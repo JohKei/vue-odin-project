@@ -1,79 +1,34 @@
 <template>
     <div class="actualBody">
-        <h1>TOP Form Validation</h1>
-        <p>Top assigment 1 <a href="https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation"
-        >Client-side form validation</a>
-        </p>
-        <p>because i'm using Vue and not the plain HTML, js, css i need to get into
-            <a href="https://vee-validate.logaretm.com/v4/guide/components/validation/">vee-validation library</a></p>
-        <Form @submit="onsubmit">
-            <label for="mail">
-                I would like you to provide me with an email address:
-            </label>
-            <Field type="email" id="mail" name="mail" :rules="validateEmail"/>
-            <ErrorMessage name="mail"/>
-            <br>
-            <button>Submit</button>
-        </Form>
+        <div class="leftSide">
+        </div>
+        <div class="rightSide">
+            <p class="test">I want to display that p element with the odin font</p>
+
+        </div>
     </div>
 </template>
 
-
-<script lang="ts" setup>
-import {Form, Field, ErrorMessage} from 'vee-validate';
-
-
-const onsubmit = (values: object) => {
-    console.log(values)
-}
-const validateEmail = (value: string) => {
-    if (!value) {
-        return 'This field is required';
-    }
-    const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-    if (!regex.test(value)) {
-        return 'This field must be a valid email';
-    }
-    return true
-}
-
+<script setup lang="ts">
 
 </script>
 
 <style scoped lang="css">
 .actualBody {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin: auto;
-    align-items: center;
-    width: fit-content;
+    flex-wrap: wrap;
 }
-
-form {
-    font: 1em sans-serif;
-    max-width: 320px;
+.leftSide{
+    background-image: url("https://media.discordapp.net/attachments/1059907690383544413/1107726257518543039/Johann_view_from_Top_beautiful_Festival_in_the_Jungle_fotoreali_ece6d134-41ca-459d-980d-8321e040df23.png?width=629&height=629");
+    background-repeat: no-repeat;
+    background-size: cover;
+    flex: 1;
+    height: 100vh;
 }
-
-p > label {
-    display: block;
+.rightSide{
+flex: 2;
 }
-
-input[type="text"],
-input[type="email"],
-input[type="number"],
-textarea,
-fieldset {
-    width: 100%;
-    border: 1px solid #333;
-    box-sizing: border-box;
-}
-
-input:invalid {
-    box-shadow: 0 0 5px 1px red;
-}
-
-input:focus:invalid {
-    box-shadow: none;
+.test{
+    font-family: Norse-Bold,serif;
 }
 </style>

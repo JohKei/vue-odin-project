@@ -15,4 +15,10 @@
 </script>
 
 <style lang="css">
+@font-face {
+    font-family: "Norse-Bold";
+    src: local('Norse-Bold'),
+    url("./fonts/Norse-Bold.otf");
+}
+
 </style>
