@@ -1,9 +1,12 @@
 <template>
     <div class="actualBody">
         <div class="leftSide">
+            <div class="logoContainer">
+                <img src="../assets/odin.png" alt="TOP Logo" class="odinLogo">
+                <p class="slogan">The Odin Project</p>
+            </div>
         </div>
         <div class="rightSide">
-            <p class="test">I want to display that p element with the odin font</p>
 
         </div>
     </div>
@@ -18,17 +21,41 @@
     display: flex;
     flex-wrap: wrap;
 }
-.leftSide{
-    background-image: url("https://media.discordapp.net/attachments/1059907690383544413/1107726257518543039/Johann_view_from_Top_beautiful_Festival_in_the_Jungle_fotoreali_ece6d134-41ca-459d-980d-8321e040df23.png?width=629&height=629");
+
+.leftSide {
+    background-image: url("https://cdn.discordapp.com/attachments/1059907690383544413/1108823030534262784/Johann_photorealistic_software_developer_desksetup_347120a9-8941-4734-b08d-dabe3ab463cb.png");
     background-repeat: no-repeat;
+    background-position: center;
     background-size: cover;
-    flex: 1;
+    flex: 1 1 450px;
     height: 100vh;
+    display: flex;
+    align-items: center;
 }
-.rightSide{
-flex: 2;
+
+.rightSide {
+    flex: 1 1 300px;
 }
-.test{
-    font-family: Norse-Bold,serif;
+
+
+.logoContainer{
+    height: 200px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+    background-color: rgba(0, 0, 0,50%);
+}
+
+.slogan {
+    font-family: Norse-Bold, serif;
+    color: white;
+    display: inline-block;
+    margin: 0;
+    font-size: 30px;
+}
+.odinLogo{
+    height: 150px;
+    width: auto;
 }
 </style>

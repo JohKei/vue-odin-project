@@ -1,10 +1,5 @@
 <template>
-    <nav>
 
-        <router-link to="/">Home</router-link>
-        <router-link to="/odinForm">Form</router-link>
-
-    </nav>
     <router-view/>
 </template>
 <!--todo navbar-->
@@ -20,5 +15,7 @@
     src: local('Norse-Bold'),
     url("./fonts/Norse-Bold.otf");
 }
-
+body{
+    margin: 0;
+}
 </style>
