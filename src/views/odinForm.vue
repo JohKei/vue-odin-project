@@ -24,10 +24,10 @@
             <Field type="text" name="firstName" id="firstName"/>
           </div>
           <div class="inputContainer">
-            <label for="lastName">
+            <label for="lastName" >
               Last Name: *
             </label>
-            <Field type="text" name="lastName" id="lastName"/>
+            <Field type="text" name="lastName" id="lastName"  />
           </div>
           <div class="inputContainer">
             <label for="mail">
@@ -153,7 +153,9 @@ label {
   display: block;
 
 }
-
+input:required{
+  border: black solid;
+}
 input:invalid {
   border: solid red;
 }
