@@ -17,46 +17,48 @@
       </p>
       <div class="formContainer">
         <Form @submit="onSubmit" class="form" id="odinForm">
-          <div class="inputContainer">
+          <div class="inputContainer form-floating">
+            <Field type="text" name="firstName" id="firstName" class="form-control" placeholder="John"/>
             <label for="firstName">
-              First Name: *
+              First Name
             </label>
-            <Field type="text" name="firstName" id="firstName"/>
           </div>
-          <div class="inputContainer">
-            <label for="lastName" >
-              Last Name: *
+          <div class="inputContainer form-floating">
+            <Field type="text" name="lastName" id="lastName" class="form-control" placeholder="Wick"/>
+            <label for="lastName">
+              Last Name
             </label>
-            <Field type="text" name="lastName" id="lastName"  />
           </div>
-          <div class="inputContainer">
-            <label for="mail">
-              Email: *
-            </label>
-            <Field type="email" name="mail" id="mail" :rules="veeValidate"/>
+          <div class="inputContainer form-floating">
+            <Field type="email" name="mail" class="form-control" id="mail" :rules="veeValidate" placeholder="Email"
+                   />
             <ErrorMessage name="mail" class="tool_tip"/>
-          </div>
-          <div class="inputContainer">
-            <label for="phoneNumber">
-              Phone Number:
+            <label for="mail">
+              Email
             </label>
-            <Field type="text" name="phoneNumber" id="phoneNumber"/>
           </div>
-          <div class="inputContainer">
+          <div class="inputContainer form-floating">
+            <Field type="text" name="phoneNumber" class="form-control" placeholder="Phone Number" id="phoneNumber"/>
+            <label for="phoneNumber">
+              Phone Number
+            </label>
+          </div>
+          <div class="inputContainer form-floating">
+            <Field type="password" name="password" class="form-control" placeholder="Password" id="password"/>
             <label for="password">
               Password
             </label>
-            <Field type="password" name="password" id="password"/>
           </div>
-          <div class="inputContainer">
+          <div class="inputContainer form-floating">
+            <Field type="password" name="confirmPassword" id="confirmPassword" class="form-control"
+                   placeholder="confirm Password"/>
             <label for="confirmPassword">
               confirm Password
             </label>
-            <Field type="password" name="confirmPassword" id="confirmPassword"/>
           </div>
         </Form>
       </div>
-      <button type="submit" form="odinForm">Create Account</button>
+      <button type="submit" form="odinForm">Submit</button>
       <p>Already have an account? <a href="#">Log in</a></p>
     </div>
   </div>
@@ -79,7 +81,6 @@ const veeValidate = (value: string) => {
   }
   return true
 }
-
 </script>
 
 <style scoped lang="css">
@@ -140,68 +141,19 @@ const veeValidate = (value: string) => {
 }
 
 .form {
-//margin: 5rem 0; display: flex; align-items: center; flex-wrap: wrap;
-  gap: 10px;
+//margin: 5rem 0; display: flex; align-items: center; flex-wrap: wrap; gap: 10px;
   display: flex;
   justify-content: center;
 }
 
-input{
+input {
   margin-top: 5px;
 }
+
 label {
   display: block;
-
-}
-input:required{
-  border: black solid;
-}
-input:invalid {
-  border: solid red;
 }
 
-input:valid {
-  border: solid green;
-}
-
-/* Error Tool Tip Styles*/
-.tool_tip {
-  /* font */
-  font-family: Helvetica,serif;
-  font-size: 13px;
-  font-weight: bold;
-  color: #cc0033;
-  line-height: 20px;
-  /* background */
-  background-color: #fce4e4;
-  border: 1px solid #fcc2c3;
-  border-radius: 7px;
-  -moz-border-radius: 7px;
-  -webkit-border-radius: 7px;
-  /* positioning */
-  float: none;
-  position: absolute;
-  padding: 7px 11px 4px;
-  margin-left: 10px; /* distance between error tip and element it points to */
-}
-
-/* Left Arrow Styles */
-.tool_tip:after, .tool_tip:before {
-  content: '';
-  border: 7px solid transparent;
-  position: absolute;
-  top: 10px;
-}
-
-.tool_tip:after {
-  border-right: 7px solid #fce4e4;
-  left: -14px;
-}
-
-.tool_tip:before {
-  border-right: 7px solid #fcc2c3;
-  left: -15px;
-}
 
 </style>
 <!--todo ErrorMessages as popup over the Label oder im input and der rechten stelle-->
