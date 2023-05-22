@@ -1,17 +1,21 @@
 <template>
+  <navigation-bar></navigation-bar>
   <div class="actualBody">
     <div class="leftSide">
       <div class="logoContainer">
         <img src="../assets/odin.png" alt="TOP Logo" class="odinLogo">
         <p class="slogan">The Odin Project</p>
       </div>
+      <p class="photoBy">Photo created by <a href="https://www.midjourney.com/home/" target="_blank">midjourney</a></p>
     </div>
     <div class="rightSide">
       <div class="contentContainer">
         <h1 class="heading">Sign up for The Odin Project <em>today!</em></h1>
         <p>
-          This is not a real online service! You know you need something like this in your life to
-          help you realize your deepest dreams. Sign up <em>now</em> to get started.
+          Learn with The Odin Project to master web development and build impressive projects like a Sign up form. With
+          its comprehensive curriculum, hands-on projects, supportive community, and job-ready skills, The Odin Project
+          offers a structured and accessible learning experience that empowers you to succeed in the world of web
+          development.
         </p>
         <p>
           You know you want to.
@@ -70,8 +74,9 @@
           </div>
         </Form>
       </div>
-      <div class="contentContainer"></div>
-      <button type="submit" form="odinForm" class="submitButton">Submit</button>
+      <div class="contentContainer">
+        <button type="submit" form="odinForm" class="submitButton">Submit</button>
+      </div>
       <p>Already have an account? <a href="#">Log in</a></p>
     </div>
   </div>
@@ -80,6 +85,7 @@
 <script setup lang="ts">
 import {Form, Field, ErrorMessage} from 'vee-validate'
 import {ref} from "vue";
+import NavigationBar from "@/components/NavigationBar.vue";
 
 function onSubmit(values: object) {
   if (checkPassword()) {
@@ -125,8 +131,7 @@ const checkPassword = () => {
   background-size: cover;
   flex: 1 1 450px;
   height: 100vh;
-  display: flex;
-  align-items: center;
+  display: grid;
 }
 
 .rightSide {
@@ -146,6 +151,17 @@ const checkPassword = () => {
   width: 100%;
   justify-content: center;
   background-color: rgba(0, 0, 0, 50%);
+  align-self: center;
+}
+
+.photoBy {
+  justify-self: center;
+  color: white;
+  align-self: end;
+  background-color: rgba(0, 0, 0, 50%);
+  width: 100%;
+  text-align: center;
+  margin: 0;
 }
 
 .slogan {
@@ -202,15 +218,18 @@ label {
 .contentContainer {
   padding: 3rem;
 }
-.submitButton{
+
+.submitButton {
   width: 200px;
   border-radius: 5px;
-  background-color: deepskyblue;
-
+  background-color: #5c5470;
+  color: white;
 }
+
 </style>
 <!--todo set rem or em Font size for Content-->
-<!--todo style Button-->
 <!--todo fill-in progress bar-->
 <!--todo if inputs valid green border around input fields but only after input-->
 <!--todo if Passwords or other Values not valid/equal -> red border-->
+<!--todo page jumping when on Mobile mode-->
+<!--todo Mobile Mode animation to scroll down-->
