@@ -39,6 +39,8 @@
             <Field type="email" name="mail" class="form-control" id="mail"
                    :rules="veeValidate" placeholder="Email"
                    ref="email"
+                   @input="checkEmail"
+                   :class="{'is-valid':isValidEmail, 'is-invalid':isInvalidEmail}"
             />
             <ErrorMessage name="mail"/>
             <label for="mail">
@@ -56,6 +58,7 @@
                    id="password"
                    v-model="passwordOne"
                    @input="checkPassword"
+                   :class="{'is-valid':isValidPassword, 'is-invalid':isInvalidPassword}"
             />
             <label for="password">
               Password
@@ -66,6 +69,7 @@
                    placeholder="confirm Password"
                    v-model="passwordTwo"
                    @input="checkPassword"
+                   :class="{'is-valid':isValidPassword, 'is-invalid':isInvalidPassword}"
             />
             <span v-if="errorMessage">{{ errorMessage }}</span>
             <label for="confirmPassword">
@@ -93,14 +97,24 @@ function onSubmit(values: object) {
   }
 }
 
+const isValidPassword = ref(false)
+const isInvalidPassword = ref(false)
+const isValidEmail = ref(false)
+const isInvalidEmail = ref(false)
+
+
+
 const veeValidate = (value: string) => {
   if (!value) {
     return 'This field is required'
   }
   const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
   if (!regex.test(value)) {
+    isInvalidEmail.value = true
     return 'This field must be a valid email';
   }
+  isInvalidEmail.value = false
+  isValidEmail.value = true
   return true
 }
 const errorMessage = ref('')
@@ -109,12 +123,23 @@ const passwordTwo = ref('')
 const checkPassword = () => {
   if (passwordOne.value != passwordTwo.value) {
     errorMessage.value = 'Passwords do not Match!'
+    isInvalidPassword.value = true
     return false
   } else if (passwordOne.value === passwordTwo.value) {
     errorMessage.value = ''
+    isInvalidPassword.value = false
+    isValidPassword.value = true
     return true
   }
 }
+
+const checkEmail = (value: string) => {
+  const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+  if (!regex.test(value)) {
+    return 'This field must be a valid email';
+  }
+}
+
 
 </script>
 
@@ -184,7 +209,7 @@ const checkPassword = () => {
 
 .formContainer {
   margin: 3rem 0;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
   background-color: #5c5470;
   padding: 1rem 0;
 }
@@ -229,7 +254,5 @@ label {
 </style>
 <!--todo set rem or em Font size for Content-->
 <!--todo fill-in progress bar-->
-<!--todo if inputs valid green border around input fields but only after input-->
-<!--todo if Passwords or other Values not valid/equal -> red border-->
 <!--todo page jumping when on Mobile mode-->
 <!--todo Mobile Mode animation to scroll down-->
