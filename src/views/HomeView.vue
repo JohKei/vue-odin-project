@@ -1,11 +1,11 @@
 <template>
-  <div>
-  </div>
+  <navigation-bar></navigation-bar>
 </template>
 
 <script setup lang="ts">
 
 
+import NavigationBar from "@/components/NavigationBar.vue";
 </script>
 
 
