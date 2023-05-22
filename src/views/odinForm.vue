@@ -7,14 +7,16 @@
       </div>
     </div>
     <div class="rightSide">
-      <h1 class="heading">Sign up for The Odin Project <em>today!</em></h1>
-      <p>
-        This is not a real online service! You know you need something like this in your life to
-        help you realize your deepest dreams. Sign up <em>now</em> to get started.
-      </p>
-      <p>
-        You know you want to.
-      </p>
+      <div class="contentContainer">
+        <h1 class="heading">Sign up for The Odin Project <em>today!</em></h1>
+        <p>
+          This is not a real online service! You know you need something like this in your life to
+          help you realize your deepest dreams. Sign up <em>now</em> to get started.
+        </p>
+        <p>
+          You know you want to.
+        </p>
+      </div>
       <div class="formContainer">
         <Form @submit="onSubmit" class="form" id="odinForm">
           <div class="inputContainer form-floating">
@@ -49,6 +51,7 @@
             <Field type="password" name="password" class="form-control" placeholder="Password"
                    id="password"
                    v-model="passwordOne"
+                   @input="checkPassword"
             />
             <label for="password">
               Password
@@ -60,14 +63,15 @@
                    v-model="passwordTwo"
                    @input="checkPassword"
             />
-            <span v-if="errorMessage">{{errorMessage}}</span>
+            <span v-if="errorMessage">{{ errorMessage }}</span>
             <label for="confirmPassword">
               confirm Password
             </label>
           </div>
         </Form>
       </div>
-      <button type="submit" form="odinForm">Submit</button>
+      <div class="contentContainer"></div>
+      <button type="submit" form="odinForm" class="submitButton">Submit</button>
       <p>Already have an account? <a href="#">Log in</a></p>
     </div>
   </div>
@@ -77,9 +81,10 @@
 import {Form, Field, ErrorMessage} from 'vee-validate'
 import {ref} from "vue";
 
-
 function onSubmit(values: object) {
-  alert(JSON.stringify(values, null, 2));
+  if (checkPassword()) {
+    alert(JSON.stringify(values, null, 2));
+  }
 }
 
 const veeValidate = (value: string) => {
@@ -96,13 +101,14 @@ const errorMessage = ref('')
 const passwordOne = ref('')
 const passwordTwo = ref('')
 const checkPassword = () => {
-  if (passwordOne.value != passwordTwo.value){
+  if (passwordOne.value != passwordTwo.value) {
     errorMessage.value = 'Passwords do not Match!'
-  }else if (passwordOne.value === passwordTwo.value){
-    errorMessage.value = 'okay'
+    return false
+  } else if (passwordOne.value === passwordTwo.value) {
+    errorMessage.value = ''
+    return true
   }
 }
-
 
 </script>
 
@@ -128,7 +134,8 @@ const checkPassword = () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 3rem;
+  justify-content: space-evenly;
+  background-color: #dbd8e3;
 }
 
 
@@ -161,10 +168,17 @@ const checkPassword = () => {
 
 .formContainer {
   margin: 3rem 0;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  background-color: #5c5470;
+  padding: 1rem 0;
 }
 
 .form {
-//margin: 5rem 0; display: flex; align-items: center; flex-wrap: wrap; gap: 10px; display: flex; justify-content: center;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
 }
 
 input {
@@ -180,12 +194,23 @@ label {
 }
 
 .inputContainer > span {
-  color: red;
+  color: white;
   display: block;
   text-align: center;
 }
+
+.contentContainer {
+  padding: 3rem;
+}
+.submitButton{
+  width: 200px;
+  border-radius: 5px;
+  background-color: deepskyblue;
+
+}
 </style>
+<!--todo set rem or em Font size for Content-->
+<!--todo style Button-->
 <!--todo fill-in progress bar-->
 <!--todo if inputs valid green border around input fields but only after input-->
 <!--todo if Passwords or other Values not valid/equal -> red border-->
-<!--todo Floating labels for the inputs + Styling -->
