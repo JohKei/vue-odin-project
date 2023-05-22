@@ -30,9 +30,11 @@
             </label>
           </div>
           <div class="inputContainer form-floating">
-            <Field type="email" name="mail" class="form-control" id="mail" :rules="veeValidate" placeholder="Email"
-                   />
-            <ErrorMessage name="mail" class="tool_tip"/>
+            <Field type="email" name="mail" class="form-control" id="mail"
+                   :rules="veeValidate" placeholder="Email"
+                   ref="email"
+            />
+            <ErrorMessage name="mail"/>
             <label for="mail">
               Email
             </label>
@@ -44,14 +46,21 @@
             </label>
           </div>
           <div class="inputContainer form-floating">
-            <Field type="password" name="password" class="form-control" placeholder="Password" id="password"/>
+            <Field type="password" name="password" class="form-control" placeholder="Password"
+                   id="password"
+                   v-model="passwordOne"
+            />
             <label for="password">
               Password
             </label>
           </div>
           <div class="inputContainer form-floating">
             <Field type="password" name="confirmPassword" id="confirmPassword" class="form-control"
-                   placeholder="confirm Password"/>
+                   placeholder="confirm Password"
+                   v-model="passwordTwo"
+                   @input="checkPassword"
+            />
+            <span v-if="errorMessage">{{errorMessage}}</span>
             <label for="confirmPassword">
               confirm Password
             </label>
@@ -66,9 +75,11 @@
 
 <script setup lang="ts">
 import {Form, Field, ErrorMessage} from 'vee-validate'
+import {ref} from "vue";
 
-const onSubmit = (values: object) => {
-  console.log(values)
+
+function onSubmit(values: object) {
+  alert(JSON.stringify(values, null, 2));
 }
 
 const veeValidate = (value: string) => {
@@ -81,6 +92,18 @@ const veeValidate = (value: string) => {
   }
   return true
 }
+const errorMessage = ref('')
+const passwordOne = ref('')
+const passwordTwo = ref('')
+const checkPassword = () => {
+  if (passwordOne.value != passwordTwo.value){
+    errorMessage.value = 'Passwords do not Match!'
+  }else if (passwordOne.value === passwordTwo.value){
+    errorMessage.value = 'okay'
+  }
+}
+
+
 </script>
 
 <style scoped lang="css">
@@ -141,9 +164,7 @@ const veeValidate = (value: string) => {
 }
 
 .form {
-//margin: 5rem 0; display: flex; align-items: center; flex-wrap: wrap; gap: 10px;
-  display: flex;
-  justify-content: center;
+//margin: 5rem 0; display: flex; align-items: center; flex-wrap: wrap; gap: 10px; display: flex; justify-content: center;
 }
 
 input {
@@ -154,9 +175,16 @@ label {
   display: block;
 }
 
+.inputContainer {
+  height: 90px;
+}
 
+.inputContainer > span {
+  color: red;
+  display: block;
+  text-align: center;
+}
 </style>
-<!--todo ErrorMessages as popup over the Label oder im input and der rechten stelle-->
 <!--todo fill-in progress bar-->
 <!--todo if inputs valid green border around input fields but only after input-->
 <!--todo if Passwords or other Values not valid/equal -> red border-->
