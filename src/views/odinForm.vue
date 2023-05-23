@@ -91,8 +91,10 @@ import {Form, Field, ErrorMessage} from 'vee-validate'
 import {ref} from "vue";
 import NavigationBar from "@/components/NavigationBar.vue";
 
+
+const email = ref('')
 function onSubmit(values: object) {
-  if (checkPassword()) {
+  if (checkPassword() && checkEmail(email.value)) {
     alert(JSON.stringify(values, null, 2));
   }
 }
@@ -139,7 +141,6 @@ const checkEmail = (value: string) => {
     return 'This field must be a valid email';
   }
 }
-
 
 </script>
 
@@ -252,6 +253,8 @@ label {
 }
 
 </style>
+<!--todo input sizing should not change when applying is-valid or is-invalid classes-->
+<!--todo  add validation for firstName, lastName & phoneNumber-->
 <!--todo set rem or em Font size for Content-->
 <!--todo fill-in progress bar-->
 <!--todo page jumping when on Mobile mode-->
