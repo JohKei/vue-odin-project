@@ -6,7 +6,7 @@
     </div>
     <div class="sidebarContainer">
       <div class="sidebarHeading">
-        <img src="../assets/odin.png" alt="Dashboard Icon" class="odinIcon">
+        <img src="../assets/odin-icon-colorful.svg" alt="Dashboard Icon" class="odinIcon">
         <h2>Dashboard</h2>
       </div>
       <div class="sidebarContent">
@@ -107,22 +107,22 @@
         <h3>Trending</h3>
         <div class="trendingContent">
           <div>
-            <img src="../assets/account-circle.svg" alt="img">
+            <img src="../assets/odin-icon-colorful.svg" alt="img">
             <p class="upperContent">@placeholder</p>
             <p class="bottomContent">Some short Content</p>
           </div>
           <div>
-            <img src="../assets/account-circle.svg" alt="img">
+            <img src="../assets/odin-icon-colorful.svg" alt="img">
             <p class="upperContent">@placeholder</p>
             <p class="bottomContent">Some short Content</p>
           </div>
           <div>
-            <img src="../assets/account-circle.svg" alt="img">
+            <img src="../assets/odin-icon-colorful.svg" alt="img">
             <p class="upperContent">@placeholder</p>
             <p class="bottomContent">Some short Content</p>
           </div>
           <div>
-            <img src="../assets/account-circle.svg" alt="img">
+            <img src="../assets/odin-icon-colorful.svg" alt="img">
             <p class="upperContent">@placeholder</p>
             <p class="bottomContent">Some short Content</p>
           </div>
