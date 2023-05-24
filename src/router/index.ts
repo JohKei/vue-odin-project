@@ -2,6 +2,7 @@ import {createRouter, createWebHistory, RouteRecordRaw} from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import odinSignUp from '../views/odinForm.vue'
 import odinDashboard from "@/views/odinDashboard.vue";
+import discordHelp from "@/views/discordHelp.vue";
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -18,6 +19,11 @@ const routes: Array<RouteRecordRaw> = [
         path: '/odinDashboard',
         name: 'Odin Dashboard',
         component: odinDashboard
+    },
+    {
+        path: '/discordHelp',
+        name: 'Discord Help',
+        component: discordHelp
     }
 ]
 
