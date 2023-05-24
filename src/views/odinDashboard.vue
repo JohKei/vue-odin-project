@@ -19,7 +19,11 @@
           The real Odin
         </button>
       </div>
-      <div class="greeting">greeting</div>
+      <div class="greeting">
+        <img src="../assets/account-circle.svg" alt="Profile Picture">
+        <p class="upperGreeting">Hi there,</p>
+        <p class="bottomGreeting">The real Odin (@odin)</p>
+      </div>
       <div class="interactions">interactions</div>
     </div>
     <div class="sidebarContainer">
@@ -297,7 +301,8 @@ img{
   background-color: green;
   display: grid;
   grid-template-columns: 3fr 2fr;
-  grid-template-rows: 1fr 2fr;
+  grid-template-rows: 1fr 1fr;
+  padding: 10px;
 }
 .searchContainer{
   grid-row: 1/2;
@@ -334,14 +339,37 @@ img{
   grid-template-columns: repeat(2, 1fr) 4fr;
   display: flex;
   align-items: center;
-  gap: 20px;
-  justify-content: center;
+  gap: 10px;
+  justify-content: flex-end;
 }
-
-
 .greeting{
   grid-row: 2/3;
   grid-column: 1/2;
+  display: grid;
+  grid-template-columns: 1fr 6fr;
+  grid-template-rows: repeat(2, 1fr);
+  gap: 5px;
+}
+.greeting > img{
+  grid-column: 1/2;
+  grid-row: 1/3;
+  justify-self: end;
+  align-self: center;
+  width: 70px;
+}
+.upperGreeting{
+  margin: 0;
+  grid-row: 1/2;
+  grid-column: 2/3;
+  align-self: end;
+}
+.bottomGreeting{
+  margin: 0;
+  grid-row: 2/3;
+  grid-column: 2/3;
+  align-self: start;
+  font-size: 1.5rem;
+
 }
 .interactions{
   grid-row: 2/3;
