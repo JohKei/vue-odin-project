@@ -6,6 +6,9 @@
     <li>
       <router-link to="/odinForm">Odin Form</router-link>
     </li>
+    <li>
+      <router-link to="/odinDashboard">Odin Dashboard</router-link>
+    </li>
   </ul>
 </template>
 
