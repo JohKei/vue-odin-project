@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import odinSignUp from '../views/odinForm.vue'
 import odinDashboard from "@/views/odinDashboard.vue";
 import discordHelp from "@/views/discordHelp.vue";
+import odinPractice from "@/views/odinPractice.vue";
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -24,6 +25,11 @@ const routes: Array<RouteRecordRaw> = [
         path: '/discordHelp',
         name: 'Discord Help',
         component: discordHelp
+    },
+    {
+        path: '/odinPractice',
+        name: 'Odin Practice',
+        component: odinPractice
     }
 ]
 

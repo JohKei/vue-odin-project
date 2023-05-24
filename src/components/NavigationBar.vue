@@ -9,6 +9,12 @@
     <li>
       <router-link to="/odinDashboard">Odin Dashboard</router-link>
     </li>
+    <li>
+      <router-link to="/discordHelp">Discord Help</router-link>
+    </li>
+    <li>
+      <router-link to="/odinPractice">Odin Practice</router-link>
+    </li>
   </ul>
 </template>
 
