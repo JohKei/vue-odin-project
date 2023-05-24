@@ -176,6 +176,7 @@ import NavigationBar from "@/components/NavigationBar.vue";
   display: grid;
   grid-template-columns: 1fr 4fr;
   grid-template-rows: 1fr 5fr;
+  height: 100vh;
 }
 
 .sidebarHeading {
@@ -261,7 +262,6 @@ img {
   display: grid;
   background-color: white;
   border-radius: 10px;
-  padding: 10px;
 }
 
 .announcementsContent > div {
@@ -332,7 +332,6 @@ img {
   display: grid;
   grid-template-columns: 3fr 2fr;
   grid-template-rows: 1fr 1fr;
-  padding: 10px;
 }
 
 .searchContainer {
