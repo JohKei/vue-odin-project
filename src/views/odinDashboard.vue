@@ -21,8 +21,10 @@
       </div>
       <div class="greeting">
         <img src="../assets/account-circle.svg" alt="Profile Picture">
-        <p class="upperGreeting">Hi there,</p>
-        <p class="bottomGreeting">The real Odin (@odin)</p>
+        <div>
+          <p class="upperGreeting">Hi there,</p>
+          <p class="bottomGreeting">The real Odin (@odin)</p>
+        </div>
       </div>
       <div class="interactions">
         <button>
@@ -382,32 +384,32 @@ img {
   grid-column: 1/2;
   display: grid;
   grid-template-columns: 1fr 6fr;
-  grid-template-rows: repeat(2, 1fr);
+  grid-template-rows: 1fr;
   gap: 5px;
 }
 
 .greeting > img {
   grid-column: 1/2;
-  grid-row: 1/3;
+  grid-row: 1/2;
   justify-self: end;
   align-self: center;
   width: 70px;
 }
 
-.upperGreeting {
-  margin: 0;
+.greeting > div {
   grid-row: 1/2;
   grid-column: 2/3;
-  align-self: end;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.greeting > div > p {
+  margin: 0;
 }
 
 .bottomGreeting {
-  margin: 0;
-  grid-row: 2/3;
-  grid-column: 2/3;
-  align-self: start;
-  font-size: 1.5rem;
-
+  font-size: 1.2rem;
 }
 
 .interactions {
@@ -418,6 +420,7 @@ img {
 .interactions {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   gap: 20px;
 }
 
@@ -432,7 +435,3 @@ img {
 
 }
 </style>
-<!--todo .contentContainer padding von 20px auf 0 gesetzt weil sonst overflow... kp warum -> muss recherchiert werden-->
-<!--todo andernfalls margin von den .contentContainer > child anpassen und schaun ob das funktioniert-->
-<!--todo es hat etwas mit den 100vh und 100vw im root container zutun. 100vw entfernt, 20px padding auf .contentContainer
-    todo und es overflowed nurnoch vertical-->
