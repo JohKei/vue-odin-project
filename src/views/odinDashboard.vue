@@ -2,7 +2,13 @@
   <NavigationBar></NavigationBar>
   <div class="rootContainer">
     <div class="headerContainer">
-      <h1>Header Content</h1>
+      <div class="searchContainer">
+        <img src="../assets/magnify.svg" alt="search Button">
+        <input type="text">
+      </div>
+      <div class="userInfo">Profile</div>
+      <div class="greeting">greeting</div>
+      <div class="interactions">interactions</div>
     </div>
     <div class="sidebarContainer">
       <div class="sidebarHeading">
@@ -144,23 +150,12 @@ import NavigationBar from "@/components/NavigationBar.vue";
   display: grid;
   grid-template-columns: 1fr 4fr;
   grid-template-rows: 1fr 5fr;
-  height: 100vh;
-  width: 100vw;
-  padding-top: 20px;
 }
-
 .sidebarHeading {
   display: grid;
   grid-template-rows: 1fr;
   grid-template-columns: 1fr 4fr;
 }
-
-.headerContainer {
-  grid-row: 1/2;
-  grid-column: 2/3;
-  background-color: green;
-}
-
 .sidebarContainer {
   grid-column: 1/2;
   grid-row: 1/3;
@@ -169,7 +164,6 @@ import NavigationBar from "@/components/NavigationBar.vue";
   grid-template-rows: 1fr 3fr 5fr;
   grid-template-columns: 1fr;
 }
-
 .sidebarContainer > div > div,
 .sidebarHeading {
   display: grid;
@@ -177,11 +171,11 @@ import NavigationBar from "@/components/NavigationBar.vue";
   justify-items: center;
   align-items: center;
 }
-
 .sidebarContent > div > img,
 .sidebarSettings > div > img,
 .odinIcon,
-.trendingContent > div > img {
+.trendingContent > div > img,
+.searchContainer > img{
   height: auto;
   width: 40px;
 }
@@ -195,7 +189,6 @@ import NavigationBar from "@/components/NavigationBar.vue";
   text-decoration: none;
   color: black;
 }
-
 .contentContainer {
   grid-column: 2/3;
   grid-row: 2/3;
@@ -203,17 +196,16 @@ import NavigationBar from "@/components/NavigationBar.vue";
   grid-template-columns: 3fr 1fr;
   grid-template-rows: 1fr 1fr;
   background-color: aquamarine;
-  padding: 20px;
-  gap: 20px;
+  gap: 10px;
+  padding: 10px;
 }
-
 .yourProjects {
   grid-row: 1/3;
   grid-column: 1/2;
 }
 .projectsContent {
   display: grid;
-  grid-template-rows: repeat(3, minmax(220px, 1fr));
+  grid-template-rows: repeat(3, minmax(200px, 1fr));
   grid-template-columns: repeat(2, minmax(200px, 1fr));
   gap: 20px;
 }
@@ -224,30 +216,25 @@ import NavigationBar from "@/components/NavigationBar.vue";
   border-left: orange 7px solid;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
-
 .announcements {
   grid-row: 1/2;
   grid-column: 2/3;
 }
-
 .announcementsContent {
   display: grid;
   background-color: white;
   border-radius: 10px;
   padding: 10px;
 }
-
 .announcementsContent > div {
   border-bottom: solid darkgray 2px;
   margin: 5px;
   padding-bottom: 5px;
 }
-
 .announcementsContent > div:last-child {
   border: none;
   padding-bottom: 0;
 }
-
 .announcementsContent > div > h4,
 .announcementsContent > div > p {
   margin: 0;
@@ -272,23 +259,68 @@ import NavigationBar from "@/components/NavigationBar.vue";
   grid-template-columns: 1fr 3fr;
   grid-template-rows: 1fr 1fr;
 }
-
 .trendingContent > div > img {
   grid-row: 1/3;
   grid-column: 1/2;
   align-self: center;
   justify-self: center;
+  width: 30px;
 }
-
 .upperContent {
   grid-row: 1/2;
   grid-column: 2/3;
   margin: 0;
+  font-size: 0.9rem;
 }
 .bottomContent{
   grid-row: 2/3;
   grid-column: 2/3;
   margin: 0;
+  font-size: 0.8rem ;
+}
+.headerContainer {
+  grid-row: 1/2;
+  grid-column: 2/3;
+  background-color: green;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 1fr 2fr;
+}
+.searchContainer{
+  grid-row: 1/2;
+  grid-column: 1/2;
+  display: grid;
+  grid-template-columns: 1fr 10fr;
+  grid-template-rows: 1fr;
+}
+.searchContainer > img{
+  grid-row: 1/2;
+  grid-column: 1/2;
+  height: auto;
+  width: 35px;
+  align-self: center;
+  justify-self: end;
+}
+.searchContainer > input{
+  grid-row: 1/2;
+  grid-column: 2/3;
+  border-radius: 10px;
+}
+.userInfo{
+  grid-row: 1/2;
+  grid-column: 2/3;
+}
+.greeting{
+  grid-row: 2/3;
+  grid-column: 1/2;
+}
+.interactions{
+  grid-row: 2/3;
+  grid-column: 2/3;
 }
 
 </style>
+<!--todo .contentContainer padding von 20px auf 0 gesetzt weil sonst overflow... kp warum -> muss recherchiert werden-->
+<!--todo andernfalls margin von den .contentContainer > child anpassen und schaun ob das funktioniert-->
+<!--todo es hat etwas mit den 100vh und 100vw im root container zutun. 100vw entfernt, 20px padding auf .contentContainer
+    todo und es overflowed nurnoch vertical-->
