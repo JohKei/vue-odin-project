@@ -6,47 +6,47 @@
     </div>
     <div class="sidebarContainer">
       <div class="sidebarHeading">
-        <img src="#" alt="Dashboard Icon">
+        <img src="../assets/odin.png" alt="Dashboard Icon" class="odinIcon">
         <h2>Dashboard</h2>
       </div>
       <div class="sidebarContent">
         <div>
-          <p>Image</p>
-          <p>Content</p>
+          <img src="../assets/home-circle-outline.svg" alt="Home Icon">
+          <p>Home</p>
         </div>
         <div>
-          <p>Image</p>
-          <p>Content</p>
+          <img src="../assets/card-account-details-outline.svg" alt="Profile Icon">
+          <p>Profile</p>
         </div>
         <div>
-          <p>Image</p>
-          <p>Content</p>
+          <img src="../assets/message.svg" alt="Messages Icon">
+          <p>Messages</p>
         </div>
         <div>
-          <p>Image</p>
-          <p>Content</p>
+          <img src="../assets/clock-time-three-outline.svg" alt="History Icon">
+          <p>History</p>
         </div>
         <div>
-          <p>Image</p>
-          <p>Content</p>
+          <img src="../assets/file-multiple.svg" alt="Tasks Icon">
+          <p>Tasks</p>
         </div>
         <div>
-          <p>Image</p>
-          <p>Content</p>
+          <img src="../assets/account-group.svg" alt="Communities Icon">
+          <p>Communities</p>
         </div>
       </div>
       <div class="sidebarSettings">
         <div>
-          <p>Image</p>
+          <img src="../assets/cog.svg" alt="Settings Icon">
+          <p>Settings</p>
+        </div>
+        <div>
+          <img src="../assets/chat-question.svg" alt="Support Icon">
           <p>Content</p>
         </div>
         <div>
-          <p>Image</p>
-          <p>Content</p>
-        </div>
-        <div>
-          <p>Image</p>
-          <p>Content</p>
+          <img src="../assets/shield-account.svg" alt="Privacy Icon">
+          <p>Privacy</p>
         </div>
       </div>
     </div>
@@ -99,8 +99,21 @@ import NavigationBar from "@/components/NavigationBar.vue";
   display: grid;
   grid-template-columns: 1fr 4fr;
   justify-items: center;
+  align-items: center;
 }
-
+.sidebarContent > div > img,
+.sidebarSettings > div >img,
+.odinIcon{
+  height: auto;
+  width: 40px;
+}
+.sidebarContent > div > p,
+.sidebarSettings > div > p,
+.sidebarHeading > h2{
+  margin: 0;
+  padding: 0;
+  justify-self: start;
+}
 .contentContainer {
   grid-column: 2/3;
   grid-row: 2/3;
