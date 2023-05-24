@@ -24,7 +24,17 @@
         <p class="upperGreeting">Hi there,</p>
         <p class="bottomGreeting">The real Odin (@odin)</p>
       </div>
-      <div class="interactions">interactions</div>
+      <div class="interactions">
+        <button>
+          New
+        </button>
+        <button>
+          Upload
+        </button>
+        <button>
+          Share
+        </button>
+      </div>
     </div>
     <div class="sidebarContainer">
       <div class="sidebarHeading">
@@ -375,7 +385,21 @@ img{
   grid-row: 2/3;
   grid-column: 2/3;
 }
+.interactions{
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+}
+.interactions > button{
+  width: 100px;
+  height: 50px;
+  border: none;
+  border-radius: 25px;
+  background-color: deepskyblue;
+  color: white;
+  font-weight: 700;
 
+}
 </style>
 <!--todo .contentContainer padding von 20px auf 0 gesetzt weil sonst overflow... kp warum -> muss recherchiert werden-->
 <!--todo andernfalls margin von den .contentContainer > child anpassen und schaun ob das funktioniert-->
