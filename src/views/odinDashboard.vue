@@ -264,6 +264,7 @@ img {
   display: grid;
   background-color: white;
   border-radius: 10px;
+  padding: 0 15px;
 }
 
 .announcementsContent > div {
@@ -334,6 +335,7 @@ img {
   display: grid;
   grid-template-columns: 3fr 2fr;
   grid-template-rows: 1fr 1fr;
+  padding: 0 15px ;
 }
 
 .searchContainer {
@@ -367,7 +369,10 @@ img {
   border-radius: 10px;
   height: 40px;
 }
-
+.searchContainer > button{
+  justify-self: end;
+  padding: 0;
+}
 .userInfo {
   grid-row: 1/2;
   grid-column: 2/3;
