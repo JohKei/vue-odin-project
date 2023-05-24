@@ -3,10 +3,18 @@
   <div class="rootContainer">
     <div class="headerContainer">
       <div class="searchContainer">
-        <img src="../assets/magnify.svg" alt="search Button">
+        <button>
+          <img src="../assets/magnify.svg" alt="search Button">
+        </button>
         <input type="text">
       </div>
-      <div class="userInfo">Profile</div>
+      <div class="userInfo">
+        <button>
+          <img src="../assets/bell-badge.svg" alt="Notification Button">
+        </button>
+        <img src="../assets/account-circle.svg" alt="Profile Picture">
+        <h4>The real Odin</h4>
+      </div>
       <div class="greeting">greeting</div>
       <div class="interactions">interactions</div>
     </div>
@@ -175,7 +183,8 @@ import NavigationBar from "@/components/NavigationBar.vue";
 .sidebarSettings > div > img,
 .odinIcon,
 .trendingContent > div > img,
-.searchContainer > img{
+.searchContainer > img,
+img{
   height: auto;
   width: 40px;
 }
@@ -283,7 +292,7 @@ import NavigationBar from "@/components/NavigationBar.vue";
   grid-column: 2/3;
   background-color: green;
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 3fr 2fr;
   grid-template-rows: 1fr 2fr;
 }
 .searchContainer{
@@ -292,8 +301,9 @@ import NavigationBar from "@/components/NavigationBar.vue";
   display: grid;
   grid-template-columns: 1fr 10fr;
   grid-template-rows: 1fr;
+  align-items: center;
 }
-.searchContainer > img{
+.searchContainer > button > img{
   grid-row: 1/2;
   grid-column: 1/2;
   height: auto;
@@ -301,15 +311,31 @@ import NavigationBar from "@/components/NavigationBar.vue";
   align-self: center;
   justify-self: end;
 }
+.searchContainer > button,
+button{
+  border: none;
+  background-color: inherit;
+}
 .searchContainer > input{
   grid-row: 1/2;
   grid-column: 2/3;
   border-radius: 10px;
+  height: 40px;
 }
 .userInfo{
   grid-row: 1/2;
   grid-column: 2/3;
+  grid-template-rows: 1fr;
+  grid-template-columns: repeat(2, 1fr) 4fr;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: center;
 }
+.userInfo>h4{
+  margin: 0;
+}
+
 .greeting{
   grid-row: 2/3;
   grid-column: 1/2;
