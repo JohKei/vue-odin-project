@@ -177,19 +177,22 @@ import NavigationBar from "@/components/NavigationBar.vue";
   grid-template-columns: 1fr 4fr;
   grid-template-rows: 1fr 5fr;
 }
+
 .sidebarHeading {
   display: grid;
   grid-template-rows: 1fr;
   grid-template-columns: 1fr 4fr;
 }
+
 .sidebarContainer {
   grid-column: 1/2;
   grid-row: 1/3;
-  background-color: deepskyblue;
+  background-color: #FDFCDC;
   display: grid;
   grid-template-rows: 1fr 3fr 5fr;
   grid-template-columns: 1fr;
 }
+
 .sidebarContainer > div > div,
 .sidebarHeading {
   display: grid;
@@ -197,12 +200,13 @@ import NavigationBar from "@/components/NavigationBar.vue";
   justify-items: center;
   align-items: center;
 }
+
 .sidebarContent > div > img,
 .sidebarSettings > div > img,
 .odinIcon,
 .trendingContent > div > img,
 .searchContainer > img,
-img{
+img {
   height: auto;
   width: 40px;
 }
@@ -216,62 +220,73 @@ img{
   text-decoration: none;
   color: black;
 }
+
 .contentContainer {
   grid-column: 2/3;
   grid-row: 2/3;
   display: grid;
   grid-template-columns: 3fr 1fr;
   grid-template-rows: 1fr 1fr;
-  background-color: aquamarine;
+  background-color: #FED9B7;
   gap: 10px;
   padding: 10px;
 }
+
 .yourProjects {
   grid-row: 1/3;
   grid-column: 1/2;
 }
+
 .projectsContent {
   display: grid;
   grid-template-rows: repeat(3, minmax(200px, 1fr));
   grid-template-columns: repeat(2, minmax(200px, 1fr));
   gap: 20px;
 }
+
 .projectsContent > div {
   background-color: white;
   border-radius: 10px;
   padding: 20px;
-  border-left: orange 7px solid;
+  border-left: #0081A7 7px solid;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
+
 .announcements {
   grid-row: 1/2;
   grid-column: 2/3;
 }
+
 .announcementsContent {
   display: grid;
   background-color: white;
   border-radius: 10px;
   padding: 10px;
 }
+
 .announcementsContent > div {
   border-bottom: solid darkgray 2px;
   margin: 5px;
   padding-bottom: 5px;
 }
+
 .announcementsContent > div:last-child {
   border: none;
   padding-bottom: 0;
 }
+
 .announcementsContent > div > h4,
 .announcementsContent > div > p {
   margin: 0;
 }
+
 .trending {
   grid-row: 2/3;
   grid-column: 2/3;
-  height: 400px;
+  height: fit-content;
 }
-.trendingContent{
+
+.trendingContent {
   background-color: white;
   color: black;
   padding: 20px;
@@ -281,11 +296,13 @@ img{
   gap: 20px;
   border-radius: 10px;
 }
+
 .trendingContent > div {
   display: grid;
   grid-template-columns: 1fr 3fr;
   grid-template-rows: 1fr 1fr;
 }
+
 .trendingContent > div > img {
   grid-row: 1/3;
   grid-column: 1/2;
@@ -293,28 +310,32 @@ img{
   justify-self: center;
   width: 30px;
 }
+
 .upperContent {
   grid-row: 1/2;
   grid-column: 2/3;
   margin: 0;
   font-size: 0.9rem;
 }
-.bottomContent{
+
+.bottomContent {
   grid-row: 2/3;
   grid-column: 2/3;
   margin: 0;
-  font-size: 0.8rem ;
+  font-size: 0.8rem;
 }
+
 .headerContainer {
   grid-row: 1/2;
   grid-column: 2/3;
-  background-color: green;
+  background-color: #00AFB9;
   display: grid;
   grid-template-columns: 3fr 2fr;
   grid-template-rows: 1fr 1fr;
   padding: 10px;
 }
-.searchContainer{
+
+.searchContainer {
   grid-row: 1/2;
   grid-column: 1/2;
   display: grid;
@@ -322,7 +343,8 @@ img{
   grid-template-rows: 1fr;
   align-items: center;
 }
-.searchContainer > button > img{
+
+.searchContainer > button > img {
   grid-row: 1/2;
   grid-column: 1/2;
   height: auto;
@@ -330,19 +352,22 @@ img{
   align-self: center;
   justify-self: end;
 }
+
 .searchContainer > button,
-.userInfo > button{
+.userInfo > button {
   border: none;
   background-color: inherit;
   font-size: 1.5rem;
 }
-.searchContainer > input{
+
+.searchContainer > input {
   grid-row: 1/2;
   grid-column: 2/3;
   border-radius: 10px;
   height: 40px;
 }
-.userInfo{
+
+.userInfo {
   grid-row: 1/2;
   grid-column: 2/3;
   grid-template-rows: 1fr;
@@ -352,7 +377,8 @@ img{
   gap: 10px;
   justify-content: flex-end;
 }
-.greeting{
+
+.greeting {
   grid-row: 2/3;
   grid-column: 1/2;
   display: grid;
@@ -360,20 +386,23 @@ img{
   grid-template-rows: repeat(2, 1fr);
   gap: 5px;
 }
-.greeting > img{
+
+.greeting > img {
   grid-column: 1/2;
   grid-row: 1/3;
   justify-self: end;
   align-self: center;
   width: 70px;
 }
-.upperGreeting{
+
+.upperGreeting {
   margin: 0;
   grid-row: 1/2;
   grid-column: 2/3;
   align-self: end;
 }
-.bottomGreeting{
+
+.bottomGreeting {
   margin: 0;
   grid-row: 2/3;
   grid-column: 2/3;
@@ -381,21 +410,24 @@ img{
   font-size: 1.5rem;
 
 }
-.interactions{
+
+.interactions {
   grid-row: 2/3;
   grid-column: 2/3;
 }
-.interactions{
+
+.interactions {
   display: flex;
   justify-content: flex-end;
   gap: 20px;
 }
-.interactions > button{
+
+.interactions > button {
   width: 100px;
   height: 50px;
   border: none;
   border-radius: 25px;
-  background-color: deepskyblue;
+  background-color: #0081A7;
   color: white;
   font-weight: 700;
 
