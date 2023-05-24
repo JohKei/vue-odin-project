@@ -12,8 +12,12 @@
         <button>
           <img src="../assets/bell-badge.svg" alt="Notification Button">
         </button>
-        <img src="../assets/account-circle.svg" alt="Profile Picture">
-        <h4>The real Odin</h4>
+        <button>
+          <img src="../assets/account-circle.svg" alt="Profile Picture">
+        </button>
+        <button>
+          The real Odin
+        </button>
       </div>
       <div class="greeting">greeting</div>
       <div class="interactions">interactions</div>
@@ -312,9 +316,10 @@ img{
   justify-self: end;
 }
 .searchContainer > button,
-button{
+.userInfo > button{
   border: none;
   background-color: inherit;
+  font-size: 1.5rem;
 }
 .searchContainer > input{
   grid-row: 1/2;
@@ -332,9 +337,7 @@ button{
   gap: 20px;
   justify-content: center;
 }
-.userInfo>h4{
-  margin: 0;
-}
+
 
 .greeting{
   grid-row: 2/3;
