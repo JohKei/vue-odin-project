@@ -1,5 +1,5 @@
 <template>
-  <div class="customMenu">
+  <div class="customMenu" :class="{customMenuBottomBorder: !navActive}">
     <img src="../assets/menu.svg" alt="Menu Icon" class="menuIcon" @click="navActive = !navActive">
     <div v-if="navActive" class="customNavbar">
       <router-link to="/">Home</router-link>
@@ -7,7 +7,8 @@
       <div class="odinProjectsDropdownContainer">
         <button class="odinDropdownBtn" @click="odinContentActive = !odinContentActive">
           Odin Projects
-          <i class="arrow down"></i>
+          <i v-if="odinContentActive" class="arrow down"></i>
+          <i v-if="!odinContentActive" class="arrow right"></i>
         </button>
         <div v-if="odinContentActive" class="odinDropContent">
           <router-link to="/odinForm">Odin Form</router-link>
@@ -17,7 +18,8 @@
       <div class="personalPlayGroundDropContainer">
         <button class="personalDropBtn" @click="personalContentActive = !personalContentActive">
           Personal Playground
-          <i class="arrow down"></i>
+          <i v-if="personalContentActive" class="arrow down"></i>
+          <i v-if="!personalContentActive" class="arrow right"></i>
         </button>
         <div v-if="personalContentActive" class="personalDropContent">
           <router-link to="/odinPractice">
@@ -37,8 +39,8 @@
 import {ref} from "vue";
 
 const navActive = ref(false)
-const odinContentActive = ref(false)
-const personalContentActive = ref(false)
+const odinContentActive = ref(true)
+const personalContentActive = ref(true)
 
 
 </script>
@@ -51,24 +53,26 @@ const personalContentActive = ref(false)
 
 .customMenu {
   position: absolute;
-  background-color: rgba(255, 255, 255, 30%);
-  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 80%);
+  border-radius: 10px 10px 0 0;
   --headerHeight: 50px;
   height: var(--headerHeight);
 }
-
+.customMenuBottomBorder{
+  border-radius: 10px;
+}
 .customNavbar {
   display: flex;
   gap: 10px;
-  background-color: rgba(0, 0, 0, 50%);
+  background-color: rgba(255, 255, 255, 80%);
   flex-direction: column;
   width: 30vh;
   align-items: center;
   height: calc(100vh - var(--headerHeight));
+  border-radius: 0 0 10px 10px;
 }
 
 .customNavbar a {
-  color: white;
   text-decoration: none;
 }
 
@@ -77,7 +81,6 @@ const personalContentActive = ref(false)
   border: none;
   background-color: inherit;
   margin: 0;
-  color: white;
 }
 
 .odinDropContent,
@@ -102,11 +105,10 @@ const personalContentActive = ref(false)
 
 .odinDropContent a,
 .personalDropContent a {
-  color: white;
 }
 
 .arrow {
-  border: solid white;
+  border: solid black;
   border-width: 0 3px 3px 0;
   display: inline-block;
   padding: 3px;
@@ -115,6 +117,15 @@ const personalContentActive = ref(false)
 .down {
   transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
+}
+.right {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+.odinDropdownBtn,
+.personalDropBtn,
+a{
+  color: black;
 }
 </style>
 
