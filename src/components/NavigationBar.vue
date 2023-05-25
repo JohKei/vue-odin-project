@@ -32,7 +32,6 @@
       </div>
     </div>
   </div>
-<!--todo just make the OdinProjects & Personal playground dropdowns always active. Just style it little bit smaller-->
 </template>
 
 <script setup lang="ts">
@@ -58,12 +57,14 @@ const personalContentActive = ref(true)
   --headerHeight: 50px;
   height: var(--headerHeight);
 }
-.customMenuBottomBorder{
+
+.customMenuBottomBorder {
   border-radius: 10px;
 }
+
 .customNavbar {
   display: flex;
-  gap: 10px;
+  gap: 20px;
   background-color: rgba(255, 255, 255, 80%);
   flex-direction: column;
   width: 30vh;
@@ -89,13 +90,7 @@ const personalContentActive = ref(true)
 }
 
 
-.odinDropContent {
-  display: flex;
-  flex-direction: column;
-  background-color: inherit;
-  align-items: center;
-}
-
+.odinDropContent,
 .personalDropContent {
   display: flex;
   flex-direction: column;
@@ -103,9 +98,6 @@ const personalContentActive = ref(true)
   align-items: center;
 }
 
-.odinDropContent a,
-.personalDropContent a {
-}
 
 .arrow {
   border: solid black;
@@ -118,14 +110,22 @@ const personalContentActive = ref(true)
   transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
 }
+
 .right {
   transform: rotate(-45deg);
   -webkit-transform: rotate(-45deg);
 }
+
 .odinDropdownBtn,
 .personalDropBtn,
-a{
+a {
   color: black;
+  font-size: 1.4rem;
+}
+
+.odinDropContent > a,
+.personalDropContent > a {
+  font-size: 1.2rem;
 }
 </style>
 
