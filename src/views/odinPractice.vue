@@ -5,6 +5,8 @@
 
 <script setup lang="ts">
 import NavigationBar from "@/components/NavigationBar.vue";
+import {number, string} from "yup";
+import * as diagnostics_channel from "diagnostics_channel";
 
 
 class Book {
@@ -33,7 +35,9 @@ const gta = new Book("Grand Thef Auto 6", "Rockstar Games", 6, true)
 class Hero {
   name: string
   level: number
-
+  greet() {
+    return `${this.name} is greeting you!`
+  }
   constructor(name: string, level: number) {
     this.name = name
     this.level = level
@@ -45,49 +49,42 @@ class Hero {
 
 // console.log(Object.getPrototypeOf(player1))
 
-Hero.prototype.greet = function () {
-  return `${this.name} says hello.`
-}
+// Hero.prototype.greet = function () {
+//   return `${this.name} says hello.`
+// }
 // console.log(player1.greet())
 
-class Warrior {
-  name: string
-  level: number
+class Warrior extends Hero{
   weapon: string
-
-  constructor(name: string, level: number, weapon: string) {
-    this.name = name
-    this.level = level
+  constructor(name:string, level: number, weapon:string) {
+    super(name, level);
     this.weapon = weapon
   }
 }
-
-class Healer {
-  name: string
-  level: number
+class Healer extends Hero{
   spell: string
-
-  constructor(name: string, level: number, spell: string) {
-    this.name = name
-    this.level = level
+  constructor (name:string, level: number, spell:string) {
+    super(name, level);
     this.spell = spell
+  }
+  castSpell(){
+    return `${this.name} casts ${this.spell} on you!`
   }
 }
 
-Object.setPrototypeOf(Warrior.prototype, Hero.prototype)
-Object.setPrototypeOf(Healer.prototype, Hero.prototype)
 
 Warrior.prototype.attack = function (){
-  return `${this.name} attacks with the ${this.weapon}`
+  return `${this.name} attacks with his ${this.weapon}`
 }
 
 Healer.prototype.heal = function (){
   return `${this.name} casts ${this.spell}`
 }
 
-const hero1 = new Warrior('Bjorn', 50, 'Axe')
-const hero2 = new Healer('Kanin', 22, 'cure')
-console.log(hero1.attack(), hero2)
+const hero1 = new Warrior('Odin', 35, 'axe')
+const hero2 = new Healer('Athena', 45, 'cure')
+
+
 
 </script>
 <style scoped lang="css">
