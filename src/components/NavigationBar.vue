@@ -13,6 +13,7 @@
         <div v-if="odinContentActive" class="odinDropContent">
           <router-link to="/odinForm">Odin Form</router-link>
           <router-link to="/odinDashboard">Odin Dashboard</router-link>
+          <router-link to="/odinLibrary">Odin Library</router-link>
         </div>
       </div>
       <div class="personalPlayGroundDropContainer">
