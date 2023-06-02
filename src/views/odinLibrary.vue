@@ -6,7 +6,7 @@
         <div class="filterContainer">
           <div class="form-floating">
             <input type="text" class="form-control filterInput" placeholder="input" id="bookFilter">
-            <label for="bookFilter">Search name of the book or author</label>
+            <label for="bookFilter">Search name of the book or author...</label>
           </div>
         </div>
 
@@ -18,31 +18,31 @@
             all
           </button>
           <button class="buttonContentColor">
-            <img src="#" alt="img">
+            <svg-icon type="mdi" :path="icons.unicornSvg"/>
             Fantasy
           </button>
           <button class="buttonContentColor">
-            <img src="#" alt="img">
+            <svg-icon type="mdi" :path="icons.dramaMask"/>
             Drama
           </button>
           <button class="buttonContentColor">
-            <img src="#" alt="img">
+            <svg-icon type="mdi" :path="icons.handCuffs"/>
             Detective
           </button>
           <button class="buttonContentColor">
-            <img src="#" alt="img">
+            <svg-icon type="mdi" :path="icons.education"/>
             Education
           </button>
           <button class="buttonContentColor">
-            <img src="#" alt="img">
+            <svg-icon type="mdi" :path="icons.psychology"/>
             Psychology
           </button>
           <button class="buttonContentColor">
-            <img src="#" alt="img">
+            <svg-icon type="mdi" :path="icons.business"/>
             Business
           </button>
           <button class="buttonContentColor">
-            <img src="#" alt="img">
+            <svg-icon type="mdi" :path="icons.astrology"/>
             Astrology
           </button>
         </div>
@@ -60,6 +60,22 @@
 
 
 <script setup lang="ts">
+import SvgIcon from '@jamescoyle/vue-icon';
+import {
+  mdiUnicorn, mdiDramaMasks, mdiHandcuffs,
+  mdiSchool, mdiBrain, mdiBriefcaseVariant,
+  mdiZodiacLibra,
+} from '@mdi/js';
+
+const icons = {
+  unicornSvg: mdiUnicorn,
+  dramaMask: mdiDramaMasks,
+  handCuffs: mdiHandcuffs,
+  education: mdiSchool,
+  psychology: mdiBrain,
+  business: mdiBriefcaseVariant,
+  astrology: mdiZodiacLibra
+}
 
 class Book {
   author: string
@@ -99,13 +115,13 @@ import NavigationBar from "@/components/NavigationBar.vue";
 
 .actualBody {
   display: grid;
-  grid-template-rows: 1fr 4fr;
+  grid-template-rows: 1fr 7fr;
   grid-template-columns: 1fr 4fr;
   height: 100%;
   width: 100%;
-  border-radius: 20px;
+  border-radius: 40px;
   background-color: #bd977c;
-  gap: 2rem;
+  gap: 1rem;
   padding: 2rem;
 }
 
@@ -114,7 +130,7 @@ import NavigationBar from "@/components/NavigationBar.vue";
   grid-column: 2/3;
   display: grid;
   grid-template-columns: 4fr 1fr;
-  grid-template-rows: 4fr 1fr;
+  grid-template-rows: 1fr 1fr;
 }
 
 .filterContainer {
@@ -123,11 +139,14 @@ import NavigationBar from "@/components/NavigationBar.vue";
   display: grid;
   align-self: center;
 }
-.filterInput{
+
+.filterInput {
   border-radius: 20px;
 }
-.form-floating{
+
+.form-floating {
   width: 70%;
+  margin-left: auto;
 }
 
 .userContainer {
@@ -151,7 +170,7 @@ import NavigationBar from "@/components/NavigationBar.vue";
   background-color: #dfe0e0;
   grid-row: 2/3;
   grid-column: 2/3;
-  border-radius: 20px;
+  border-radius: 40px;
 }
 
 
