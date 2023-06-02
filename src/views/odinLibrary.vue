@@ -1,15 +1,60 @@
 <template>
   <navigation-bar></navigation-bar>
   <div class="body">
-    <div class="header">
+    <div class="actualBody">
+      <div class="header">
+        <div class="filterContainer">
+          <div class="form-floating">
+            <input type="text" class="form-control filterInput" placeholder="input" id="bookFilter">
+            <label for="bookFilter">Search name of the book or author</label>
+          </div>
+        </div>
 
-    </div>
-    <div class="sideBar">
+        <div class="userContainer">
 
-    </div>
-    <div class="contentContainer">
+        </div>
+        <div class="topicSelection">
+          <button class="buttonContentColor">
+            all
+          </button>
+          <button class="buttonContentColor">
+            <img src="#" alt="img">
+            Fantasy
+          </button>
+          <button class="buttonContentColor">
+            <img src="#" alt="img">
+            Drama
+          </button>
+          <button class="buttonContentColor">
+            <img src="#" alt="img">
+            Detective
+          </button>
+          <button class="buttonContentColor">
+            <img src="#" alt="img">
+            Education
+          </button>
+          <button class="buttonContentColor">
+            <img src="#" alt="img">
+            Psychology
+          </button>
+          <button class="buttonContentColor">
+            <img src="#" alt="img">
+            Business
+          </button>
+          <button class="buttonContentColor">
+            <img src="#" alt="img">
+            Astrology
+          </button>
+        </div>
+      </div>
+      <div class="sideBar">
 
+      </div>
+      <div class="contentContainer">
+
+      </div>
     </div>
+
   </div>
 </template>
 
@@ -45,19 +90,83 @@ import NavigationBar from "@/components/NavigationBar.vue";
 </script>
 
 <style scoped lang="css">
-.BackgroundColor {
-  background-color: #DAAA63;
+.body {
+  width: 100vw;
+  height: 100vh;
+  padding: 2rem;
+  background-color: #cbb19b;
 }
 
-.contentBackgroundColor {
-  background-color: #fff4e6;
+.actualBody {
+  display: grid;
+  grid-template-rows: 1fr 4fr;
+  grid-template-columns: 1fr 4fr;
+  height: 100%;
+  width: 100%;
+  border-radius: 20px;
+  background-color: #bd977c;
+  gap: 2rem;
+  padding: 2rem;
 }
 
-.contentColor {
-  background-color: #4b3832;
+.header {
+  grid-row: 1/2;
+  grid-column: 2/3;
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+  grid-template-rows: 4fr 1fr;
+}
+
+.filterContainer {
+  grid-row: 1/2;
+  grid-column: 1/2;
+  display: grid;
+  align-self: center;
+}
+.filterInput{
+  border-radius: 20px;
+}
+.form-floating{
+  width: 70%;
+}
+
+.userContainer {
+  grid-column: 2/3;
+  grid-row: 1/2;
+}
+
+.topicSelection {
+  grid-row: 2/3;
+  grid-column: 1/3;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.sideBar {
+  grid-row: 1/3;
+  grid-column: 1/2;
+}
+
+.contentContainer {
+  background-color: #dfe0e0;
+  grid-row: 2/3;
+  grid-column: 2/3;
+  border-radius: 20px;
+}
+
+
+.buttonContentColor:active,
+.buttonContentColor:hover {
+  background-color: #9b7960;
+  border: none;
+  border-radius: 10px;
+  padding: 0 10px;
 }
 
 .buttonContentColor {
-  background-color: #FCA72C;
+  background-color: inherit;
+  border: none;
+  padding: 0 10px;
 }
+
 </style>
