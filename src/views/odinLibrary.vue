@@ -51,7 +51,6 @@
 
       </div>
       <div class="contentContainer">
-
       </div>
     </div>
 
@@ -66,6 +65,15 @@ import {
   mdiSchool, mdiBrain, mdiBriefcaseVariant,
   mdiZodiacLibra,
 } from '@mdi/js';
+import NavigationBar from "@/components/NavigationBar.vue";
+import {reactive, ref} from "vue";
+import { v4 as uuidv4 } from 'uuid';
+
+// Todo Books i want to include:
+// Hustle harder, hustle smarter
+// Elon Musk biography
+// 48 Laws of Power
+// Building Browser Extensions by Matt Frisbie
 
 const icons = {
   unicornSvg: mdiUnicorn,
@@ -78,6 +86,7 @@ const icons = {
 }
 
 class Book {
+  id: string
   author: string
   pages: number
   readStatus: boolean
@@ -92,6 +101,7 @@ class Book {
               topic: string,
               cover: string
   ) {
+    this.id = uuidv4()
     this.author = author
     this.pages = pages
     this.readStatus = readStatus
@@ -101,8 +111,18 @@ class Book {
   }
 }
 
-
-import NavigationBar from "@/components/NavigationBar.vue";
+const books = reactive([
+  {
+    id: uuidv4(),
+    author: "50 Cent",
+    pages: 300,
+    readStatus: false,
+    title: "Hustle Harder, Hustle Smarter",
+    topic: "Business",
+    cover: "https://cdn.shopify.com/s/files/1/0285/2821/4050/products/9780062953803_8d16bd12-f578-47cb-acea-91eb0cefec7e.jpg?v=1685604249&width=350"
+  }
+])
+console.log(books)
 </script>
 
 <style scoped lang="css">
