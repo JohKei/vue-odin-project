@@ -1,5 +1,6 @@
 <template>
   <navigation-bar></navigation-bar>
+
 </template>
 
 

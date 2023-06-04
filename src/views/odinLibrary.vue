@@ -4,6 +4,7 @@
     <div class="actualBody">
       <div class="header">
         <div class="filterContainer">
+          <!--Todo: such-filter reactive funktionsfähig machen-->
           <div class="form-floating">
             <input type="text" class="form-control filterInput" placeholder="input" id="bookFilter">
             <label for="bookFilter">Search name of the book or author...</label>
@@ -11,9 +12,21 @@
         </div>
 
         <div class="userContainer">
-          <button>Add Book</button>
+          <!--Todo: Button stylen-->
+          <button type="button" data-bs-toggle="modal" data-bs-target="#bookModal">
+            Add Book
+          </button>
+          <book-modal class="modal fade modal-xl"
+                      id="bookModal"
+                      tabindex="-1"
+                      aria-labelledby="exampleModalLabel"
+                      aria-hidden="true"
+          >
+
+          </book-modal>
         </div>
         <div class="topicSelection">
+          <!--Todo: filter buttons funktionsfähig machen-->
           <button class="buttonContentColor">
             all
           </button>
@@ -61,7 +74,6 @@
         </ul>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -76,6 +88,7 @@ import {
 import NavigationBar from "@/components/NavigationBar.vue";
 import {reactive, ref} from "vue";
 import {v4 as uuidv4} from 'uuid';
+import BookModal from "@/components/bookModal.vue";
 
 // Todo Books i want to include:
 // Hustle harder, hustle smarter
@@ -83,6 +96,7 @@ import {v4 as uuidv4} from 'uuid';
 // 48 Laws of Power
 // Building Browser Extensions by Matt Frisbie
 // Warren Buffet Der Jahrhundert Kapitalist von Gisela Baur
+
 
 const icons = {
   unicornSvg: mdiUnicorn,
@@ -131,7 +145,6 @@ const books = reactive([
     cover: "https://cdn.shopify.com/s/files/1/0285/2821/4050/products/9780062953803_8d16bd12-f578-47cb-acea-91eb0cefec7e.jpg?v=1685604249&width=350"
   }
 ])
-console.log(books)
 </script>
 
 <style scoped lang="css">
