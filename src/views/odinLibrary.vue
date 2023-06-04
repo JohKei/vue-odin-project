@@ -11,7 +11,7 @@
         </div>
 
         <div class="userContainer">
-
+          <button>Add Book</button>
         </div>
         <div class="topicSelection">
           <button class="buttonContentColor">
@@ -51,6 +51,14 @@
 
       </div>
       <div class="contentContainer">
+        <!--Todo: addBook button-->
+        <ul>
+          <li v-for="book in books" :key="book.id">
+            <!--Todo: Das muss garkeine BS Card sein... Ich denke einfach ein Div mit dem Bild als Bg müsste ausreichen
+                      Dieses div muss dann aber auch passend gestyled werden für onclick etc und ein Modal öffnen-->
+            <img v-if="book.cover" :src="book.cover" class="bookCover" alt="Book Cover">
+          </li>
+        </ul>
       </div>
     </div>
 
@@ -67,13 +75,14 @@ import {
 } from '@mdi/js';
 import NavigationBar from "@/components/NavigationBar.vue";
 import {reactive, ref} from "vue";
-import { v4 as uuidv4 } from 'uuid';
+import {v4 as uuidv4} from 'uuid';
 
 // Todo Books i want to include:
 // Hustle harder, hustle smarter
 // Elon Musk biography
 // 48 Laws of Power
 // Building Browser Extensions by Matt Frisbie
+// Warren Buffet Der Jahrhundert Kapitalist von Gisela Baur
 
 const icons = {
   unicornSvg: mdiUnicorn,
@@ -172,6 +181,9 @@ console.log(books)
 .userContainer {
   grid-column: 2/3;
   grid-row: 1/2;
+  display: grid;
+  align-items: center;
+  justify-items: center;
 }
 
 .topicSelection {
@@ -191,6 +203,7 @@ console.log(books)
   grid-row: 2/3;
   grid-column: 2/3;
   border-radius: 40px;
+  overflow: scroll;
 }
 
 
@@ -208,4 +221,20 @@ console.log(books)
   padding: 0 10px;
 }
 
+.contentContainer > ul {
+  padding: 0;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.contentContainer > ul > li {
+  list-style-type: none;
+  margin: 20px;
+}
+
+.bookCover {
+  border-radius: 20px;
+  width: 170px;
+}
 </style>
