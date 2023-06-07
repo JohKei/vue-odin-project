@@ -7,8 +7,11 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body content">
-          <div class="cover">
-            <div class="noCover">
+          <div v-if="book.cover" class="coverImage" :style="{'background-image': `url(${book.cover})`}">
+
+          </div>
+          <div class="noCoverImage" v-else>
+            <div class="noCover" v-if="!book.cover">
               No Cover yet!
             </div>
           </div>
@@ -47,12 +50,13 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary"
-                  data-bs-dismiss="modal"
+                  data-bs-dismiss=""
+                  @click="mountBook"
           >
             Close
           </button>
           <button type="button" class="btn btn-primary"
-                  @click="$emit('bookData', book)"
+                  @click="$emit('bookData', book,)"
                   data-bs-dismiss="modal"
           >
             Save changes
@@ -66,14 +70,20 @@
 
 <script setup lang="ts">
 //Todo: Vee-validate: required & Number inputs, prevent from submitting emit if required missing
-import {reactive, ref} from "vue";
+import {onMounted, reactive, ref} from "vue";
 import {Book} from '@/global/global'
 import {v4 as uuidv4} from 'uuid';
+
 // eslint-disable-next-line no-undef
 const emits = defineEmits<{
   (e: 'bookData', book: Book): void
 }>()
 
+// eslint-disable-next-line no-undef
+const props = defineProps<{
+  currentBook: Book,
+}
+>()
 
 // Todo: write function, if prop -> assign bookData from parent to book
 const book: Book = reactive({
@@ -86,9 +96,20 @@ const book: Book = reactive({
   cover: ""
 })
 const logBook = () => {
-  console.log(book)
+  console.log(props.currentBook)
 }
 
+const mountBook = (() => {
+  if (props.currentBook) {
+    book.readStatus = props.currentBook.readStatus
+    book.topic = props.currentBook.topic
+    book.cover = props.currentBook.cover
+    book.title = props.currentBook.title
+    book.id = props.currentBook.id
+    book.author = props.currentBook.author
+    book.pages = props.currentBook.pages
+  }
+})
 </script>
 
 
@@ -100,9 +121,18 @@ const logBook = () => {
   margin: 20px;
 }
 
-.cover {
+.noCoverImage {
   flex-grow: 1;
   background-image: url("https://cdn.discordapp.com/attachments/1059907690383544413/1114975398338510909/Johann_beautiful_photorealistic_Book_library_c89e8773-b6c4-4ab0-9c4d-3bd97667f97a.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border-radius: 20px;
+  aspect-ratio: 5.25/8.25;
+}
+
+.coverImage {
+  flex-grow: 1;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;

@@ -26,6 +26,7 @@
 
           </book-modal>
         </div>
+        <!--Todo: move filter buttons to the sidebar & display amount of books in each topic-->
         <div class="topicSelection">
           <!--Todo: make filter buttons functional-->
           <button class="buttonContentColor">
@@ -70,9 +71,27 @@
           <li v-for="book in books"
               :key="book.id"
           >
+            <img v-if="book.cover"
+                 :src="book.cover"
+                 class="bookCover"
+                 alt="Book Cover"
+                 data-bs-toggle="modal"
+                 data-bs-target="#bookModalEdit"
+                 @click="selectedBook = book"
+            >
 
-            <img v-if="book.cover" :src="book.cover" class="bookCover" alt="Book Cover">
           </li>
+          <book-modal class="modal fade modal-xl"
+                      tabindex="-1"
+                      aria-labelledby="exampleModalLabel"
+                      aria-hidden="true"
+                      :current-book="selectedBook"
+                      id="bookModalEdit"
+                      @bookData="dataRecieve"
+          >
+
+          </book-modal>
+
         </ul>
       </div>
     </div>
@@ -92,7 +111,6 @@ import {reactive, ref} from "vue";
 import {v4 as uuidv4} from 'uuid';
 import BookModal from "@/components/bookModal.vue";
 import {Book} from "@/global/global";
-
 
 // Todo Books i want to include:
 // Hustle harder, hustle smarter
@@ -125,20 +143,23 @@ const books = reactive([
   },
   {
     id: uuidv4(),
-    author: "Test",
-    pages: 200,
+    author: "Ashlee Vance",
+    pages: 416,
     readStatus: false,
-    title: "Test",
-    topic: "Test",
-    cover: "https://cdn.discordapp.com/attachments/1059907690383544413/1113109238751961128/Johann_software_developer_hideout_0a7a587d-8d71-48e9-9e6c-ba1efc45966a.png"
+    title: "Elon Musk: Tesla, SpaceX, and the Quest for a Fantastic Future",
+    topic: "Business",
+    cover: "https://m.media-amazon.com/images/P/006230125X.01._SCLZZZZZZZ_SX500_.jpg"
   },
 ])
 // Todo: emit für neues buch wäre soweit funktionsfähig (in den kinderschuhen)
 // Todo: dataRecieve umschreiben auf: getBookData -> if emit.value is already in books[] -> overwrite
 // Todo: else push/unshift + give id
-const dataRecieve = (a:Book) =>{
-  console.log(books.push(a))
+const dataRecieve = (a: Book) => {
+  books.push(a)
 }
+const selectedBook = ref({
+
+})
 </script>
 
 <style scoped lang="css">
@@ -241,7 +262,10 @@ const dataRecieve = (a:Book) =>{
 
 .bookCover {
   border-radius: 20px;
-  width: 200px;
+  width: 170px;
   aspect-ratio: 5.25/8.25;
+}
+.bookCover:hover{
+  border: red 3px solid;
 }
 </style>
