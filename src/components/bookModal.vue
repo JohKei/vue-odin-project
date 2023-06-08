@@ -51,12 +51,12 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary"
                   data-bs-dismiss=""
-                  @click="mountBook"
+                  @click="console.log(newId)"
           >
             Close
           </button>
           <button type="button" class="btn btn-primary"
-                  @click="$emit('bookData', book,)"
+                  @click="$emit('addBook', book)"
                   data-bs-dismiss="modal"
           >
             Save changes
@@ -76,17 +76,18 @@ import {v4 as uuidv4} from 'uuid';
 
 // eslint-disable-next-line no-undef
 const emits = defineEmits<{
-  (e: 'bookData', book: Book): void
+  (e: 'addBook', book: Book): void
+  (e: 'editBook', book: Book): void
 }>()
 
 // eslint-disable-next-line no-undef
 const props = defineProps<{
   currentBook: Book,
+  newBook: boolean
 }
 >()
 
-// Todo: write function, if prop -> assign bookData from parent to book
-const book: Book = reactive({
+const book = reactive<Book>({
   readStatus: false,
   pages: null,
   title: "",
@@ -95,12 +96,32 @@ const book: Book = reactive({
   topic: "",
   cover: ""
 })
-const logBook = () => {
-  console.log(props.currentBook)
+const newId = ()=>{
+  return uuidv4()
 }
 
-const mountBook = (() => {
-  if (props.currentBook) {
+const resetBook = () => {
+  book.readStatus = false
+  book.topic = ""
+  book.cover = ""
+  book.title = ""
+  book.id = ""
+  book.author = ""
+  book.pages = null
+}
+
+// Todo: mountBook on openModal
+// Todo: loadBook is not working... if we console.log(book) in between the steps of reseting and assigning a id, i get 3 times the same id logged and i dont know why
+const loadBook =()=> {
+  if (props.newBook) {
+    console.log(book)
+    resetBook()
+    console.log(book)
+    book.id = uuidv4()
+    console.log(book)
+    return
+  } else if (props.currentBook) {
+    console.log(props.newBook)
     book.readStatus = props.currentBook.readStatus
     book.topic = props.currentBook.topic
     book.cover = props.currentBook.cover
@@ -108,8 +129,10 @@ const mountBook = (() => {
     book.id = props.currentBook.id
     book.author = props.currentBook.author
     book.pages = props.currentBook.pages
+
   }
-})
+}
+// Todo:  @click on saveButton, if new book -> $emit(addBook,book) else if currentBook -> $emit(editBook)
 </script>
 
 

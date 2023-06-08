@@ -21,7 +21,8 @@
                       tabindex="-1"
                       aria-labelledby="exampleModalLabel"
                       aria-hidden="true"
-                      @bookData="dataRecieve"
+                      @addBook="dataRecieve"
+                      :new-book="true"
           >
 
           </book-modal>
@@ -67,12 +68,19 @@
       </div>
       <div class="contentContainer">
         <ul>
-          <!--Todo: onClick open editModal & give bookData prop-->
           <li v-for="book in books"
               :key="book.id"
           >
             <img v-if="book.cover"
                  :src="book.cover"
+                 class="bookCover"
+                 alt="Book Cover"
+                 data-bs-toggle="modal"
+                 data-bs-target="#bookModalEdit"
+                 @click="selectedBook = book"
+            >
+            <img v-else
+                 :src="noCover"
                  class="bookCover"
                  alt="Book Cover"
                  data-bs-toggle="modal"
@@ -87,7 +95,7 @@
                       aria-hidden="true"
                       :current-book="selectedBook"
                       id="bookModalEdit"
-                      @bookData="dataRecieve"
+                      @addBook="dataRecieve"
           >
 
           </book-modal>
@@ -111,6 +119,7 @@ import {reactive, ref} from "vue";
 import {v4 as uuidv4} from 'uuid';
 import BookModal from "@/components/bookModal.vue";
 import {Book} from "@/global/global";
+import {array} from "yup";
 
 // Todo Books i want to include:
 // Hustle harder, hustle smarter
@@ -129,9 +138,9 @@ const icons = {
   business: mdiBriefcaseVariant,
   astrology: mdiZodiacLibra
 }
+const noCover = 'https://cdn.discordapp.com/attachments/1059907690383544413/1114975398338510909/Johann_beautiful_photorealistic_Book_library_c89e8773-b6c4-4ab0-9c4d-3bd97667f97a.png'
 
-
-const books = reactive([
+const books = ref <Book[]>([
   {
     id: uuidv4(),
     author: "50 Cent",
@@ -154,12 +163,16 @@ const books = reactive([
 // Todo: emit für neues buch wäre soweit funktionsfähig (in den kinderschuhen)
 // Todo: dataRecieve umschreiben auf: getBookData -> if emit.value is already in books[] -> overwrite
 // Todo: else push/unshift + give id
-const dataRecieve = (a: Book) => {
-  books.push(a)
+const doesBookExists = (toCheck:string) => {
+  return books.value.some(item => item.id === toCheck)
 }
-const selectedBook = ref({
+const dataRecieve = (a: Book) => {
+  if (doesBookExists(a.id)) {
+    return
+  } else books.value.push(a)
+}
 
-})
+const selectedBook = ref({})
 </script>
 
 <style scoped lang="css">
@@ -265,7 +278,8 @@ const selectedBook = ref({
   width: 170px;
   aspect-ratio: 5.25/8.25;
 }
-.bookCover:hover{
+
+.bookCover:hover {
   border: red 3px solid;
 }
 </style>
