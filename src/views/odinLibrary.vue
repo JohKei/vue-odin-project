@@ -21,7 +21,7 @@
                       tabindex="-1"
                       aria-labelledby="exampleModalLabel"
                       aria-hidden="true"
-                      @addBook="dataRecieve"
+                      @addBook="dataReceive"
                       :new-book="true"
           >
 
@@ -93,9 +93,9 @@
                       tabindex="-1"
                       aria-labelledby="exampleModalLabel"
                       aria-hidden="true"
-                      :current-book="selectedBook"
+                      :book-from-parent="selectedBook"
                       id="bookModalEdit"
-                      @addBook="dataRecieve"
+                      @addBook="dataReceive"
           >
 
           </book-modal>
@@ -115,15 +115,13 @@ import {
   mdiZodiacLibra,
 } from '@mdi/js';
 import NavigationBar from "@/components/NavigationBar.vue";
-import {reactive, ref} from "vue";
+import {ref} from "vue";
 import {v4 as uuidv4} from 'uuid';
 import BookModal from "@/components/bookModal.vue";
-import {Book} from "@/global/global";
-import {array} from "yup";
+import {bookInterface, Book} from "@/global/global";
+import {auto} from "@popperjs/core";
 
 // Todo Books i want to include:
-// Hustle harder, hustle smarter
-// Elon Musk biography
 // 48 Laws of Power
 // Building Browser Extensions by Matt Frisbie
 // Warren Buffet Der Jahrhundert Kapitalist von Gisela Baur
@@ -140,7 +138,7 @@ const icons = {
 }
 const noCover = 'https://cdn.discordapp.com/attachments/1059907690383544413/1114975398338510909/Johann_beautiful_photorealistic_Book_library_c89e8773-b6c4-4ab0-9c4d-3bd97667f97a.png'
 
-const books = ref <Book[]>([
+const books = ref <bookInterface[]>([
   {
     id: uuidv4(),
     author: "50 Cent",
@@ -160,22 +158,35 @@ const books = ref <Book[]>([
     cover: "https://m.media-amazon.com/images/P/006230125X.01._SCLZZZZZZZ_SX500_.jpg"
   },
 ])
-// Todo: emit für neues buch wäre soweit funktionsfähig (in den kinderschuhen)
-// Todo: dataRecieve umschreiben auf: getBookData -> if emit.value is already in books[] -> overwrite
-// Todo: else push/unshift + give id
+// Todo: edit doesBookExist & dataReceive @emit 'addBook' -> give Id & push into books[], @emit 'editBook' -> look for position in books[] and replace it
+// Todo: if book has already id -> edit book, else if book!id -> give id & push
+// Todo: always send book as prop to child, either empty one if new or current
+// Todo: newBook schreiben
+// Todo: resetBook schreiben
+
+const newBook = new Book("", null, false, "", "", "")
+
 const doesBookExists = (toCheck:string) => {
   return books.value.some(item => item.id === toCheck)
 }
-const dataRecieve = (a: Book) => {
+
+const dataReceive = (a: bookInterface) => {
+  // console.log(a)
   if (doesBookExists(a.id)) {
-    return
-  } else books.value.push(a)
+    // edit Book
+  } else {
+
+    books.value.push(a)
+
+  }
 }
 
 const selectedBook = ref({})
+
 </script>
 
 <style scoped lang="css">
+/* style inspired by https://dribbble.com/shots/19289689-Library-app */
 .body {
   width: 100vw;
   height: 100vh;
