@@ -153,12 +153,10 @@ const existingBook = (ar: bookInterface) => {
 const addBook = (bookFromChild: bookInterface) => {
   bookFromChild.id = uuidv4()
   books.value.push(bookFromChild)
-  console.log(books)
 }
 const editBook = (bookFromChild: bookInterface) => {
   const bookIndex = books.value.findIndex((book) => book.id === bookFromChild.id);
   books.value.splice(bookIndex, 1, bookFromChild);
-  console.log(books)
 }
 // const dataReceive = (bookFromChild: bookInterface) => {
 //   const bookIndex = books.value.findIndex((book) => book.id === bookFromChild.id); // Find index of book with same ID

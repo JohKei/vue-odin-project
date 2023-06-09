@@ -56,7 +56,7 @@
 
 
 <script setup lang="ts">
-import {reactive} from "vue";
+import {reactive, toRef} from "vue";
 import {bookInterface} from "@/global/global";
 const noCover = 'https://cdn.discordapp.com/attachments/1059907690383544413/1114975398338510909/Johann_beautiful_photorealistic_Book_library_c89e8773-b6c4-4ab0-9c4d-3bd97667f97a.png'
 
@@ -78,23 +78,19 @@ const closeModal = () => {
   emits('closeModal', false)
 }
 const sendEditBook = () => {
-  emits('editBook', book)
+  emits('editBook', book.value)
   emits('closeModal', false)
 }
 const sendAddBook = () => {
-  emits('addBook', book)
+  emits('addBook', book.value)
   emits('closeModal', false)
 }
 const sendBook = () => {
-  if(book.id === undefined){
-    console.log(book.id)
+  if(book.value.id === undefined){
     sendAddBook()
   }else sendEditBook()
 }
-
-
-
-const book = reactive(props.bookFromParent)
+const book = toRef(props, 'bookFromParent')
 
 
 
