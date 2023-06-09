@@ -119,13 +119,6 @@ import {ref} from "vue";
 import {v4 as uuidv4} from 'uuid';
 import BookModal from "@/components/bookModal.vue";
 import {bookInterface, Book} from "@/global/global";
-import {auto} from "@popperjs/core";
-
-// Todo Books i want to include:
-// 48 Laws of Power
-// Building Browser Extensions by Matt Frisbie
-// Warren Buffet Der Jahrhundert Kapitalist von Gisela Baur
-
 
 const icons = {
   unicornSvg: mdiUnicorn,
@@ -136,6 +129,12 @@ const icons = {
   business: mdiBriefcaseVariant,
   astrology: mdiZodiacLibra
 }
+
+// Todo Books i want to include:
+// 48 Laws of Power
+// Building Browser Extensions by Matt Frisbie
+// Warren Buffet Der Jahrhundert Kapitalist von Gisela Baur
+
 const noCover = 'https://cdn.discordapp.com/attachments/1059907690383544413/1114975398338510909/Johann_beautiful_photorealistic_Book_library_c89e8773-b6c4-4ab0-9c4d-3bd97667f97a.png'
 
 const books = ref <bookInterface[]>([

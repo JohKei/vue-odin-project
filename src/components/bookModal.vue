@@ -85,13 +85,7 @@ const props = defineProps<{
   bookFromParent: bookInterface,
 }
 >()
-const testFunction = () =>{
-  if (props.bookFromParent){
-    return props.bookFromParent.author
-  }else{
-    return ""
-  }
-}
+
 class BookAssign extends Book{
   getAuthor = computed (() =>{
     if (props.bookFromParent){
@@ -140,15 +134,15 @@ const book = reactive(new BookAssign(
     )
 )
 
-// const resetBook = () => {
-//   book.readStatus = false
-//   book.topic = ""
-//   book.cover = ""
-//   book.title = ""
-//   book.id = ""
-//   book.author = ""
-//   book.pages = null
-// }
+const resetBook = () => {
+  book.readStatus = false
+  book.topic = ""
+  book.cover = ""
+  book.title = ""
+  book.id = ""
+  book.author = ""
+  book.pages = null
+}
 
 // Todo: mountBook on openModal
 // Todo: loadBook is not working... if we console.log(book) in between the steps of resetting and assigning a id, i get 3 times the same id logged and i dont know why
