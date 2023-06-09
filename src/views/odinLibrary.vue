@@ -63,12 +63,13 @@
         <ul>
           <li v-for="book in books"
               :key="book.id"
-              @click="Object.assign(selectedBook,book); console.log(book.id)"
+              @click="existingBook(book)"
           >
             <img v-if="book.cover" :src="book.cover" class="bookCover" alt="Book Cover" @click="openModal">
             <img v-else :src="noCover" class="bookCover" alt="Book Cover" @click="openModal">
             <!--Todo: @emit(receiveBook)-> dataReceive-->
             <vue-book-modal
+                v-if="isModalOpen"
                 :book-from-parent="selectedBook"
                 :modal-status="isModalOpen"
                 @close-modal="closeModal"
@@ -152,34 +153,35 @@ const books = ref<bookInterface[]>([
 
 const newBook = new Book("", null, false, "", "", "")
 const newBookF = () => {
-  Object.assign(selectedBook.value, newBook)
+  selectedBook.value = JSON.parse(JSON.stringify(newBook))
   openModal()
 }
-const doesBookExists = (toCheck: string) => {
-  return books.value.some(item => item.id === toCheck)
+const existingBook = (ar: bookInterface) => {
+  return selectedBook.value = JSON.parse(JSON.stringify(ar))
 }
 
-
-const addBook = (bookFromChild:bookInterface) => {
+const addBook = (bookFromChild: bookInterface) => {
   bookFromChild.id = uuidv4()
   books.value.push(bookFromChild)
+  console.log(books)
 }
-const editBook = (bookFromChild:bookInterface) => {
+const editBook = (bookFromChild: bookInterface) => {
   const bookIndex = books.value.findIndex((book) => book.id === bookFromChild.id);
   books.value.splice(bookIndex, 1, bookFromChild);
+  console.log(books)
 }
-const dataReceive = (bookFromChild: bookInterface) => {
-  const bookIndex = books.value.findIndex((book) => book.id === bookFromChild.id); // Find index of book with same ID
-
-  if (bookIndex === -1) {
-    // If book does not exist in array, push new book object
-    books.value.push(bookFromChild);
-  } else {
-    // If book exists in array, replace object at index with new book object
-    books.value.splice(bookIndex, 1, bookFromChild);
-  }
-
-};
+// const dataReceive = (bookFromChild: bookInterface) => {
+//   const bookIndex = books.value.findIndex((book) => book.id === bookFromChild.id); // Find index of book with same ID
+//
+//   if (bookIndex === -1) {
+//     // If book does not exist in array, push new book object
+//     books.value.push(bookFromChild);
+//   } else {
+//     // If book exists in array, replace object at index with new book object
+//     books.value.splice(bookIndex, 1, bookFromChild);
+//   }
+//
+// };
 
 const selectedBook = ref({})
 

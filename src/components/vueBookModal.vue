@@ -1,6 +1,6 @@
 <template>
   <Teleport to="#bookModal">
-    <div class="modal-bg" v-if="props.modalStatus">
+    <div class="modal-bg" >
       <div class="content" >
         <div v-if="book.cover" class="coverImage"
              :style="{'background-image': `url(${props.bookFromParent.cover})`}">
@@ -58,14 +58,12 @@
 <script setup lang="ts">
 import {reactive} from "vue";
 import {bookInterface} from "@/global/global";
-
 const noCover = 'https://cdn.discordapp.com/attachments/1059907690383544413/1114975398338510909/Johann_beautiful_photorealistic_Book_library_c89e8773-b6c4-4ab0-9c4d-3bd97667f97a.png'
 
 
 // eslint-disable-next-line no-undef
 const props = defineProps<{
   bookFromParent: bookInterface,
-  modalStatus: boolean
 }>()
 
 // eslint-disable-next-line no-undef
@@ -93,6 +91,9 @@ const sendBook = () => {
     sendAddBook()
   }else sendEditBook()
 }
+
+
+
 const book = reactive(props.bookFromParent)
 
 
