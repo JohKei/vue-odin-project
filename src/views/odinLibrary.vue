@@ -114,9 +114,6 @@ const closeModal = () => {
 }
 
 // Todo Books i want to include:
-// 48 Laws of Power
-// Building Browser Extensions by Matt Frisbie
-// Warren Buffet Der Jahrhundert Kapitalist von Gisela Baur
 
 const noCover = 'https://cdn.discordapp.com/attachments/1059907690383544413/1114975398338510909/Johann_beautiful_photorealistic_Book_library_c89e8773-b6c4-4ab0-9c4d-3bd97667f97a.png'
 
@@ -139,6 +136,33 @@ const books = ref<bookInterface[]>([
     topic: "Business",
     cover: "https://m.media-amazon.com/images/P/006230125X.01._SCLZZZZZZZ_SX500_.jpg"
   },
+  {
+    id: uuidv4(),
+    author: "Robert Greene",
+    pages: 480,
+    readStatus: false,
+    title: "The 48 Laws of Power",
+    topic: "Psychology",
+    cover: "https://upload.wikimedia.org/wikipedia/en/9/9d/GreeneRobert-48LawsOfPower.jpg"
+  },
+  {
+    id: uuidv4(),
+    author: "Matt Frisbie",
+    pages: 570,
+    readStatus: false,
+    title: "Building Browser Extensions: Create Modern Extensions for Chrome, Safari, Firefox, and Edge",
+    topic: "Education",
+    cover: "https://d1b14unh5d6w7g.cloudfront.net/148428724X.01.S001.LXXXXXXX.jpg?Expires=1686418633&Signature=WUABejcqqYL5v39SEFAcRqoM4pj6ZfKsDclRDnq760JPL5n6Yl8bepCT4LrTHrtVV9wq2b8oUjIJNRBvubYxbhV2XKi59ly3M9mnV03M14V9SVU5owwFtzlSBk4S5Fxodyx-V8YP9AC9CWSDDJK6nRXK-ouIdDwVVa63wA5InI0_&Key-Pair-Id=APKAIUO27P366FGALUMQ"
+  },
+  {
+    id: uuidv4(),
+    author: "Gisela Baur",
+    pages: 309,
+    readStatus: true,
+    title: "Warren Buffet - Der Jahrhundertkapitalist: Vom Zeitungsjungen zum Milliardär - sein Weg zum Erfolg",
+    topic: "Business",
+    cover: "https://m.media-amazon.com/images/I/517v3xHyK3L.jpg"
+  }
 ])
 
 const newBook = new Book("", null, false, "", "", "")
@@ -158,18 +182,6 @@ const editBook = (bookFromChild: bookInterface) => {
   const bookIndex = books.value.findIndex((book) => book.id === bookFromChild.id);
   books.value.splice(bookIndex, 1, bookFromChild);
 }
-// const dataReceive = (bookFromChild: bookInterface) => {
-//   const bookIndex = books.value.findIndex((book) => book.id === bookFromChild.id); // Find index of book with same ID
-//
-//   if (bookIndex === -1) {
-//     // If book does not exist in array, push new book object
-//     books.value.push(bookFromChild);
-//   } else {
-//     // If book exists in array, replace object at index with new book object
-//     books.value.splice(bookIndex, 1, bookFromChild);
-//   }
-//
-// };
 
 const selectedBook = ref({})
 

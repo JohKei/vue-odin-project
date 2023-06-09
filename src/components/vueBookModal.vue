@@ -104,7 +104,7 @@ const book = toRef(props, 'bookFromParent')
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 50%);
+  background-color: rgba(0, 0, 0, 30%);
   display: flex;
   justify-content: center;
   align-items: center;
