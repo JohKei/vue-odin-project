@@ -7,7 +7,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body content">
-          <div v-if="book.getCover" class="coverImage" :style="{'background-image': `url(${book.getCover})`}">
+          <div v-if="book.cover" class="coverImage" :style="{'background-image': `url(${book.cover})`}">
 
           </div>
           <div class="noCoverImage" v-else>
@@ -17,22 +17,22 @@
           </div>
           <div class="bookForm">
             <div class="form-floating">
-              <input type="text" class="form-control" id="author" placeholder="" v-model="book.getAuthor">
+              <input type="text" class="form-control" id="author" placeholder="" v-model="book.author">
               <label for="author">Author</label>
             </div>
             <div class="form-floating">
-              <input type="text" class="form-control" id="title" placeholder="" v-model="book.getTitle">
+              <input type="text" class="form-control" id="title" placeholder="" v-model="book.title">
               <label for="title">Book Title</label>
             </div>
             <div class="form-floating">
-              <input type="number" class="form-control numberInput" id="pages" placeholder="" v-model="book.getPages">
+              <input type="number" class="form-control numberInput" id="pages" placeholder="" v-model="book.pages">
               <label for="pages">Amount of Pages</label>
             </div>
             <div class="form-floating">
-              <input type="text" class="form-control" id="cover" placeholder="" v-model="book.getCover">
+              <input type="text" class="form-control" id="cover" placeholder="" v-model="book.cover">
               <label for="cover">Book Cover-link</label>
             </div>
-            <select class="form-select" aria-label="Default select example" v-model="book.getTopic">
+            <select class="form-select" aria-label="Default select example" v-model="book.topic">
               <option selected>Choose the Book topic</option>
               <option value="Fantasy">Fantasy</option>
               <option value="Drama">Drama</option>
@@ -43,7 +43,7 @@
               <option value="Astrology">Astrology</option>
             </select>
             <div class="form-check form-switch form-check-reverse">
-              <input class="form-check-input" type="checkbox" id="flexSwitchCheckReverse" v-model="book.getReadStatus">
+              <input class="form-check-input" type="checkbox" id="flexSwitchCheckReverse" v-model="book.readStatus">
               <label class="form-check-label" for="flexSwitchCheckReverse">Did you read the book?</label>
             </div>
           </div>
@@ -124,15 +124,7 @@ class BookAssign extends Book{
 }
 
 
-const book = reactive(new BookAssign(
-        "",
-        null,
-        false,
-        "",
-        "",
-        ""
-    )
-)
+const book = reactive(props.bookFromParent)
 
 const resetBook = () => {
   book.readStatus = false

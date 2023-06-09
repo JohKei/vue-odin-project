@@ -13,19 +13,12 @@
 
         <div class="userContainer">
           <!--Todo: Button styling-->
-          <button type="button" data-bs-toggle="modal" data-bs-target="#bookModal">
+          <!--Todo: @click="new book = selected Book, open Modal"-->
+          <button type="button" @click="newBookF()">
             Add Book
           </button>
-          <book-modal class="modal fade modal-xl"
-                      id="bookModal"
-                      tabindex="-1"
-                      aria-labelledby="exampleModalLabel"
-                      aria-hidden="true"
-                      @addBook="dataReceive"
-                      :new-book="true"
-          >
 
-          </book-modal>
+
         </div>
         <!--Todo: move filter buttons to the sidebar & display amount of books in each topic-->
         <div class="topicSelection">
@@ -70,36 +63,19 @@
         <ul>
           <li v-for="book in books"
               :key="book.id"
+              @click="Object.assign(selectedBook,book)"
           >
-            <img v-if="book.cover"
-                 :src="book.cover"
-                 class="bookCover"
-                 alt="Book Cover"
-                 data-bs-toggle="modal"
-                 data-bs-target="#bookModalEdit"
-                 @click="selectedBook = book"
+            <img v-if="book.cover" :src="book.cover" class="bookCover" alt="Book Cover" @click="openModal">
+            <img v-else :src="noCover" class="bookCover" alt="Book Cover" @click="openModal">
+            <!--Todo: @emit(receiveBook)-> dataReceive-->
+            <vue-book-modal
+                :book-from-parent="selectedBook"
+                :modal-status="isModalOpen"
+                @close-modal="closeModal"
             >
-            <img v-else
-                 :src="noCover"
-                 class="bookCover"
-                 alt="Book Cover"
-                 data-bs-toggle="modal"
-                 data-bs-target="#bookModalEdit"
-                 @click="selectedBook = book"
-            >
+            </vue-book-modal>
 
           </li>
-          <book-modal class="modal fade modal-xl"
-                      tabindex="-1"
-                      aria-labelledby="exampleModalLabel"
-                      aria-hidden="true"
-                      :book-from-parent="selectedBook"
-                      id="bookModalEdit"
-                      @addBook="dataReceive"
-          >
-
-          </book-modal>
-
         </ul>
       </div>
     </div>
@@ -119,6 +95,10 @@ import {ref} from "vue";
 import {v4 as uuidv4} from 'uuid';
 import BookModal from "@/components/bookModal.vue";
 import {bookInterface, Book} from "@/global/global";
+import VueBookModal from "@/components/vueBookModal.vue";
+import {vOnClickOutside} from "@vueuse/components";
+import {object} from "yup";
+
 
 const icons = {
   unicornSvg: mdiUnicorn,
@@ -129,6 +109,13 @@ const icons = {
   business: mdiBriefcaseVariant,
   astrology: mdiZodiacLibra
 }
+const isModalOpen = ref(false)
+const openModal = () => {
+  isModalOpen.value = true
+}
+const closeModal = () => {
+  isModalOpen.value = false
+}
 
 // Todo Books i want to include:
 // 48 Laws of Power
@@ -137,7 +124,7 @@ const icons = {
 
 const noCover = 'https://cdn.discordapp.com/attachments/1059907690383544413/1114975398338510909/Johann_beautiful_photorealistic_Book_library_c89e8773-b6c4-4ab0-9c4d-3bd97667f97a.png'
 
-const books = ref <bookInterface[]>([
+const books = ref<bookInterface[]>([
   {
     id: uuidv4(),
     author: "50 Cent",
@@ -163,9 +150,13 @@ const books = ref <bookInterface[]>([
 // Todo: newBook schreiben
 // Todo: resetBook schreiben
 
-const newBook = new Book("", null, false, "", "", "")
 
-const doesBookExists = (toCheck:string) => {
+const newBook = new Book("", null, false, "", "", "")
+const newBookF = () => {
+  Object.assign(selectedBook.value, newBook)
+  openModal()
+}
+const doesBookExists = (toCheck: string) => {
   return books.value.some(item => item.id === toCheck)
 }
 
@@ -181,6 +172,7 @@ const dataReceive = (a: bookInterface) => {
 }
 
 const selectedBook = ref({})
+
 
 </script>
 

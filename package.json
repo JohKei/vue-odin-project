@@ -11,6 +11,8 @@
     "@jamescoyle/vue-icon": "^0.1.2",
     "@mdi/js": "^7.2.96",
     "@popperjs/core": "^2.11.7",
+    "@vueuse/components": "^10.1.2",
+    "@vueuse/core": "^10.1.2",
     "axios": "^1.4.0",
     "bootstrap": "^5.2.3",
     "core-js": "^3.8.3",
