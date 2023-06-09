@@ -13,12 +13,9 @@
 
         <div class="userContainer">
           <!--Todo: Button styling-->
-          <!--Todo: @click="new book = selected Book, open Modal"-->
           <button type="button" @click="newBookF()">
             Add Book
           </button>
-
-
         </div>
         <!--Todo: move filter buttons to the sidebar & display amount of books in each topic-->
         <div class="topicSelection">
@@ -67,7 +64,6 @@
           >
             <img v-if="book.cover" :src="book.cover" class="bookCover" alt="Book Cover" @click="openModal">
             <img v-else :src="noCover" class="bookCover" alt="Book Cover" @click="openModal">
-            <!--Todo: @emit(receiveBook)-> dataReceive-->
             <vue-book-modal
                 v-if="isModalOpen"
                 :book-from-parent="selectedBook"
@@ -144,12 +140,6 @@ const books = ref<bookInterface[]>([
     cover: "https://m.media-amazon.com/images/P/006230125X.01._SCLZZZZZZZ_SX500_.jpg"
   },
 ])
-// Todo: edit doesBookExist & dataReceive @emit 'addBook' -> give Id & push into books[], @emit 'editBook' -> look for position in books[] and replace it
-// Todo: if book has already id -> edit book, else if book!id -> give id & push
-// Todo: always send book as prop to child, either empty one if new or current
-// Todo: newBook schreiben
-// Todo: resetBook schreiben
-
 
 const newBook = new Book("", null, false, "", "", "")
 const newBookF = () => {
