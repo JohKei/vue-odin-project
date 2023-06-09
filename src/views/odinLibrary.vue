@@ -63,7 +63,7 @@
         <ul>
           <li v-for="book in books"
               :key="book.id"
-              @click="Object.assign(selectedBook,book)"
+              @click="Object.assign(selectedBook,book); console.log(book.id)"
           >
             <img v-if="book.cover" :src="book.cover" class="bookCover" alt="Book Cover" @click="openModal">
             <img v-else :src="noCover" class="bookCover" alt="Book Cover" @click="openModal">
@@ -72,6 +72,8 @@
                 :book-from-parent="selectedBook"
                 :modal-status="isModalOpen"
                 @close-modal="closeModal"
+                @edit-book="editBook"
+                @addBook="addBook"
             >
             </vue-book-modal>
 
@@ -93,11 +95,8 @@ import {
 import NavigationBar from "@/components/NavigationBar.vue";
 import {ref} from "vue";
 import {v4 as uuidv4} from 'uuid';
-import BookModal from "@/components/bookModal.vue";
 import {bookInterface, Book} from "@/global/global";
 import VueBookModal from "@/components/vueBookModal.vue";
-import {vOnClickOutside} from "@vueuse/components";
-import {object} from "yup";
 
 
 const icons = {
@@ -160,16 +159,27 @@ const doesBookExists = (toCheck: string) => {
   return books.value.some(item => item.id === toCheck)
 }
 
-const dataReceive = (a: bookInterface) => {
-  // console.log(a)
-  if (doesBookExists(a.id)) {
-    // edit Book
-  } else {
 
-    books.value.push(a)
-
-  }
+const addBook = (bookFromChild:bookInterface) => {
+  bookFromChild.id = uuidv4()
+  books.value.push(bookFromChild)
 }
+const editBook = (bookFromChild:bookInterface) => {
+  const bookIndex = books.value.findIndex((book) => book.id === bookFromChild.id);
+  books.value.splice(bookIndex, 1, bookFromChild);
+}
+const dataReceive = (bookFromChild: bookInterface) => {
+  const bookIndex = books.value.findIndex((book) => book.id === bookFromChild.id); // Find index of book with same ID
+
+  if (bookIndex === -1) {
+    // If book does not exist in array, push new book object
+    books.value.push(bookFromChild);
+  } else {
+    // If book exists in array, replace object at index with new book object
+    books.value.splice(bookIndex, 1, bookFromChild);
+  }
+
+};
 
 const selectedBook = ref({})
 

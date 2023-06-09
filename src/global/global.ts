@@ -7,7 +7,7 @@ export {
 import {v4 as uuidv4} from 'uuid';
 
 interface bookInterface {
-    id: string
+    id: undefined | string
     author: string
     pages: number | null
     readStatus: boolean
@@ -18,7 +18,7 @@ interface bookInterface {
 
 
 class Book implements bookInterface {
-    id: string
+    id: undefined | string
     author: string
     pages: null | number
     readStatus: boolean
@@ -43,8 +43,9 @@ class Book implements bookInterface {
                 title: string,
                 topic: string,
                 cover: string
+
     ) {
-        this.id = ""
+        this.id = undefined
         this.author = author
         this.pages = pages
         this.readStatus = readStatus

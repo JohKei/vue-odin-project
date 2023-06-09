@@ -46,7 +46,7 @@
           </div>
           <div class="modalFooter">
             <button class="btn btn-danger" @click="closeModal">cancel</button>
-            <button class="btn btn-success" >save</button>
+            <button class="btn btn-success" @click="sendBook" >save</button>
           </div>
         </div>
       </div>
@@ -72,11 +72,26 @@ const props = defineProps<{
 const emits = defineEmits<{
   (e: 'closeModal', ModalStatus: boolean): void
   (e: 'editBook', book:bookInterface):void
+  (e: 'addBook', book:bookInterface):void
 }>()
 
 
 const closeModal = () => {
   emits('closeModal', false)
+}
+const sendEditBook = () => {
+  emits('editBook', book)
+  emits('closeModal', false)
+}
+const sendAddBook = () => {
+  emits('addBook', book)
+  emits('closeModal', false)
+}
+const sendBook = () => {
+  if(book.id === undefined){
+    console.log(book.id)
+    sendAddBook()
+  }else sendEditBook()
 }
 const book = reactive(props.bookFromParent)
 
@@ -127,8 +142,8 @@ const book = reactive(props.bookFromParent)
 }
 
 .noCover {
-  top: 2em;
-  left: -5em;
+  top: 5em;
+  left: -3em;
   color: #fff;
   display: block;
   position: absolute;
@@ -153,7 +168,7 @@ const book = reactive(props.bookFromParent)
   right: 0;
   bottom: 0;
   position: absolute;
-  margin: -0.3em -5em;
+  margin: -0.5em -3.8em;
   transform: scale(0.7);
   -webkit-transform: scale(0.7);
   border: 2px rgba(255, 255, 255, 0.7) dashed;
