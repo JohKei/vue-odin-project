@@ -94,8 +94,7 @@ import {ref} from "vue";
 import {v4 as uuidv4} from 'uuid';
 import {bookInterface, Book} from "@/global/global";
 import VueBookModal from "@/components/vueBookModal.vue";
-
-
+const noCover = 'https://media.discordapp.net/attachments/1059907690383544413/1116801106081747074/Johann_a_beautiful_empty_book_photorealistic_879e4af4-201a-42d4-bf9c-71f3194c7923.png?width=629&height=629'
 const icons = {
   unicornSvg: mdiUnicorn,
   dramaMask: mdiDramaMasks,
@@ -105,6 +104,7 @@ const icons = {
   business: mdiBriefcaseVariant,
   astrology: mdiZodiacLibra
 }
+
 const isModalOpen = ref(false)
 const openModal = () => {
   isModalOpen.value = true
@@ -113,16 +113,12 @@ const closeModal = () => {
   isModalOpen.value = false
 }
 
-// Todo Books i want to include:
-
-const noCover = 'https://cdn.discordapp.com/attachments/1059907690383544413/1114975398338510909/Johann_beautiful_photorealistic_Book_library_c89e8773-b6c4-4ab0-9c4d-3bd97667f97a.png'
-
 const books = ref<bookInterface[]>([
   {
     id: uuidv4(),
     author: "50 Cent",
     pages: 300,
-    readStatus: false,
+    readStatus: true,
     title: "Hustle Harder, Hustle Smarter",
     topic: "Business",
     cover: "https://cdn.shopify.com/s/files/1/0285/2821/4050/products/9780062953803_8d16bd12-f578-47cb-acea-91eb0cefec7e.jpg?v=1685604249&width=350"
@@ -131,7 +127,7 @@ const books = ref<bookInterface[]>([
     id: uuidv4(),
     author: "Ashlee Vance",
     pages: 416,
-    readStatus: false,
+    readStatus: true,
     title: "Elon Musk: Tesla, SpaceX, and the Quest for a Fantastic Future",
     topic: "Business",
     cover: "https://m.media-amazon.com/images/P/006230125X.01._SCLZZZZZZZ_SX500_.jpg"
@@ -162,6 +158,33 @@ const books = ref<bookInterface[]>([
     title: "Warren Buffet - Der Jahrhundertkapitalist: Vom Zeitungsjungen zum Milliardär - sein Weg zum Erfolg",
     topic: "Business",
     cover: "https://m.media-amazon.com/images/I/517v3xHyK3L.jpg"
+  },
+  {
+    id: uuidv4(),
+    author: "Robert T. Klyosaki",
+    pages: 336,
+    readStatus: false,
+    title: "Rich Dad Poor Dad: What the Rich teach their Kids about Money that the Poor and Middle Class do not!",
+    topic: "Education",
+    cover: "https://m.media-amazon.com/images/P/3754107437.01._SCLZZZZZZZ_SX500_.jpg"
+  },
+  {
+    id: uuidv4(),
+    author: "Napoleon Hill",
+    pages: 202,
+    readStatus: false,
+    title: "think and grow Rich",
+    topic: "Education",
+    cover: "https://m.media-amazon.com/images/P/1604591870.01._SCLZZZZZZZ_SX500_.jpg"
+  },
+  {
+    id: uuidv4(),
+    author: "Salfedean Ammous",
+    pages: 286,
+    readStatus: false,
+    title: "The Bitcoin Standart: The decentralized Alternative to Central Banking",
+    topic: "Education",
+    cover: "https://m.media-amazon.com/images/P/1119473861.01._SCLZZZZZZZ_SX500_.jpg"
   }
 ])
 

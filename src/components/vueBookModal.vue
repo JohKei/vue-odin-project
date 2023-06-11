@@ -56,9 +56,9 @@
 
 
 <script setup lang="ts">
-import {reactive, toRef} from "vue";
+import {toRef} from "vue";
 import {bookInterface} from "@/global/global";
-const noCover = 'https://cdn.discordapp.com/attachments/1059907690383544413/1114975398338510909/Johann_beautiful_photorealistic_Book_library_c89e8773-b6c4-4ab0-9c4d-3bd97667f97a.png'
+const noCover = 'https://media.discordapp.net/attachments/1059907690383544413/1116801106081747074/Johann_a_beautiful_empty_book_photorealistic_879e4af4-201a-42d4-bf9c-71f3194c7923.png?width=629&height=629'
 
 
 // eslint-disable-next-line no-undef
@@ -92,6 +92,8 @@ const sendBook = () => {
 }
 const book = toRef(props, 'bookFromParent')
 
+// Todo: vee-validate
+// Todo: add delete button
 
 
 </script>
@@ -118,6 +120,7 @@ const book = toRef(props, 'bookFromParent')
   margin: 20px;
   background: white;
   width: 80vw;
+  max-width: 1100px;
   height: 50vh;
   border-radius: 20px;
 }
