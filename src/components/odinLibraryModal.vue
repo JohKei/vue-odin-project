@@ -1,7 +1,7 @@
 <template>
   <Teleport to="#bookModal">
-    <div class="modal-bg" >
-      <div class="content" >
+    <div class="modal-bg">
+      <div class="content">
         <div v-if="book.cover" class="coverImage"
              :style="{'background-image': `url(${props.bookFromParent.cover})`}">
 
@@ -46,7 +46,7 @@
           </div>
           <div class="modalFooter">
             <button class="btn btn-danger" @click="closeModal">cancel</button>
-            <button class="btn btn-success" @click="sendBook" >save</button>
+            <button class="btn btn-success" @click="sendBook">save</button>
           </div>
         </div>
       </div>
@@ -54,10 +54,10 @@
   </Teleport>
 </template>
 
-
 <script setup lang="ts">
 import {toRef} from "vue";
 import {bookInterface} from "@/global/global";
+
 const noCover = 'https://media.discordapp.net/attachments/1059907690383544413/1116801106081747074/Johann_a_beautiful_empty_book_photorealistic_879e4af4-201a-42d4-bf9c-71f3194c7923.png?width=629&height=629'
 
 
@@ -69,8 +69,8 @@ const props = defineProps<{
 // eslint-disable-next-line no-undef
 const emits = defineEmits<{
   (e: 'closeModal', ModalStatus: boolean): void
-  (e: 'editBook', book:bookInterface):void
-  (e: 'addBook', book:bookInterface):void
+  (e: 'editBook', book: bookInterface): void
+  (e: 'addBook', book: bookInterface): void
 }>()
 
 
@@ -86,18 +86,16 @@ const sendAddBook = () => {
   emits('closeModal', false)
 }
 const sendBook = () => {
-  if(book.value.id === undefined){
+  if (book.value.id === undefined) {
     sendAddBook()
-  }else sendEditBook()
+  } else sendEditBook()
 }
 const book = toRef(props, 'bookFromParent')
 
 // Todo: vee-validate
 // Todo: add delete button
 
-
 </script>
-
 
 <style scoped lang="css">
 .modal-bg {
@@ -185,12 +183,14 @@ const book = toRef(props, 'bookFromParent')
   -webkit-appearance: none;
   -moz-appearance: textfield;
 }
-.modalFooter{
+
+.modalFooter {
   align-self: flex-end;
   display: flex;
   gap: 20px;
 }
-.btn{
+
+.btn {
   width: 150px;
   border-radius: 20px;
 }

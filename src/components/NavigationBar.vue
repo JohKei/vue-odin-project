@@ -42,7 +42,7 @@ const navActive = ref(false)
 const odinContentActive = ref(true)
 const personalContentActive = ref(true)
 
-
+// Todo: add descriptive Headings @OdinProjects ("Odin intermediate-CSS&HTML", "Odin JS-Path")
 </script>
 
 <style scoped lang="css">

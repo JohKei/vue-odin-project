@@ -12,49 +12,14 @@
         </div>
 
         <div class="userContainer">
-          <!--Todo: Button styling-->
           <button type="button" @click="newBookF()">
             Add Book
           </button>
         </div>
-        <!--Todo: move filter buttons to the sidebar & display amount of books in each topic-->
-        <div class="topicSelection">
-          <!--Todo: make filter buttons functional-->
-          <button class="buttonContentColor">
-            all
-          </button>
-          <button class="buttonContentColor">
-            <svg-icon type="mdi" :path="icons.unicornSvg"/>
-            Fantasy
-          </button>
-          <button class="buttonContentColor">
-            <svg-icon type="mdi" :path="icons.dramaMask"/>
-            Drama
-          </button>
-          <button class="buttonContentColor">
-            <svg-icon type="mdi" :path="icons.handCuffs"/>
-            Detective
-          </button>
-          <button class="buttonContentColor">
-            <svg-icon type="mdi" :path="icons.education"/>
-            Education
-          </button>
-          <button class="buttonContentColor">
-            <svg-icon type="mdi" :path="icons.psychology"/>
-            Psychology
-          </button>
-          <button class="buttonContentColor">
-            <svg-icon type="mdi" :path="icons.business"/>
-            Business
-          </button>
-          <button class="buttonContentColor">
-            <svg-icon type="mdi" :path="icons.astrology"/>
-            Astrology
-          </button>
-        </div>
+
       </div>
       <div class="sideBar">
-
+        <odin-library-side-bar></odin-library-side-bar>
       </div>
       <div class="contentContainer">
         <ul>
@@ -63,8 +28,9 @@
               @click="existingBook(book)"
           >
             <img v-if="book.cover" :src="book.cover" class="bookCover" alt="Book Cover" @click="openModal">
+            <!--Todo: add "no Cover yet!" banner to the book if !cover-->
             <img v-else :src="noCover" class="bookCover" alt="Book Cover" @click="openModal">
-            <vue-book-modal
+            <odin-library-modal
                 v-if="isModalOpen"
                 :book-from-parent="selectedBook"
                 :modal-status="isModalOpen"
@@ -72,7 +38,7 @@
                 @edit-book="editBook"
                 @addBook="addBook"
             >
-            </vue-book-modal>
+            </odin-library-modal>
 
           </li>
         </ul>
@@ -83,27 +49,16 @@
 
 
 <script setup lang="ts">
-import SvgIcon from '@jamescoyle/vue-icon';
-import {
-  mdiUnicorn, mdiDramaMasks, mdiHandcuffs,
-  mdiSchool, mdiBrain, mdiBriefcaseVariant,
-  mdiZodiacLibra,
-} from '@mdi/js';
 import NavigationBar from "@/components/NavigationBar.vue";
 import {ref} from "vue";
 import {v4 as uuidv4} from 'uuid';
 import {bookInterface, Book} from "@/global/global";
-import VueBookModal from "@/components/vueBookModal.vue";
+import VueBookModal from "@/components/odinLibraryModal.vue";
+import OdinLibrarySideBar from "@/components/odinLibrarySideBar.vue";
+import OdinLibraryModal from "@/components/odinLibraryModal.vue";
+
 const noCover = 'https://media.discordapp.net/attachments/1059907690383544413/1116801106081747074/Johann_a_beautiful_empty_book_photorealistic_879e4af4-201a-42d4-bf9c-71f3194c7923.png?width=629&height=629'
-const icons = {
-  unicornSvg: mdiUnicorn,
-  dramaMask: mdiDramaMasks,
-  handCuffs: mdiHandcuffs,
-  education: mdiSchool,
-  psychology: mdiBrain,
-  business: mdiBriefcaseVariant,
-  astrology: mdiZodiacLibra
-}
+
 
 const isModalOpen = ref(false)
 const openModal = () => {
@@ -237,7 +192,7 @@ const selectedBook = ref({})
   grid-column: 2/3;
   display: grid;
   grid-template-columns: 4fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 1fr;
 }
 
 .filterContainer {
@@ -264,12 +219,6 @@ const selectedBook = ref({})
   justify-items: center;
 }
 
-.topicSelection {
-  grid-row: 2/3;
-  grid-column: 1/3;
-  display: flex;
-  justify-content: space-evenly;
-}
 
 .sideBar {
   grid-row: 1/3;
@@ -282,21 +231,6 @@ const selectedBook = ref({})
   grid-column: 2/3;
   border-radius: 40px;
   overflow: scroll;
-}
-
-
-.buttonContentColor:active,
-.buttonContentColor:hover {
-  background-color: #9b7960;
-  border: none;
-  border-radius: 10px;
-  padding: 0 10px;
-}
-
-.buttonContentColor {
-  background-color: inherit;
-  border: none;
-  padding: 0 10px;
 }
 
 .contentContainer > ul {
