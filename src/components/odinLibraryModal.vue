@@ -30,7 +30,7 @@
             <label for="cover">Book Cover-link</label>
           </div>
           <select class="form-select" aria-label="Default select example" v-model="book.topic">
-            <option selected>Choose the Book topic</option>
+            <option value="">Choose the Book topic</option>
             <option value="Fantasy">Fantasy</option>
             <option value="Drama">Drama</option>
             <option value="Detective">Detective</option>
@@ -94,7 +94,7 @@ const book = toRef(props, 'bookFromParent')
 
 // Todo: vee-validate
 // Todo: add delete button
-
+// Todo: open&close Modal animation
 </script>
 
 <style scoped lang="css">

@@ -10,19 +10,17 @@
             <label for="bookFilter">Search name of the book or author...</label>
           </div>
         </div>
-
-        <div class="userContainer">
-          <button type="button" @click="newBookF()">
-            Add Book
-          </button>
-        </div>
-
       </div>
       <div class="sideBar">
         <odin-library-side-bar></odin-library-side-bar>
       </div>
       <div class="contentContainer">
         <ul>
+          <li>
+            <div class="addBook" @click="newBookF()">
+              <svg-icon type="mdi" :path="icons.plus" class="icon" size="100"></svg-icon>
+            </div>
+          </li>
           <li v-for="book in books"
               :key="book.id"
               @click="existingBook(book)"
@@ -56,9 +54,14 @@ import {bookInterface, Book} from "@/global/global";
 import VueBookModal from "@/components/odinLibraryModal.vue";
 import OdinLibrarySideBar from "@/components/odinLibrarySideBar.vue";
 import OdinLibraryModal from "@/components/odinLibraryModal.vue";
+import SvgIcon from '@jamescoyle/vue-icon';
+import {mdiPlus} from '@mdi/js'
 
 const noCover = 'https://media.discordapp.net/attachments/1059907690383544413/1116801106081747074/Johann_a_beautiful_empty_book_photorealistic_879e4af4-201a-42d4-bf9c-71f3194c7923.png?width=629&height=629'
 
+const icons = {
+  plus: mdiPlus
+}
 
 const isModalOpen = ref(false)
 const openModal = () => {
@@ -178,7 +181,7 @@ const selectedBook = ref({})
 .actualBody {
   display: grid;
   grid-template-rows: 1fr 7fr;
-  grid-template-columns: 1fr 4fr;
+  grid-template-columns: 1fr 7fr;
   height: 100%;
   width: 100%;
   border-radius: 40px;
@@ -191,15 +194,16 @@ const selectedBook = ref({})
   grid-row: 1/2;
   grid-column: 2/3;
   display: grid;
-  grid-template-columns: 4fr 1fr;
+  grid-template-columns: 1fr;
   grid-template-rows: 1fr;
 }
 
 .filterContainer {
   grid-row: 1/2;
   grid-column: 1/2;
-  display: grid;
-  align-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .filterInput {
@@ -207,18 +211,8 @@ const selectedBook = ref({})
 }
 
 .form-floating {
-  width: 70%;
-  margin-left: auto;
+  width: 60%;
 }
-
-.userContainer {
-  grid-column: 2/3;
-  grid-row: 1/2;
-  display: grid;
-  align-items: center;
-  justify-items: center;
-}
-
 
 .sideBar {
   grid-row: 1/3;
@@ -244,13 +238,24 @@ const selectedBook = ref({})
   margin: 20px;
 }
 
+.addBook {
+  border-radius: 20px;
+  width: 170px;
+  aspect-ratio: 5.25/8.25;
+  background-color: #cbb19b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .bookCover {
   border-radius: 20px;
   width: 170px;
   aspect-ratio: 5.25/8.25;
 }
 
-.bookCover:hover {
-  border: red 3px solid;
+.bookCover:hover,
+.addBook:hover {
+  border: #bd977c 8px solid;
 }
 </style>

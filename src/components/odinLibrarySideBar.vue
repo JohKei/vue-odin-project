@@ -2,37 +2,61 @@
   <!--Todo: inputGroup add-on next to each button with the computed amount of books with this category-->
   <!--Todo: @click show filtered Books-->
   <div class="topicSelection">
-    <button class="buttonContentColor">
-      all
-    </button>
-    <button class="buttonContentColor">
-      <svg-icon type="mdi" :path="icons.unicornSvg"/>
-      Fantasy
-    </button>
-    <button class="buttonContentColor">
-      <svg-icon type="mdi" :path="icons.dramaMask"/>
-      Drama
-    </button>
-    <button class="buttonContentColor">
-      <svg-icon type="mdi" :path="icons.handCuffs"/>
-      Detective
-    </button>
-    <button class="buttonContentColor">
-      <svg-icon type="mdi" :path="icons.education"/>
-      Education
-    </button>
-    <button class="buttonContentColor">
-      <svg-icon type="mdi" :path="icons.psychology"/>
-      Psychology
-    </button>
-    <button class="buttonContentColor">
-      <svg-icon type="mdi" :path="icons.business"/>
-      Business
-    </button>
-    <button class="buttonContentColor">
-      <svg-icon type="mdi" :path="icons.astrology"/>
-      Astrology
-    </button>
+    <div class="input-group mb-3">
+      <button class="buttonContentColor">
+        all
+      </button>
+      <span class="input-group-text">0</span>
+    </div>
+    <div class="input-group mb-3">
+      <button class="buttonContentColor">
+        <svg-icon type="mdi" :path="icons.unicornSvg"/>
+        Fantasy
+      </button>
+      <span class="input-group-text">0</span>
+    </div>
+    <div class="input-group mb-3">
+      <button class="buttonContentColor">
+        <svg-icon type="mdi" :path="icons.dramaMask"/>
+        Drama
+      </button>
+      <span class="input-group-text">0</span>
+    </div>
+    <div class="input-group mb-3">
+      <button class="buttonContentColor">
+        <svg-icon type="mdi" :path="icons.handCuffs"/>
+        Detective
+      </button>
+      <span class="input-group-text">0</span>
+    </div>
+    <div class="input-group mb-3">
+      <button class="buttonContentColor">
+        <svg-icon type="mdi" :path="icons.education"/>
+        Education
+      </button>
+      <span class="input-group-text">0</span>
+    </div>
+    <div class="input-group mb-3">
+      <button class="buttonContentColor">
+        <svg-icon type="mdi" :path="icons.psychology"/>
+        Psychology
+      </button>
+      <span class="input-group-text">0</span>
+    </div>
+    <div class="input-group mb-3">
+      <button class="buttonContentColor">
+        <svg-icon type="mdi" :path="icons.business"/>
+        Business
+      </button>
+      <span class="input-group-text">0</span>
+    </div>
+    <div class="input-group mb-3">
+      <button class="buttonContentColor">
+        <svg-icon type="mdi" :path="icons.astrology"/>
+        Astrology
+      </button>
+      <span class="input-group-text">0</span>
+    </div>
   </div>
 </template>
 
@@ -65,23 +89,32 @@ const icons = {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  align-items: center;
   height: 100%;
   width: 100%;
 }
 
 .buttonContentColor:active,
 .buttonContentColor:hover {
-  background-color: #9b7960;
+  background-color: #cbb19b;
   border: none;
   border-radius: 10px;
   padding: 0 10px;
 }
 
 .buttonContentColor {
-  background-color: inherit;
-  border: none;
+  background-color: #bd977c;
   padding: 0 10px;
-  width: max-content;
+  flex-grow: 1;
+  border: #cbb19b 1px solid;
+  border-radius: 10px;
+}
+.input-group{
+  justify-content: flex-end;
+}
+.input-group-text{
+  background-color: #cbb19b;
+  border-radius: 10px;
+  padding: 3px 5px;
+  border: #cbb19b 2px solid;
 }
 </style>
