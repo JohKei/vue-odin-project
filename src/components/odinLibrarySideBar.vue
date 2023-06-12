@@ -1,75 +1,84 @@
 <template>
-<!--Todo: highlighting Buttons if active filter-->
+  <!--Todo: highlighting Buttons if active filter-->
   <div class="topicSelection">
     <div class="input-group mb-3">
       <button class="buttonContentColor"
               @click="emits('filterButton', '')"
+              :disabled="bookCount('').length<1"
       >
         all
       </button>
-      <span class="input-group-text">{{bookCount("").length}}</span>
+      <span class="input-group-text">{{ bookCount("").length }}</span>
     </div>
     <div class="input-group mb-3">
       <button class="buttonContentColor"
               @click="emits('filterButton', 'Fantasy')"
+              :disabled="bookCount('Fantasy').length<1"
       >
         <svg-icon type="mdi" :path="icons.unicornSvg"/>
         Fantasy
       </button>
-      <span class="input-group-text">{{bookCount("Fantasy").length}}</span>
+      <span class="input-group-text">{{ bookCount("Fantasy").length }}</span>
     </div>
     <div class="input-group mb-3">
       <button class="buttonContentColor"
               @click="emits('filterButton', 'Drama')"
+              :disabled="bookCount('Drama').length<1"
       >
         <svg-icon type="mdi" :path="icons.dramaMask"/>
         Drama
       </button>
-      <span class="input-group-text">{{bookCount("Drama").length}}</span>
+      <span class="input-group-text">{{ bookCount("Drama").length }}</span>
     </div>
     <div class="input-group mb-3">
       <button class="buttonContentColor"
               @click="emits('filterButton', 'Detective')"
+              :disabled="bookCount('Detective').length<1"
       >
         <svg-icon type="mdi" :path="icons.handCuffs"/>
         Detective
       </button>
-      <span class="input-group-text">{{bookCount("Detective").length}}</span>
+      <span class="input-group-text">{{ bookCount("Detective").length }}</span>
     </div>
     <div class="input-group mb-3">
       <button class="buttonContentColor"
               @click="emits('filterButton', 'Education')"
+              :disabled="bookCount('Education').length<1"
       >
         <svg-icon type="mdi" :path="icons.education"/>
         Education
       </button>
-      <span class="input-group-text">{{bookCount("Education").length}}</span>
+      <span class="input-group-text">{{ bookCount("Education").length }}</span>
     </div>
     <div class="input-group mb-3">
       <button class="buttonContentColor"
               @click="emits('filterButton', 'Psychology')"
+              :disabled="bookCount('Psychology').length<1"
       >
         <svg-icon type="mdi" :path="icons.psychology"/>
         Psychology
       </button>
-      <span class="input-group-text">{{bookCount("Psychology").length}}</span>
+      <span class="input-group-text">{{ bookCount("Psychology").length }}</span>
     </div>
     <div class="input-group mb-3">
       <button class="buttonContentColor"
-              @click="$emit('filterButton', 'business')">
+              @click="$emit('filterButton', 'Business')"
+              :disabled="bookCount('Business').length<1"
+      >
         <svg-icon type="mdi" :path="icons.business"/>
         Business
       </button>
-      <span class="input-group-text">{{bookCount("Business").length}}</span>
+      <span class="input-group-text">{{ bookCount("Business").length }}</span>
     </div>
     <div class="input-group mb-3">
       <button class="buttonContentColor"
               @click="emits('filterButton', 'Astrology')"
+              :disabled="bookCount('Astrology').length<1"
       >
         <svg-icon type="mdi" :path="icons.astrology"/>
         Astrology
       </button>
-      <span class="input-group-text">{{bookCount("Astrology").length}}</span>
+      <span class="input-group-text">{{ bookCount("Astrology").length }}</span>
     </div>
   </div>
 </template>
@@ -98,14 +107,14 @@ const icons = {
 }
 // eslint-disable-next-line no-undef
 const emits = defineEmits<{
-  (e: 'filterButton', filter: string):void
+  (e: 'filterButton', filter: string): void
 }>()
 // eslint-disable-next-line no-undef
 const props = defineProps<{
   'sideBarBookData': [bookInterface]
 }>()
 
-const bookCount = (arg:string,) =>{
+const bookCount = (arg: string,) => {
   return props.sideBarBookData.filter(item => item.topic.toLowerCase().includes(arg.toLowerCase()))
 }
 </script>

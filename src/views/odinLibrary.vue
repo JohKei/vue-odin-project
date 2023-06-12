@@ -115,7 +115,7 @@ const filterButton = (arg:string) =>{
 const books = ref<bookInterface[]>([
   {
     id: uuidv4(),
-    author: "50 Cent",
+    author: "50 Cent - Curtis Jackson",
     pages: 300,
     readStatus: true,
     title: "Hustle Harder, Hustle Smarter",
@@ -265,12 +265,14 @@ const books = ref<bookInterface[]>([
   display: flex;
   align-items: center;
   justify-content: center;
+  border: #bd977c 2px solid;
 }
 
 .bookCover {
   border-radius: 20px;
   width: 170px;
   aspect-ratio: 5.25/8.25;
+  border: #bd977c 2px solid;
 }
 
 .bookCover:hover,
