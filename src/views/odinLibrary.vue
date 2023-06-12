@@ -6,8 +6,8 @@
         <div class="filterContainer">
           <!--Todo: make search filter reactive & functional-->
           <div class="form-floating">
-            <input type="text" class="form-control filterInput" placeholder="input" id="bookFilter">
-            <label for="bookFilter">Search name of the book or author...</label>
+            <input type="text" class="form-control filterInput" placeholder="input" id="bookFilter" v-model="searchBar">
+            <label for="bookFilter">Search Name of the Book, Author or Category...</label>
           </div>
         </div>
       </div>
@@ -21,7 +21,7 @@
               <svg-icon type="mdi" :path="icons.plus" class="icon" size="100"></svg-icon>
             </div>
           </li>
-          <li v-for="book in books"
+          <li v-for="book in filteredBooks"
               :key="book.id"
               @click="existingBook(book)"
           >
@@ -48,7 +48,7 @@
 
 <script setup lang="ts">
 import NavigationBar from "@/components/NavigationBar.vue";
-import {ref} from "vue";
+import {computed, ref} from "vue";
 import {v4 as uuidv4} from 'uuid';
 import {bookInterface, Book} from "@/global/global";
 import VueBookModal from "@/components/odinLibraryModal.vue";
@@ -56,6 +56,7 @@ import OdinLibrarySideBar from "@/components/odinLibrarySideBar.vue";
 import OdinLibraryModal from "@/components/odinLibraryModal.vue";
 import SvgIcon from '@jamescoyle/vue-icon';
 import {mdiPlus} from '@mdi/js'
+import {string} from "yup";
 
 const noCover = 'https://media.discordapp.net/attachments/1059907690383544413/1116801106081747074/Johann_a_beautiful_empty_book_photorealistic_879e4af4-201a-42d4-bf9c-71f3194c7923.png?width=629&height=629'
 
@@ -70,6 +71,36 @@ const openModal = () => {
 const closeModal = () => {
   isModalOpen.value = false
 }
+
+const newBook = new Book("", null, false, "", "", "")
+const newBookF = () => {
+  selectedBook.value = JSON.parse(JSON.stringify(newBook))
+  openModal()
+}
+const existingBook = (ar: bookInterface) => {
+  return selectedBook.value = JSON.parse(JSON.stringify(ar))
+}
+
+const addBook = (bookFromChild: bookInterface) => {
+  bookFromChild.id = uuidv4()
+  books.value.push(bookFromChild)
+}
+const editBook = (bookFromChild: bookInterface) => {
+  const bookIndex = books.value.findIndex((book) => book.id === bookFromChild.id);
+  books.value.splice(bookIndex, 1, bookFromChild);
+}
+
+const selectedBook = ref({})
+
+const searchBar = ref("")
+
+const filteredBooks = computed(() => {
+  return books.value.filter(item =>
+      item.title.toLowerCase().includes(searchBar.value.toLowerCase()) ||
+      item.author.toLowerCase().includes(searchBar.value.toLowerCase()) ||
+      item.topic.toLowerCase().includes(searchBar.value.toLowerCase()))
+
+})
 
 const books = ref<bookInterface[]>([
   {
@@ -145,26 +176,6 @@ const books = ref<bookInterface[]>([
     cover: "https://m.media-amazon.com/images/P/1119473861.01._SCLZZZZZZZ_SX500_.jpg"
   }
 ])
-
-const newBook = new Book("", null, false, "", "", "")
-const newBookF = () => {
-  selectedBook.value = JSON.parse(JSON.stringify(newBook))
-  openModal()
-}
-const existingBook = (ar: bookInterface) => {
-  return selectedBook.value = JSON.parse(JSON.stringify(ar))
-}
-
-const addBook = (bookFromChild: bookInterface) => {
-  bookFromChild.id = uuidv4()
-  books.value.push(bookFromChild)
-}
-const editBook = (bookFromChild: bookInterface) => {
-  const bookIndex = books.value.findIndex((book) => book.id === bookFromChild.id);
-  books.value.splice(bookIndex, 1, bookFromChild);
-}
-
-const selectedBook = ref({})
 
 
 </script>
