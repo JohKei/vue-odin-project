@@ -28,15 +28,7 @@ class Book implements bookInterface {
     assignId(){
         this.id = uuidv4()
     }
-    resetBook(){
-        this.readStatus = false
-        this.topic = ""
-        this.cover = ""
-        this.title = ""
-        this.id = ""
-        this.author = ""
-        this.pages = null
-    }
+
     constructor(author: string,
                 pages: number | null,
                 readStatus: boolean,

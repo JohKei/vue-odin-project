@@ -12,7 +12,12 @@
         </div>
       </div>
       <div class="sideBar">
-        <odin-library-side-bar></odin-library-side-bar>
+        <odin-library-side-bar
+            @filterButton="filterButton"
+            :side-bar-book-data="books"
+        >
+
+        </odin-library-side-bar>
       </div>
       <div class="contentContainer">
         <ul>
@@ -51,12 +56,10 @@ import NavigationBar from "@/components/NavigationBar.vue";
 import {computed, ref} from "vue";
 import {v4 as uuidv4} from 'uuid';
 import {bookInterface, Book} from "@/global/global";
-import VueBookModal from "@/components/odinLibraryModal.vue";
 import OdinLibrarySideBar from "@/components/odinLibrarySideBar.vue";
 import OdinLibraryModal from "@/components/odinLibraryModal.vue";
 import SvgIcon from '@jamescoyle/vue-icon';
 import {mdiPlus} from '@mdi/js'
-import {string} from "yup";
 
 const noCover = 'https://media.discordapp.net/attachments/1059907690383544413/1116801106081747074/Johann_a_beautiful_empty_book_photorealistic_879e4af4-201a-42d4-bf9c-71f3194c7923.png?width=629&height=629'
 
@@ -94,13 +97,20 @@ const selectedBook = ref({})
 
 const searchBar = ref("")
 
-const filteredBooks = computed(() => {
-  return books.value.filter(item =>
-      item.title.toLowerCase().includes(searchBar.value.toLowerCase()) ||
-      item.author.toLowerCase().includes(searchBar.value.toLowerCase()) ||
-      item.topic.toLowerCase().includes(searchBar.value.toLowerCase()))
+const filteredBooks = computed((argument: string) => {
+  if (!argument) {
+    return books.value.filter(item =>
+        item.title.toLowerCase().includes(searchBar.value.toLowerCase()) ||
+        item.author.toLowerCase().includes(searchBar.value.toLowerCase()) ||
+        item.topic.toLowerCase().includes(searchBar.value.toLowerCase()))
+  } else if (argument) {
+    return books.value.filter(item => item.topic.toLowerCase().includes(argument.toLowerCase()))
+  } else return alert("Filter did not Apply!, something went wrong!")
 
 })
+const filterButton = (arg:string) =>{
+  return searchBar.value = arg
+}
 
 const books = ref<bookInterface[]>([
   {
@@ -176,8 +186,6 @@ const books = ref<bookInterface[]>([
     cover: "https://m.media-amazon.com/images/P/1119473861.01._SCLZZZZZZZ_SX500_.jpg"
   }
 ])
-
-
 </script>
 
 <style scoped lang="css">
