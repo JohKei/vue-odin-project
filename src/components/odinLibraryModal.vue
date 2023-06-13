@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <div class="modal-bg" v-if="showModal == true">
+    <div class="modal-bg" v-if="showModal">
       <div class="content">
         <div v-if="book.cover" class="coverImage"
              :style="{'background-image': `url(${props.bookFromParent.cover})`}">
@@ -10,48 +10,51 @@
             No Cover yet!
           </div>
         </div>
-        <div class="bookForm">
+        <div class="rightSide">
           <button class="btn iconButton" @click="closeModal">
             <svg-icon :path="icons.close" type="mdi"></svg-icon>
           </button>
-          <div class="form-floating">
-            <input type="text" class="form-control" id="author" placeholder="" v-model="book.author">
-            <label for="author">Author</label>
-          </div>
-          <div class="form-floating">
-            <input type="text" class="form-control" id="title" placeholder="" v-model="book.title">
-            <label for="title">Book Title</label>
-          </div>
-          <div class="form-floating">
-            <input type="number" class="form-control numberInput" id="pages" placeholder=""
-                   v-model="book.pages">
-            <label for="pages">Amount of Pages</label>
-          </div>
-          <div class="form-floating">
-            <input type="text" class="form-control" id="cover" placeholder="" v-model="book.cover">
-            <label for="cover">Book Cover-link</label>
-          </div>
-          <select class="form-select" aria-label="Default select example" v-model="book.topic">
-            <option value="">Choose the Book topic</option>
-            <option value="Fantasy">Fantasy</option>
-            <option value="Drama">Drama</option>
-            <option value="Detective">Detective</option>
-            <option value="Education">Education</option>
-            <option value="Psychology">Psychology</option>
-            <option value="Business">Business</option>
-            <option value="Astrology">Astrology</option>
-          </select>
-          <div class="form-check form-switch form-check-reverse">
-            <input class="form-check-input" type="checkbox" id="flexSwitchCheckReverse"
-                   v-model="book.readStatus">
-            <label class="form-check-label" for="flexSwitchCheckReverse">Did you read the book?</label>
-          </div>
+          <Form @submit="validate" class="bookForm">
+            <div class="form-floating">
+              <Field name="author" type="text" class="form-control" id="author" placeholder="" v-model="book.author"/>
+              <label for="author">Author</label>
+            </div>
+            <div class="form-floating">
+              <Field name="title" type="text" class="form-control" id="title" placeholder="" v-model="book.title"/>
+              <label for="title">Book Title</label>
+            </div>
+            <div class="form-floating">
+              <Field name="pages" type="number" class="form-control numberInput" id="pages" placeholder=""
+                     v-model.number="book.pages"/>
+              <label for="pages">Amount of Pages</label>
+            </div>
+            <div class="form-floating">
+              <Field name="cover" type="text" class="form-control" id="cover" placeholder="" v-model="book.cover"/>
+              <label for="cover">Book Cover-link</label>
+            </div>
+            <Field as="select" name="topic" class="form-select" aria-label="Default select example"
+                   v-model="book.topic">
+              <option value="">Choose the Book topic</option>
+              <option value="Fantasy">Fantasy</option>
+              <option value="Drama">Drama</option>
+              <option value="Detective">Detective</option>
+              <option value="Education">Education</option>
+              <option value="Psychology">Psychology</option>
+              <option value="Business">Business</option>
+              <option value="Astrology">Astrology</option>
+            </Field>
+            <div class="form-check form-switch form-check-reverse">
+              <Field name="readStatus" class="form-check-input" type="checkbox" id="flexSwitchCheckReverse"
+                     v-model="book.readStatus"/>
+              <label class="form-check-label" for="flexSwitchCheckReverse">Did you read the book?</label>
+            </div>
+          </Form>
           <div class="modalFooter">
             <button class="btn btn-danger" @click="deleteBook">
               <svg-icon :path="icons.delete" type="mdi"></svg-icon>
               delete
             </button>
-            <button class="btn btn-success" @click="sendBook">
+            <button class="btn btn-success" @click="validate">
               <svg-icon :path="icons.save" type="mdi"></svg-icon>
               save
             </button>
@@ -63,15 +66,16 @@
 </template>
 
 <script setup lang="ts">
-import {ref, toRef} from "vue";
+import {ref, toRef, watch} from "vue";
 import {bookInterface} from "@/global/global";
 import SvgIcon from '@jamescoyle/vue-icon';
+import {Form, Field} from 'vee-validate';
 import {
   mdiClose,
   mdiTrashCanOutline,
   mdiCheckUnderline
 } from '@mdi/js';
-
+// Todo: add required Vee-validation
 const icons = {
   close: mdiClose,
   delete: mdiTrashCanOutline,
@@ -116,8 +120,15 @@ const sendBook = () => {
 }
 const book = toRef(props, 'bookFromParent')
 
-const showModal = ref(toRef(props, 'show'))
-
+const showModal = ref(false)
+const showModalTest = toRef(props, 'show')
+watch(showModalTest, () => {
+  showModal.value = showModalTest.value
+})
+const validate = () => {
+  console.log("hellooo you cant save the book because its not valid yet!")
+//
+}
 </script>
 
 
@@ -240,7 +251,7 @@ const showModal = ref(toRef(props, 'show'))
 }
 
 .fade-enter-active {
-  transition: all 0.5s ease;
+  transition: all 0.25s ease;
 }
 
 .fade-leave-active {
@@ -251,5 +262,11 @@ const showModal = ref(toRef(props, 'show'))
 .fade-leave-to {
   opacity: 0;
   transform: scale(1.1);
+}
+
+.rightSide {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 </style>

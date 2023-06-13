@@ -70,7 +70,7 @@ const personalContentActive = ref(true)
   gap: 20px;
   background-color: rgba(255, 255, 255, 90%);
   flex-direction: column;
-  width: 25vw;
+  width: 20vw;
   align-items: center;
   height: calc(100vh - var(--headerHeight));
   border-radius: 0 0 10px 10px;
