@@ -14,7 +14,7 @@
           <button class="btn iconButton" @click="closeModal">
             <svg-icon :path="icons.close" type="mdi"></svg-icon>
           </button>
-          <Form @submit="validate" class="bookForm">
+          <div class="bookForm">
             <div class="form-floating">
               <Field name="author" type="text" class="form-control" id="author" placeholder="" v-model="book.author"/>
               <label for="author">Author</label>
@@ -48,7 +48,7 @@
                      v-model="book.readStatus"/>
               <label class="form-check-label" for="flexSwitchCheckReverse">Did you read the book?</label>
             </div>
-          </Form>
+          </div>
           <div class="modalFooter">
             <button class="btn btn-danger" @click="deleteBook">
               <svg-icon :path="icons.delete" type="mdi"></svg-icon>
@@ -69,7 +69,7 @@
 import {ref, toRef, watch} from "vue";
 import {bookInterface} from "@/global/global";
 import SvgIcon from '@jamescoyle/vue-icon';
-import {Form, Field} from 'vee-validate';
+import {Field} from 'vee-validate';
 import {
   mdiClose,
   mdiTrashCanOutline,
