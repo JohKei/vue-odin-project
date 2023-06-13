@@ -41,7 +41,6 @@
             <option value="Business">Business</option>
             <option value="Astrology">Astrology</option>
           </select>
-          <!--Todo: check input bigger-->
           <div class="form-check form-switch form-check-reverse">
             <input class="form-check-input" type="checkbox" id="flexSwitchCheckReverse"
                    v-model="book.readStatus">
@@ -226,4 +225,14 @@ const book = toRef(props, 'bookFromParent')
   align-self: flex-end;
   padding: 0;
 }
+.form-check-input{
+  font-size: 1.5rem;
+}
+.form-check{
+  margin-right: 1.3rem;
+}
+.form-check-label{
+  padding-top: 5px;
+}
+
 </style>
