@@ -1,5 +1,4 @@
 <template>
-  <!--Todo: highlighting Buttons if active filter-->
   <div class="topicSelection">
     <div class="input-group mb-3">
       <button class="buttonContentColor"

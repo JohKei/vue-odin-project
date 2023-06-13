@@ -255,7 +255,3 @@ label {
 </style>
 <!--todo input sizing should not change when applying is-valid or is-invalid classes-->
 <!--todo  add validation for firstName, lastName & phoneNumber-->
-<!--todo set rem or em Font size for Content-->
-<!--todo fill-in progress bar-->
-<!--todo page jumping when on Mobile mode-->
-<!--todo Mobile Mode animation to scroll down-->
