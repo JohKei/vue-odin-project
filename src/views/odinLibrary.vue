@@ -4,7 +4,6 @@
     <div class="actualBody">
       <div class="header">
         <div class="filterContainer">
-          <!--Todo: make search filter reactive & functional-->
           <div class="form-floating">
             <input type="text" class="form-control filterInput" placeholder="input" id="bookFilter" v-model="searchBar">
             <label for="bookFilter">Search Name of the Book, Author or Category...</label>
@@ -16,7 +15,6 @@
             @filterButton="filterButton"
             :side-bar-book-data="books"
         >
-
         </odin-library-side-bar>
       </div>
       <div class="contentContainer">
@@ -30,9 +28,14 @@
               :key="book.id"
               @click="existingBook(book)"
           >
-            <img v-if="book.cover" :src="book.cover" class="bookCover" alt="Book Cover" @click="openModal">
-            <!--Todo: add "no Cover yet!" banner to the book if !cover-->
-            <img v-else :src="noCover" class="bookCover" alt="Book Cover" @click="openModal">
+            <!--Todo: addHover with 3 buttons, edit, view, delete-->
+            <div class="imgContainer">
+              <img v-if="book.cover" :src="book.cover" class="bookCover" alt="Book Cover" @click="openModal">
+              <img v-else :src="noCover" class="bookCover" alt="Book Cover" @click="openModal">
+              <div class="noCover" v-if="!book.cover">
+                No Cover yet!
+              </div>
+            </div>
             <odin-library-modal
                 v-if="isModalOpen"
                 :book-from-parent="selectedBook"
@@ -42,7 +45,6 @@
                 @addBook="addBook"
             >
             </odin-library-modal>
-
           </li>
         </ul>
       </div>
@@ -108,9 +110,10 @@ const filteredBooks = computed((argument: string) => {
   } else return alert("Filter did not Apply!, something went wrong!")
 
 })
-const filterButton = (arg:string) =>{
+const filterButton = (arg: string) => {
   return searchBar.value = arg
 }
+
 
 const books = ref<bookInterface[]>([
   {
@@ -120,7 +123,7 @@ const books = ref<bookInterface[]>([
     readStatus: true,
     title: "Hustle Harder, Hustle Smarter",
     topic: "Business",
-    cover: "https://cdn.shopify.com/s/files/1/0285/2821/4050/products/9780062953803_8d16bd12-f578-47cb-acea-91eb0cefec7e.jpg?v=1685604249&width=350"
+    cover: "https://m.media-amazon.com/images/I/818KRrorFEL._AC_UF1000,1000_QL80_.jpg"
   },
   {
     id: uuidv4(),
@@ -147,7 +150,7 @@ const books = ref<bookInterface[]>([
     readStatus: false,
     title: "Building Browser Extensions: Create Modern Extensions for Chrome, Safari, Firefox, and Edge",
     topic: "Education",
-    cover: "https://d1b14unh5d6w7g.cloudfront.net/148428724X.01.S001.LXXXXXXX.jpg?Expires=1686418633&Signature=WUABejcqqYL5v39SEFAcRqoM4pj6ZfKsDclRDnq760JPL5n6Yl8bepCT4LrTHrtVV9wq2b8oUjIJNRBvubYxbhV2XKi59ly3M9mnV03M14V9SVU5owwFtzlSBk4S5Fxodyx-V8YP9AC9CWSDDJK6nRXK-ouIdDwVVa63wA5InI0_&Key-Pair-Id=APKAIUO27P366FGALUMQ"
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1670123786i/63920668.jpg"
   },
   {
     id: uuidv4(),
@@ -278,5 +281,37 @@ const books = ref<bookInterface[]>([
 .bookCover:hover,
 .addBook:hover {
   border: #bd977c 8px solid;
+}
+
+.noCover {
+  top: -14em;
+  left: -1.7em;
+  color: #fff;
+  display: block;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  letter-spacing: .06em;
+  background-color: #A00;
+  padding: 0.3em 1em 0.3em 1em;
+  text-shadow: 0 0 0.75em #444;
+  box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.5);
+  font: bold 16px/1.2em Arial, Sans-Serif;
+  -webkit-text-shadow: 0 0 0.75em #444;
+  -webkit-box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.5);
+  -webkit-transform: rotate(-45deg) scale(0.75, 1);
+}
+
+.noCover:before {
+  content: '';
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  margin: -0.5em -2.3em;
+  transform: scale(0.7);
+  -webkit-transform: scale(0.7);
+  border: 2px rgba(255, 255, 255, 0.7) dashed;
 }
 </style>
