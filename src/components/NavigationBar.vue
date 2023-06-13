@@ -42,7 +42,7 @@ const navActive = ref(false)
 const odinContentActive = ref(true)
 const personalContentActive = ref(true)
 
-
+// Todo: add descriptive Headings @OdinProjects ("Odin intermediate-CSS&HTML", "Odin JS-Path")
 </script>
 
 <style scoped lang="css">
@@ -53,6 +53,7 @@ const personalContentActive = ref(true)
 
 .customMenu {
   position: absolute;
+  z-index: 10;
   background-color: rgba(255, 255, 255, 80%);
   border-radius: 10px 10px 0 0;
   --headerHeight: 50px;

@@ -93,6 +93,7 @@ import NavigationBar from "@/components/NavigationBar.vue";
 
 
 const email = ref('')
+
 function onSubmit(values: object) {
   if (checkPassword() && checkEmail(email.value)) {
     alert(JSON.stringify(values, null, 2));
@@ -103,7 +104,6 @@ const isValidPassword = ref(false)
 const isInvalidPassword = ref(false)
 const isValidEmail = ref(false)
 const isInvalidEmail = ref(false)
-
 
 
 const veeValidate = (value: string) => {
@@ -168,7 +168,6 @@ const checkEmail = (value: string) => {
   justify-content: space-evenly;
   background-color: #dbd8e3;
 }
-
 
 .logoContainer {
   height: 200px;
@@ -253,9 +252,3 @@ label {
 }
 
 </style>
-<!--todo input sizing should not change when applying is-valid or is-invalid classes-->
-<!--todo  add validation for firstName, lastName & phoneNumber-->
-<!--todo set rem or em Font size for Content-->
-<!--todo fill-in progress bar-->
-<!--todo page jumping when on Mobile mode-->
-<!--todo Mobile Mode animation to scroll down-->

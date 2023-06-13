@@ -2,7 +2,6 @@
 
     <router-view/>
 </template>
-<!--todo navbar-->
 
 <script setup lang="ts">
 
