@@ -28,7 +28,6 @@
               :key="book.id"
               @click="existingBook(book)"
           >
-            <!--Todo: addHover with 3 buttons, edit, view, delete-->
             <div class="imgContainer">
               <img v-if="book.cover" :src="book.cover" class="bookCover" alt="Book Cover" @click="openModal">
               <img v-else :src="noCover" class="bookCover" alt="Book Cover" @click="openModal">
@@ -43,6 +42,7 @@
                 @close-modal="closeModal"
                 @edit-book="editBook"
                 @addBook="addBook"
+                @delete-book="deleteBook"
             >
             </odin-library-modal>
           </li>
@@ -93,6 +93,11 @@ const addBook = (bookFromChild: bookInterface) => {
 const editBook = (bookFromChild: bookInterface) => {
   const bookIndex = books.value.findIndex((book) => book.id === bookFromChild.id);
   books.value.splice(bookIndex, 1, bookFromChild);
+}
+
+const deleteBook = (bookFromChild: bookInterface) => {
+  const bookIndex = books.value.findIndex((book) => book.id === bookFromChild.id)
+  books.value.splice(bookIndex, 1)
 }
 
 const selectedBook = ref({})

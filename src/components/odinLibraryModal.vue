@@ -4,7 +4,6 @@
       <div class="content">
         <div v-if="book.cover" class="coverImage"
              :style="{'background-image': `url(${props.bookFromParent.cover})`}">
-
         </div>
         <div class="noCoverImage" v-else :style="{'background-image': `url(${noCover})`}">
           <div class="noCover" v-if="!props.bookFromParent.cover">
@@ -12,6 +11,9 @@
           </div>
         </div>
         <div class="bookForm">
+          <button class="btn iconButton" @click="closeModal">
+            <svg-icon :path="icons.close" type="mdi"></svg-icon>
+          </button>
           <div class="form-floating">
             <input type="text" class="form-control" id="author" placeholder="" v-model="book.author">
             <label for="author">Author</label>
@@ -39,14 +41,21 @@
             <option value="Business">Business</option>
             <option value="Astrology">Astrology</option>
           </select>
+          <!--Todo: check input bigger-->
           <div class="form-check form-switch form-check-reverse">
             <input class="form-check-input" type="checkbox" id="flexSwitchCheckReverse"
                    v-model="book.readStatus">
             <label class="form-check-label" for="flexSwitchCheckReverse">Did you read the book?</label>
           </div>
           <div class="modalFooter">
-            <button class="btn btn-danger" @click="closeModal">cancel</button>
-            <button class="btn btn-success" @click="sendBook">save</button>
+            <button class="btn btn-danger" @click="deleteBook">
+              <svg-icon :path="icons.delete" type="mdi"></svg-icon>
+              delete
+            </button>
+            <button class="btn btn-success" @click="sendBook">
+              <svg-icon :path="icons.save" type="mdi"></svg-icon>
+              save
+            </button>
           </div>
         </div>
       </div>
@@ -57,7 +66,18 @@
 <script setup lang="ts">
 import {toRef} from "vue";
 import {bookInterface} from "@/global/global";
+import SvgIcon from '@jamescoyle/vue-icon';
+import {
+  mdiClose,
+  mdiTrashCanOutline,
+  mdiCheckUnderline
+} from '@mdi/js';
 
+const icons = {
+  close: mdiClose,
+  delete: mdiTrashCanOutline,
+  save: mdiCheckUnderline
+}
 const noCover = 'https://media.discordapp.net/attachments/1059907690383544413/1116801106081747074/Johann_a_beautiful_empty_book_photorealistic_879e4af4-201a-42d4-bf9c-71f3194c7923.png?width=629&height=629'
 
 
@@ -71,6 +91,7 @@ const emits = defineEmits<{
   (e: 'closeModal', ModalStatus: boolean): void
   (e: 'editBook', book: bookInterface): void
   (e: 'addBook', book: bookInterface): void
+  (e: 'deleteBook', book: bookInterface): void
 }>()
 
 
@@ -79,6 +100,10 @@ const closeModal = () => {
 }
 const sendEditBook = () => {
   emits('editBook', book.value)
+  emits('closeModal', false)
+}
+const deleteBook = () => {
+  emits('deleteBook', book.value)
   emits('closeModal', false)
 }
 const sendAddBook = () => {
@@ -93,7 +118,6 @@ const sendBook = () => {
 const book = toRef(props, 'bookFromParent')
 
 // Todo: vee-validate
-// Todo: add delete button
 // Todo: open&close Modal animation
 </script>
 
@@ -114,12 +138,13 @@ const book = toRef(props, 'bookFromParent')
   position: relative;
   display: flex;
   gap: 20px;
-  padding: 30px;
+  padding: 20px;
   margin: 20px;
   background: white;
   width: 80vw;
   max-width: 1100px;
-  height: 50vh;
+  min-height: fit-content;
+  height: 55vh;
   border-radius: 20px;
 }
 
@@ -193,5 +218,12 @@ const book = toRef(props, 'bookFromParent')
 .btn {
   width: 150px;
   border-radius: 20px;
+}
+
+.iconButton {
+  width: fit-content;
+  height: fit-content;
+  align-self: flex-end;
+  padding: 0;
 }
 </style>
