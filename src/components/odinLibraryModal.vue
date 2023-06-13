@@ -60,7 +60,6 @@
       </div>
     </div>
   </transition>
-
 </template>
 
 <script setup lang="ts">
@@ -80,7 +79,6 @@ const icons = {
 }
 const noCover = 'https://media.discordapp.net/attachments/1059907690383544413/1116801106081747074/Johann_a_beautiful_empty_book_photorealistic_879e4af4-201a-42d4-bf9c-71f3194c7923.png?width=629&height=629'
 
-
 // eslint-disable-next-line no-undef
 const props = defineProps<{
   bookFromParent: bookInterface,
@@ -94,7 +92,6 @@ const emits = defineEmits<{
   (e: 'addBook', book: bookInterface): void
   (e: 'deleteBook', book: bookInterface): void
 }>()
-
 
 const closeModal = () => {
   showModal.value = false
@@ -121,8 +118,8 @@ const book = toRef(props, 'bookFromParent')
 
 const showModal = ref(toRef(props, 'show'))
 
-// Todo: vee-validate
 </script>
+
 
 <style scoped lang="css">
 .modal-bg {
