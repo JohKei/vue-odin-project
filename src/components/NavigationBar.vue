@@ -11,8 +11,10 @@
           <i v-if="!odinContentActive" class="arrow right"></i>
         </button>
         <div v-if="odinContentActive" class="odinDropContent">
+          <h3 class="semHeading">Intermediate HTML and CSS</h3>
           <router-link to="/odinForm">Odin Form</router-link>
           <router-link to="/odinDashboard">Odin Dashboard</router-link>
+          <h3 class="semHeading">Javascript</h3>
           <router-link to="/odinLibrary">Odin Library</router-link>
         </div>
       </div>
@@ -42,7 +44,6 @@ const navActive = ref(false)
 const odinContentActive = ref(true)
 const personalContentActive = ref(true)
 
-// Todo: add descriptive Headings @OdinProjects ("Odin intermediate-CSS&HTML", "Odin JS-Path")
 </script>
 
 <style scoped lang="css">
@@ -67,9 +68,9 @@ const personalContentActive = ref(true)
 .customNavbar {
   display: flex;
   gap: 20px;
-  background-color: rgba(255, 255, 255, 80%);
+  background-color: rgba(255, 255, 255, 90%);
   flex-direction: column;
-  width: 30vh;
+  width: 25vw;
   align-items: center;
   height: calc(100vh - var(--headerHeight));
   border-radius: 0 0 10px 10px;
@@ -128,6 +129,15 @@ a {
 .odinDropContent > a,
 .personalDropContent > a {
   font-size: 1.2rem;
+}
+.semHeading{
+  text-align: center;
+  font-size: 1.3rem;
+  margin: 0;
+}
+.odinProjectsDropdownContainer{
+  display: flex;
+  flex-direction: column;
 }
 </style>
 
