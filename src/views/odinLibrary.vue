@@ -29,22 +29,23 @@
               @click="existingBook(book)"
           >
             <div class="imgContainer">
-              <img v-if="book.cover" :src="book.cover" class="bookCover" alt="Book Cover" @click="openModal">
-              <img v-else :src="noCover" class="bookCover" alt="Book Cover" @click="openModal">
+              <img v-if="book.cover" :src="book.cover" class="bookCover" alt="Book Cover" @click="toggleModal">
+              <img v-else :src="noCover" class="bookCover" alt="Book Cover" @click="toggleModal">
               <div class="noCover" v-if="!book.cover">
                 No Cover yet!
               </div>
             </div>
-            <odin-library-modal
-                v-if="isModalOpen"
-                :book-from-parent="selectedBook"
-                :modal-status="isModalOpen"
-                @close-modal="closeModal"
-                @edit-book="editBook"
-                @addBook="addBook"
-                @delete-book="deleteBook"
-            >
-            </odin-library-modal>
+            <Teleport to="#bookModal">
+              <odin-library-modal
+                  :book-from-parent="selectedBook"
+                  :show="isModalOpen"
+                  @close-modal="toggleModal"
+                  @edit-book="editBook"
+                  @addBook="addBook"
+                  @delete-book="deleteBook"
+              >
+              </odin-library-modal>
+            </Teleport>
           </li>
         </ul>
       </div>
@@ -70,17 +71,13 @@ const icons = {
 }
 
 const isModalOpen = ref(false)
-const openModal = () => {
-  isModalOpen.value = true
+const toggleModal = () => {
+  isModalOpen.value = !isModalOpen.value
 }
-const closeModal = () => {
-  isModalOpen.value = false
-}
-
 const newBook = new Book("", null, false, "", "", "")
 const newBookF = () => {
   selectedBook.value = JSON.parse(JSON.stringify(newBook))
-  openModal()
+  toggleModal()
 }
 const existingBook = (ar: bookInterface) => {
   return selectedBook.value = JSON.parse(JSON.stringify(ar))

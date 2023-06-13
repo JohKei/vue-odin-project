@@ -1,6 +1,6 @@
 <template>
-  <Teleport to="#bookModal">
-    <div class="modal-bg">
+  <transition name="fade">
+    <div class="modal-bg" v-if="showModal == true">
       <div class="content">
         <div v-if="book.cover" class="coverImage"
              :style="{'background-image': `url(${props.bookFromParent.cover})`}">
@@ -59,11 +59,12 @@
         </div>
       </div>
     </div>
-  </Teleport>
+  </transition>
+
 </template>
 
 <script setup lang="ts">
-import {toRef} from "vue";
+import {ref, toRef} from "vue";
 import {bookInterface} from "@/global/global";
 import SvgIcon from '@jamescoyle/vue-icon';
 import {
@@ -83,6 +84,7 @@ const noCover = 'https://media.discordapp.net/attachments/1059907690383544413/11
 // eslint-disable-next-line no-undef
 const props = defineProps<{
   bookFromParent: bookInterface,
+  show: boolean
 }>()
 
 // eslint-disable-next-line no-undef
@@ -95,19 +97,20 @@ const emits = defineEmits<{
 
 
 const closeModal = () => {
+  showModal.value = false
   emits('closeModal', false)
 }
 const sendEditBook = () => {
   emits('editBook', book.value)
-  emits('closeModal', false)
+  closeModal()
 }
 const deleteBook = () => {
   emits('deleteBook', book.value)
-  emits('closeModal', false)
+  closeModal()
 }
 const sendAddBook = () => {
   emits('addBook', book.value)
-  emits('closeModal', false)
+  closeModal()
 }
 const sendBook = () => {
   if (book.value.id === undefined) {
@@ -116,8 +119,9 @@ const sendBook = () => {
 }
 const book = toRef(props, 'bookFromParent')
 
+const showModal = ref(toRef(props, 'show'))
+
 // Todo: vee-validate
-// Todo: open&close Modal animation
 </script>
 
 <style scoped lang="css">
@@ -225,14 +229,30 @@ const book = toRef(props, 'bookFromParent')
   align-self: flex-end;
   padding: 0;
 }
-.form-check-input{
+
+.form-check-input {
   font-size: 1.5rem;
 }
-.form-check{
+
+.form-check {
   margin-right: 1.3rem;
 }
-.form-check-label{
+
+.form-check-label {
   padding-top: 5px;
 }
 
+.fade-enter-active {
+  transition: all 0.5s ease;
+}
+
+.fade-leave-active {
+  transition: all 0.25s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: scale(1.1);
+}
 </style>
