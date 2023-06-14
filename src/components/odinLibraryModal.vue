@@ -14,26 +14,62 @@
           <button class="btn iconButton" @click="closeModal">
             <svg-icon :path="icons.close" type="mdi"></svg-icon>
           </button>
-          <div class="bookForm">
+          <Form @submit="submit" class="bookForm" id="bookForm">
             <div class="form-floating">
-              <Field name="author" type="text" class="form-control" id="author" placeholder="" v-model="book.author"/>
+              <Field name="author"
+                     type="text"
+                     class="form-control"
+                     id="author"
+                     placeholder=""
+                     v-model="book.author"
+                     :rules="validString"
+              />
               <label for="author">Author</label>
+              <ErrorMessage name="author"/>
             </div>
             <div class="form-floating">
-              <Field name="title" type="text" class="form-control" id="title" placeholder="" v-model="book.title"/>
+              <Field name="title"
+                     type="text"
+                     class="form-control"
+                     id="title"
+                     placeholder=""
+                     v-model="book.title"
+                     :rules="validString"
+              />
               <label for="title">Book Title</label>
+              <ErrorMessage name="title"/>
             </div>
             <div class="form-floating">
-              <Field name="pages" type="number" class="form-control numberInput" id="pages" placeholder=""
-                     v-model.number="book.pages"/>
+              <Field name="pages"
+                     type="number"
+                     class="form-control numberInput"
+                     id="pages"
+                     placeholder=""
+                     v-model.number="book.pages"
+                     :rules="validNumber"
+              />
               <label for="pages">Amount of Pages</label>
+              <ErrorMessage name="pages"/>
             </div>
             <div class="form-floating">
-              <Field name="cover" type="text" class="form-control" id="cover" placeholder="" v-model="book.cover"/>
+              <Field name="cover"
+                     type="text"
+                     class="form-control"
+                     id="cover"
+                     placeholder=""
+                     v-model="book.cover"
+                     :rules="validBookCover"
+              />
               <label for="cover">Book Cover-link</label>
+              <ErrorMessage name="cover"/>
             </div>
-            <Field as="select" name="topic" class="form-select" aria-label="Default select example"
-                   v-model="book.topic">
+            <Field as="select"
+                   name="topic"
+                   class="form-select"
+                   aria-label="Default select example"
+                   v-model="book.topic"
+                   :rules="validTopic"
+            >
               <option value="">Choose the Book topic</option>
               <option value="Fantasy">Fantasy</option>
               <option value="Drama">Drama</option>
@@ -43,18 +79,23 @@
               <option value="Business">Business</option>
               <option value="Astrology">Astrology</option>
             </Field>
+            <ErrorMessage name="topic"/>
             <div class="form-check form-switch form-check-reverse">
-              <Field name="readStatus" class="form-check-input" type="checkbox" id="flexSwitchCheckReverse"
-                     v-model="book.readStatus"/>
+              <Field name="readStatus"
+                     class="form-check-input"
+                     type="checkbox"
+                     id="flexSwitchCheckReverse"
+                     v-model="book.readStatus"
+              />
               <label class="form-check-label" for="flexSwitchCheckReverse">Did you read the book?</label>
             </div>
-          </div>
+          </Form>
           <div class="modalFooter">
             <button class="btn btn-danger" @click="deleteBook">
               <svg-icon :path="icons.delete" type="mdi"></svg-icon>
               delete
             </button>
-            <button class="btn btn-success" @click="validate">
+            <button class="btn btn-success" type="submit" form="bookForm">
               <svg-icon :path="icons.save" type="mdi"></svg-icon>
               save
             </button>
@@ -67,9 +108,9 @@
 
 <script setup lang="ts">
 import {ref, toRef, watch} from "vue";
-import {bookInterface} from "@/global/global";
+import {Book, bookInterface} from "@/global/global";
 import SvgIcon from '@jamescoyle/vue-icon';
-import {Field} from 'vee-validate';
+import {Field, Form, ErrorMessage} from 'vee-validate';
 import {
   mdiClose,
   mdiTrashCanOutline,
@@ -118,16 +159,57 @@ const sendBook = () => {
     sendAddBook()
   } else sendEditBook()
 }
-const book = toRef(props, 'bookFromParent')
+
+const book = ref(new Book("", null, false, "", "", ""))
+
+const bookProp = toRef(props, 'bookFromParent')
+
+watch(bookProp, () => {
+  book.value = JSON.parse(JSON.stringify(bookProp.value))
+})
 
 const showModal = ref(false)
-const showModalTest = toRef(props, 'show')
-watch(showModalTest, () => {
-  showModal.value = showModalTest.value
+
+const showModalProp = toRef(props, 'show')
+
+watch(showModalProp, () => {
+  showModal.value = showModalProp.value
 })
-const validate = () => {
-  console.log("hellooo you cant save the book because its not valid yet!")
-//
+
+const validString = (input: string) => {
+  if (book.value) {
+    if (input.length < 3) {
+      return 'This Field needs at least 3 Characters!'
+    } else return true
+  } else return
+}
+
+const validNumber = (input: any) => {
+  if ((!/^[0-9]+$/.test(input))) {
+    return 'Please only enter Numbers!'
+  } else return true
+}
+
+const validBookCover = (input: string) => {
+  if (input.match(/\.(jpeg|jpg|gif|png)$/) != null) {
+    return true
+  } else return 'This is not a valid image-link!'
+}
+
+const validTopic = (input: string) => {
+  if (input === '') {
+    return 'Choose a Topic!'
+  } else return true
+}
+
+const submit = (values: bookInterface) => {
+  if (validString(values.title) &&
+      validString(values.topic) &&
+      validNumber(values.pages) &&
+      validBookCover(values.cover) &&
+      validTopic(values.topic)) {
+    sendBook()
+  } else return alert('No submit here!')
 }
 </script>
 

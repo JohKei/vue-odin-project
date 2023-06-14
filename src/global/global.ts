@@ -13,7 +13,7 @@ interface bookInterface {
     readStatus: boolean
     title: string
     topic: string
-    cover: string | null
+    cover: string
 }
 
 
@@ -24,7 +24,7 @@ class Book implements bookInterface {
     readStatus: boolean
     title: string
     topic: string
-    cover: string | null
+    cover: string
     assignId(){
         this.id = uuidv4()
     }
