@@ -165,19 +165,7 @@ watch(showModalProp, () => {
 })
 
 
-const validNumber = (input: any) => {
-  if ((!/^[0-9]+$/.test(input))) {
-    return 'Please only enter Numbers!'
-  } else return true
-}
 
-const validBookCover = (input: string) => {
-  if (input.match(/\.(jpeg|jpg|gif|png)$/) != null) {
-    return true
-  } else {
-     'This is not a valid image-link!'
-  }
-}
 const submit = () =>{
   sendBook()
 }
