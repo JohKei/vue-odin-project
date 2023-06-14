@@ -108,7 +108,7 @@
 
 <script setup lang="ts">
 import {ref, toRef, watch} from "vue";
-import {Book, bookInterface} from "@/global/global";
+import {bookInterface} from "@/global/global";
 import SvgIcon from '@jamescoyle/vue-icon';
 import {Field, Form, ErrorMessage} from 'vee-validate';
 import {
@@ -160,13 +160,7 @@ const sendBook = () => {
   } else sendEditBook()
 }
 
-const book = ref(new Book("", null, false, "", "", ""))
-
-const bookProp = toRef(props, 'bookFromParent')
-
-watch(bookProp, () => {
-  book.value = JSON.parse(JSON.stringify(bookProp.value))
-})
+const book = toRef(props, 'bookFromParent')
 
 const showModal = ref(false)
 
