@@ -22,10 +22,8 @@
                      id="author"
                      placeholder=""
                      v-model="book.author"
-                     :rules="validString"
               />
               <label for="author">Author</label>
-              <ErrorMessage name="author"/>
             </div>
             <div class="form-floating">
               <Field name="title"
@@ -34,7 +32,6 @@
                      id="title"
                      placeholder=""
                      v-model="book.title"
-                     :rules="validString"
               />
               <label for="title">Book Title</label>
               <ErrorMessage name="title"/>
@@ -46,7 +43,6 @@
                      id="pages"
                      placeholder=""
                      v-model.number="book.pages"
-                     :rules="validNumber"
               />
               <label for="pages">Amount of Pages</label>
               <ErrorMessage name="pages"/>
@@ -58,7 +54,6 @@
                      id="cover"
                      placeholder=""
                      v-model="book.cover"
-                     :rules="validBookCover"
               />
               <label for="cover">Book Cover-link</label>
               <ErrorMessage name="cover"/>
@@ -68,7 +63,6 @@
                    class="form-select"
                    aria-label="Default select example"
                    v-model="book.topic"
-                   :rules="validTopic"
             >
               <option value="">Choose the Book topic</option>
               <option value="Fantasy">Fantasy</option>
@@ -170,13 +164,6 @@ watch(showModalProp, () => {
   showModal.value = showModalProp.value
 })
 
-const validString = (input: string) => {
-  if (book.value) {
-    if (input.length < 3) {
-      return 'This Field needs at least 3 Characters!'
-    } else return true
-  } else return
-}
 
 const validNumber = (input: any) => {
   if ((!/^[0-9]+$/.test(input))) {
@@ -187,24 +174,16 @@ const validNumber = (input: any) => {
 const validBookCover = (input: string) => {
   if (input.match(/\.(jpeg|jpg|gif|png)$/) != null) {
     return true
-  } else return 'This is not a valid image-link!'
+  } else {
+     'This is not a valid image-link!'
+  }
+}
+const submit = () =>{
+  sendBook()
 }
 
-const validTopic = (input: string) => {
-  if (input === '') {
-    return 'Choose a Topic!'
-  } else return true
-}
 
-const submit = (values: bookInterface) => {
-  if (validString(values.title) &&
-      validString(values.topic) &&
-      validNumber(values.pages) &&
-      validBookCover(values.cover) &&
-      validTopic(values.topic)) {
-    sendBook()
-  } else return alert('No submit here!')
-}
+
 </script>
 
 
