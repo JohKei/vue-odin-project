@@ -93,8 +93,10 @@ const editBook = (bookFromChild: bookInterface) => {
 }
 
 const deleteBook = (bookFromChild: bookInterface) => {
-  const bookIndex = books.value.findIndex((book) => book.id === bookFromChild.id)
-  books.value.splice(bookIndex, 1)
+  if (bookFromChild.id){
+    const bookIndex = books.value.findIndex((book) => book.id === bookFromChild.id)
+    books.value.splice(bookIndex, 1)
+  }else return
 }
 
 const selectedBook = ref({})
