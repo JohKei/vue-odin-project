@@ -22,8 +22,10 @@
                      id="author"
                      placeholder=""
                      v-model="book.author"
+                     :rules="validateAuthor"
               />
               <label for="author">Author</label>
+              <ErrorMessage class="errorMessage" name="author"/>
             </div>
             <div class="form-floating">
               <Field name="title"
@@ -32,9 +34,10 @@
                      id="title"
                      placeholder=""
                      v-model="book.title"
+                     :rules="validateTitle"
               />
               <label for="title">Book Title</label>
-              <ErrorMessage name="title"/>
+              <ErrorMessage name="title" class="errorMessage"></ErrorMessage>
             </div>
             <div class="form-floating">
               <Field name="pages"
@@ -43,9 +46,10 @@
                      id="pages"
                      placeholder=""
                      v-model.number="book.pages"
+                     :rules="validatePages"
               />
               <label for="pages">Amount of Pages</label>
-              <ErrorMessage name="pages"/>
+              <ErrorMessage name="pages" class="errorMessage"></ErrorMessage>
             </div>
             <div class="form-floating">
               <Field name="cover"
@@ -54,15 +58,17 @@
                      id="cover"
                      placeholder=""
                      v-model="book.cover"
+                     :rules="validateCover"
               />
               <label for="cover">Book Cover-link</label>
-              <ErrorMessage name="cover"/>
+              <ErrorMessage name="cover" class="errorMessage"></ErrorMessage>
             </div>
             <Field as="select"
                    name="topic"
                    class="form-select"
                    aria-label="Default select example"
                    v-model="book.topic"
+                   :rules="validateTopic"
             >
               <option value="">Choose the Book topic</option>
               <option value="Fantasy">Fantasy</option>
@@ -73,7 +79,7 @@
               <option value="Business">Business</option>
               <option value="Astrology">Astrology</option>
             </Field>
-            <ErrorMessage name="topic"/>
+            <ErrorMessage name="topic" class="errorMessage"></ErrorMessage>
             <div class="form-check form-switch form-check-reverse">
               <Field name="readStatus"
                      class="form-check-input"
@@ -105,6 +111,7 @@ import {ref, toRef, watch} from "vue";
 import {bookInterface} from "@/global/global";
 import SvgIcon from '@jamescoyle/vue-icon';
 import {Field, Form, ErrorMessage} from 'vee-validate';
+import * as yup from 'yup'
 import {
   mdiClose,
   mdiTrashCanOutline,
@@ -165,24 +172,15 @@ watch(showModalProp, () => {
 })
 
 
-const validNumber = (input: any) => {
-  if ((!/^[0-9]+$/.test(input))) {
-    return 'Please only enter Numbers!'
-  } else return true
-}
+const validateTitle = yup.string().required().min(3)
+const validateAuthor = yup.string().required().min(3)
+const validatePages = yup.number().positive().required()
+const validateCover = yup.string().matches(/^(https?:\/\/.*\.(?:png|jpg))?$/, 'Please provide a valid image link or leave it empty.');
+const validateTopic = yup.string().required().matches(/(Fantasy|Drama|Detective|Education|Psychology|Business|Astrology)/)
 
-const validBookCover = (input: string) => {
-  if (input.match(/\.(jpeg|jpg|gif|png)$/) != null) {
-    return true
-  } else {
-     'This is not a valid image-link!'
-  }
-}
-const submit = () =>{
+const submit = () => {
   sendBook()
 }
-
-
 
 </script>
 
@@ -209,8 +207,8 @@ const submit = () =>{
   background: white;
   width: 80vw;
   max-width: 1100px;
+  min-width: fit-content;
   min-height: fit-content;
-  height: 55vh;
   border-radius: 20px;
 }
 
@@ -220,6 +218,7 @@ const submit = () =>{
   background-size: cover;
   border-radius: 20px;
   aspect-ratio: 5.25/8.25;
+  flex: 1;
 }
 
 .coverImage {
@@ -228,6 +227,7 @@ const submit = () =>{
   background-size: cover;
   border-radius: 20px;
   aspect-ratio: 5.25/8.25;
+  flex: 1;
 }
 
 .noCover {
@@ -323,5 +323,9 @@ const submit = () =>{
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+}
+
+.errorMessage {
+  position: relative;
 }
 </style>
