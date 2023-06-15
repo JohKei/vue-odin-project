@@ -5,7 +5,7 @@
       <div class="inputSection">
         <h1 class="rmPadding">Metric/Imperial Unit Conversion</h1>
         <input type="number" v-model="inputEl" class="input" id="input-el"
-               onkeyup="if(value<1) value=1;if(value>999) value=999;">
+               onkeyup="if(value<1) value=1;">
         <div>
           <button class="button" @click="convert()">Convert</button>
           <button class="button" id="clear" @click="clear">Clear</button>
@@ -133,11 +133,11 @@ function clear() {
 }
 
 .inputSection .input {
-  width: 200px;
-  height: 100px;
+  width: 100%;
+  height: 50px;
   border: 2px solid #B295FF;
   background-color: #6943FF;
-  font-size: 58px;
+  font-size: 1.5rem;
   font-weight: 800;
   color: white;
   text-align: center;

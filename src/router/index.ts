@@ -8,6 +8,7 @@ import odinLibrary from "@/views/odinLibrary.vue";
 import odinLandingPage from "@/views/odinLandingPage.vue";
 import scrimbaScoreBoard from '@/views/scrimbaScoreBoard.vue'
 import scrimbaUnitConversion from "@/views/scrimbaUnitConversion.vue";
+import scrimbaPasswordGenerator from "@/views/scrimbaPasswordGenerator.vue";
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -54,6 +55,11 @@ const routes: Array<RouteRecordRaw> = [
         path: '/scrimba/UnitConversion',
         name: 'Unit Conversion',
         component: scrimbaUnitConversion
+    },
+    {
+        path: '/scrimba/PasswordGenerator',
+        name: 'Password generator',
+        component: scrimbaPasswordGenerator
     }
 ]
 
