@@ -7,6 +7,7 @@ import odinPractice from "@/views/odinPractice.vue";
 import odinLibrary from "@/views/odinLibrary.vue";
 import odinLandingPage from "@/views/odinLandingPage.vue";
 import scrimbaScoreBoard from '@/views/scrimbaScoreBoard.vue'
+import scrimbaUnitConversion from "@/views/scrimbaUnitConversion.vue";
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -15,12 +16,12 @@ const routes: Array<RouteRecordRaw> = [
         component: HomeView
     },
     {
-        path: '/odinForm',
+        path: '/odin/Form',
         name: 'odin Form',
         component: odinSignUp
     },
     {
-        path: '/odinDashboard',
+        path: '/odin/Dashboard',
         name: 'Odin Dashboard',
         component: odinDashboard
     },
@@ -30,24 +31,29 @@ const routes: Array<RouteRecordRaw> = [
         component: discordHelp
     },
     {
-        path: '/odinPractice',
+        path: '/odin/Practice',
         name: 'Odin Practice',
         component: odinPractice
     },
     {
-        path: '/odinLibrary',
+        path: '/odin/Library',
         name: 'Odin Library',
         component: odinLibrary
     },
     {
-        path: '/odinLandingPage',
+        path: '/odin/LandingPage',
         name: 'Odin Landing page',
         component: odinLandingPage
     },
     {
-        path: '/scrimbaScoreBoard',
+        path: '/scrimba/ScoreBoard',
         name: 'Scrimba Score-Board',
         component: scrimbaScoreBoard
+    },
+    {
+        path: '/scrimba/UnitConversion',
+        name: 'Unit Conversion',
+        component: scrimbaUnitConversion
     }
 ]
 

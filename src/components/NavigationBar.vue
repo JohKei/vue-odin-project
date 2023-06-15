@@ -12,10 +12,10 @@
         </button>
         <div v-if="odinContentActive" class="odinDropContent">
           <h3 class="semHeading">Intermediate HTML and CSS</h3>
-          <router-link to="/odinForm">Odin Form</router-link>
-          <router-link to="/odinDashboard">Odin Dashboard</router-link>
+          <router-link to="/odin/Form">Odin Form</router-link>
+          <router-link to="/odin/Dashboard">Odin Dashboard</router-link>
           <h3 class="semHeading">Javascript</h3>
-          <router-link to="/odinLibrary">Odin Library</router-link>
+          <router-link to="/odin/Library">Odin Library</router-link>
         </div>
       </div>
       <div class="personalPlayGroundDropContainer">
@@ -25,7 +25,7 @@
           <i v-if="!personalContentActive" class="arrow right"></i>
         </button>
         <div v-if="personalContentActive" class="personalDropContent">
-          <router-link to="/odinPractice">
+          <router-link to="/odin/Practice">
             Odin Practice
           </router-link>
           <router-link to="/discordHelp">

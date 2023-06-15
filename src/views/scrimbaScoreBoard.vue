@@ -1,4 +1,5 @@
 <template>
+  <navigation-bar></navigation-bar>
   <div class="body">
     <div class="actualBody">
       <div class="player">
@@ -36,6 +37,8 @@
   </div>
 </template>
 <script setup lang="js">
+import NavigationBar from "@/components/NavigationBar.vue";
+
 let homeScore = 0
 let guestScore = 0
 
