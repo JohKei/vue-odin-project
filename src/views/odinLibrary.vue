@@ -24,7 +24,6 @@
               <svg-icon type="mdi" :path="icons.plus" class="icon" size="100"></svg-icon>
             </div>
           </li>
-          <!--Todo: right now @click Modal is opening stacked 8-times. Gotta do something about that!-->
           <li v-for="book in filteredBooks"
               :key="book.id"
               @click="existingBook(book)"
@@ -36,22 +35,22 @@
                 No Cover yet!
               </div>
             </div>
-            <Teleport to="#bookModal">
-              <odin-library-modal
-                  :book-from-parent="selectedBook"
-                  :show="isModalOpen"
-                  @close-modal="toggleModal"
-                  @edit-book="editBook"
-                  @addBook="addBook"
-                  @delete-book="deleteBook"
-              >
-              </odin-library-modal>
-            </Teleport>
           </li>
         </ul>
       </div>
     </div>
   </div>
+  <Teleport to="#bookModal">
+    <odin-library-modal
+        :book-from-parent="selectedBook"
+        :show="isModalOpen"
+        @close-modal="toggleModal"
+        @edit-book="editBook"
+        @addBook="addBook"
+        @delete-book="deleteBook"
+    >
+    </odin-library-modal>
+  </Teleport>
 </template>
 
 
