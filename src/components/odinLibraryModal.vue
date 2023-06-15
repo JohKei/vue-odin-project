@@ -15,71 +15,81 @@
             <svg-icon :path="icons.close" type="mdi"></svg-icon>
           </button>
           <Form @submit="submit" class="bookForm" id="bookForm">
-            <div class="form-floating">
-              <Field name="author"
-                     type="text"
-                     class="form-control"
-                     id="author"
-                     placeholder=""
-                     v-model="book.author"
-                     :rules="validateAuthor"
-              />
-              <label for="author">Author</label>
+            <div class="inputContainer">
+              <div class="form-floating">
+                <Field name="author"
+                       type="text"
+                       class="form-control"
+                       id="author"
+                       placeholder=""
+                       v-model="book.author"
+                       :rules="validateAuthor"
+                />
+                <label for="author">Author*</label>
+              </div>
               <ErrorMessage class="errorMessage" name="author"/>
             </div>
-            <div class="form-floating">
-              <Field name="title"
-                     type="text"
-                     class="form-control"
-                     id="title"
-                     placeholder=""
-                     v-model="book.title"
-                     :rules="validateTitle"
-              />
-              <label for="title">Book Title</label>
+            <div class="inputContainer">
+              <div class="form-floating">
+                <Field name="title"
+                       type="text"
+                       class="form-control"
+                       id="title"
+                       placeholder=""
+                       v-model="book.title"
+                       :rules="validateTitle"
+                />
+                <label for="title">Book Title*</label>
+              </div>
               <ErrorMessage name="title" class="errorMessage"></ErrorMessage>
             </div>
-            <div class="form-floating">
-              <Field name="pages"
-                     type="number"
-                     class="form-control numberInput"
-                     id="pages"
-                     placeholder=""
-                     v-model.number="book.pages"
-                     :rules="validatePages"
-              />
-              <label for="pages">Amount of Pages</label>
+            <div class="inputContainer">
+              <div class="form-floating">
+                <Field name="pages"
+                       type="number"
+                       class="form-control numberInput"
+                       id="pages"
+                       placeholder=""
+                       v-model.number="book.pages"
+                       :rules="validatePages"
+                />
+                <label for="pages">Amount of Pages*</label>
+              </div>
               <ErrorMessage name="pages" class="errorMessage"></ErrorMessage>
             </div>
-            <div class="form-floating">
-              <Field name="cover"
-                     type="text"
-                     class="form-control"
-                     id="cover"
-                     placeholder=""
-                     v-model="book.cover"
-                     :rules="validateCover"
-              />
-              <label for="cover">Book Cover-link</label>
+            <div class="inputContainer">
+              <div class="form-floating">
+                <Field name="cover"
+                       type="text"
+                       class="form-control"
+                       id="cover"
+                       placeholder=""
+                       v-model="book.cover"
+                       :rules="validateCover"
+                />
+                <label for="cover">Book Cover-link</label>
+              </div>
               <ErrorMessage name="cover" class="errorMessage"></ErrorMessage>
             </div>
-            <Field as="select"
-                   name="topic"
-                   class="form-select"
-                   aria-label="Default select example"
-                   v-model="book.topic"
-                   :rules="validateTopic"
-            >
-              <option value="">Choose the Book topic</option>
-              <option value="Fantasy">Fantasy</option>
-              <option value="Drama">Drama</option>
-              <option value="Detective">Detective</option>
-              <option value="Education">Education</option>
-              <option value="Psychology">Psychology</option>
-              <option value="Business">Business</option>
-              <option value="Astrology">Astrology</option>
-            </Field>
-            <ErrorMessage name="topic" class="errorMessage"></ErrorMessage>
+            <div class="inputContainerTopic">
+              <Field as="select"
+                     name="topic"
+                     class="form-select"
+                     aria-label="Default select example"
+                     v-model="book.topic"
+                     :rules="validateTopic"
+              >
+                <option value="">Choose the Book topic*</option>
+                <option value="Fantasy">Fantasy</option>
+                <option value="Drama">Drama</option>
+                <option value="Detective">Detective</option>
+                <option value="Education">Education</option>
+                <option value="Psychology">Psychology</option>
+                <option value="Business">Business</option>
+                <option value="Astrology">Astrology</option>
+              </Field>
+              <ErrorMessage name="topic" class="errorMessage"></ErrorMessage>
+            </div>
             <div class="form-check form-switch form-check-reverse">
               <Field name="readStatus"
                      class="form-check-input"
@@ -110,14 +120,14 @@
 import {ref, toRef, watch} from "vue";
 import {bookInterface} from "@/global/global";
 import SvgIcon from '@jamescoyle/vue-icon';
-import {Field, Form, ErrorMessage} from 'vee-validate';
+import {Field, Form, ErrorMessage, configure} from 'vee-validate';
 import * as yup from 'yup'
 import {
   mdiClose,
   mdiTrashCanOutline,
   mdiCheckUnderline
 } from '@mdi/js';
-// Todo: add required Vee-validation
+
 const icons = {
   close: mdiClose,
   delete: mdiTrashCanOutline,
@@ -178,6 +188,10 @@ const validatePages = yup.number().positive().required()
 const validateCover = yup.string().matches(/^(https?:\/\/.*\.(?:png|jpg))?$/, 'Please provide a valid image link or leave it empty.');
 const validateTopic = yup.string().required().matches(/(Fantasy|Drama|Detective|Education|Psychology|Business|Astrology)/)
 
+configure({
+  validateOnInput: true
+})
+
 const submit = () => {
   sendBook()
 }
@@ -219,6 +233,7 @@ const submit = () => {
   border-radius: 20px;
   aspect-ratio: 5.25/8.25;
   flex: 1;
+  min-width: 360px;
 }
 
 .coverImage {
@@ -228,6 +243,7 @@ const submit = () => {
   border-radius: 20px;
   aspect-ratio: 5.25/8.25;
   flex: 1;
+  min-width: 360px;
 }
 
 .noCover {
@@ -264,10 +280,9 @@ const submit = () => {
 }
 
 .bookForm {
-  flex-grow: 2;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  justify-content: space-evenly;
 }
 
 .numberInput {
@@ -323,9 +338,17 @@ const submit = () => {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  justify-content: space-between;
 }
 
 .errorMessage {
-  position: relative;
+  color: red;
+}
+
+.inputContainer {
+  height: 85px;
+}
+.inputContainerTopic{
+  height: 60px;
 }
 </style>
