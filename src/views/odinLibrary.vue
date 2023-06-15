@@ -24,6 +24,7 @@
               <svg-icon type="mdi" :path="icons.plus" class="icon" size="100"></svg-icon>
             </div>
           </li>
+          <!--Todo: right now @click Modal is opening stacked 8-times. Gotta do something about that!-->
           <li v-for="book in filteredBooks"
               :key="book.id"
               @click="existingBook(book)"
@@ -93,10 +94,10 @@ const editBook = (bookFromChild: bookInterface) => {
 }
 
 const deleteBook = (bookFromChild: bookInterface) => {
-  if (bookFromChild.id){
+  if (bookFromChild.id) {
     const bookIndex = books.value.findIndex((book) => book.id === bookFromChild.id)
     books.value.splice(bookIndex, 1)
-  }else return
+  } else return
 }
 
 const selectedBook = ref({})
