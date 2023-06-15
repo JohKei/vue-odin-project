@@ -181,12 +181,25 @@ watch(showModalProp, () => {
   showModal.value = showModalProp.value
 })
 
-
-const validateTitle = yup.string().required().min(3)
-const validateAuthor = yup.string().required().min(3)
-const validatePages = yup.number().positive().required()
-const validateCover = yup.string().matches(/^(https?:\/\/.*\.(?:png|jpg))?$/, 'Please provide a valid image link or leave it empty.');
-const validateTopic = yup.string().required().matches(/(Fantasy|Drama|Detective|Education|Psychology|Business|Astrology)/)
+const validateTitle = yup
+    .string().required('This Field is required!')
+    .min(3)
+const validateAuthor = yup
+    .string()
+    .required('This Field is required!')
+    .min(3)
+const validatePages = yup
+    .number()
+    .positive('this field must have a positive number')
+    .required('This Field is required!')
+    .typeError('Pages must be a Number')
+const validateCover = yup
+    .string()
+    .matches(/^(https?:\/\/.*\.(?:png|jpg))?$/, 'leave this Field empty or pass in a valid image-link');
+const validateTopic = yup
+    .string()
+    .required('This Field is required!')
+    .matches(/(Fantasy|Drama|Detective|Education|Psychology|Business|Astrology)/)
 
 configure({
   validateOnInput: true
@@ -348,7 +361,8 @@ const submit = () => {
 .inputContainer {
   height: 85px;
 }
-.inputContainerTopic{
+
+.inputContainerTopic {
   height: 60px;
 }
 </style>
