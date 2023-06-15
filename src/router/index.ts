@@ -5,6 +5,7 @@ import odinDashboard from "@/views/odinDashboard.vue";
 import discordHelp from "@/views/discordHelp.vue";
 import odinPractice from "@/views/odinPractice.vue";
 import odinLibrary from "@/views/odinLibrary.vue";
+import odinLandingPage from "@/views/odinLandingPage.vue";
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -36,6 +37,11 @@ const routes: Array<RouteRecordRaw> = [
         path: '/odinLibrary',
         name: 'Odin Library',
         component: odinLibrary
+    },
+    {
+        path: '/odinLandingPage',
+        name: 'Odin Landing page',
+        component: odinLandingPage
     }
 ]
 
