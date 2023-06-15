@@ -25,7 +25,7 @@
                        v-model="book.author"
                        :rules="validateAuthor"
                 />
-                <label for="author">Author</label>
+                <label for="author">Author*</label>
               </div>
               <ErrorMessage class="errorMessage" name="author"/>
             </div>
@@ -39,7 +39,7 @@
                        v-model="book.title"
                        :rules="validateTitle"
                 />
-                <label for="title">Book Title</label>
+                <label for="title">Book Title*</label>
               </div>
               <ErrorMessage name="title" class="errorMessage"></ErrorMessage>
             </div>
@@ -53,7 +53,7 @@
                        v-model.number="book.pages"
                        :rules="validatePages"
                 />
-                <label for="pages">Amount of Pages</label>
+                <label for="pages">Amount of Pages*</label>
               </div>
               <ErrorMessage name="pages" class="errorMessage"></ErrorMessage>
             </div>
@@ -79,7 +79,7 @@
                      v-model="book.topic"
                      :rules="validateTopic"
               >
-                <option value="">Choose the Book topic</option>
+                <option value="">Choose the Book topic*</option>
                 <option value="Fantasy">Fantasy</option>
                 <option value="Drama">Drama</option>
                 <option value="Detective">Detective</option>
@@ -120,7 +120,7 @@
 import {ref, toRef, watch} from "vue";
 import {bookInterface} from "@/global/global";
 import SvgIcon from '@jamescoyle/vue-icon';
-import {Field, Form, ErrorMessage} from 'vee-validate';
+import {Field, Form, ErrorMessage, configure} from 'vee-validate';
 import * as yup from 'yup'
 import {
   mdiClose,
@@ -181,13 +181,16 @@ watch(showModalProp, () => {
   showModal.value = showModalProp.value
 })
 
-// Todo: edit Validation to become reactive while typing!
 
 const validateTitle = yup.string().required().min(3)
 const validateAuthor = yup.string().required().min(3)
 const validatePages = yup.number().positive().required()
 const validateCover = yup.string().matches(/^(https?:\/\/.*\.(?:png|jpg))?$/, 'Please provide a valid image link or leave it empty.');
 const validateTopic = yup.string().required().matches(/(Fantasy|Drama|Detective|Education|Psychology|Business|Astrology)/)
+
+configure({
+  validateOnInput: true
+})
 
 const submit = () => {
   sendBook()
