@@ -6,6 +6,7 @@ import discordHelp from "@/views/discordHelp.vue";
 import odinPractice from "@/views/odinPractice.vue";
 import odinLibrary from "@/views/odinLibrary.vue";
 import odinLandingPage from "@/views/odinLandingPage.vue";
+import scrimbaScoreBoard from '@/views/scrimbaScoreBoard.vue'
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -42,6 +43,11 @@ const routes: Array<RouteRecordRaw> = [
         path: '/odinLandingPage',
         name: 'Odin Landing page',
         component: odinLandingPage
+    },
+    {
+        path: '/scrimbaScoreBoard',
+        name: 'Scrimba Score-Board',
+        component: scrimbaScoreBoard
     }
 ]
 
