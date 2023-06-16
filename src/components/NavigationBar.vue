@@ -11,6 +11,10 @@
           <i v-if="!odinContentActive" class="arrow right"></i>
         </button>
         <div v-if="odinContentActive" class="odinDropContent">
+          <router-link to="/odinLandingPage">Odin Landing Page</router-link>
+          <router-link to="/scrimbaScoreBoard">Scrimba Score board</router-link>
+          <router-link to="/scrimbaUnitConversion">Scrimba Unit conversion</router-link>
+          <router-link to="/scrimbaPasswordGenerator">Scrimba Password generator</router-link>
           <router-link to="/odinRPS">Odin Rock Paper Scissor</router-link>
           <h3 class="semHeading">Intermediate HTML and CSS</h3>
           <router-link to="/odinForm">Odin Form</router-link>

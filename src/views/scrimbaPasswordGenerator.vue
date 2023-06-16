@@ -1,4 +1,5 @@
 <template>
+  <navigation-bar></navigation-bar>
   <div class="body">
     <div class="actualBody">
       <div class="description">
@@ -51,6 +52,7 @@
 <script setup lang="js">
 
 import {ref} from "vue";
+import NavigationBar from "@/components/NavigationBar.vue";
 
 const characters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P",
   "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k",
