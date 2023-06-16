@@ -10,8 +10,6 @@ import scrimbaScoreBoard from '@/views/scrimbaScoreBoard.vue'
 import scrimbaUnitConversion from "@/views/scrimbaUnitConversion.vue";
 import scrimbaPasswordGenerator from "@/views/scrimbaPasswordGenerator.vue";
 import odinRPS from "@/views/odinRPS.vue";
-import odinEtchaSketch from "@/views/odinEtchaSketch.vue";
-import odinCalculator from "@/views/odinCalculator.vue";
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -69,16 +67,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'Odin Rock Paper Scissor',
         component: odinRPS
     },
-    {
-        path: '/odin/EtchSketch',
-        name: 'Odin Etch a Sketch',
-        component: odinEtchaSketch
-    },
-    {
-        path: '/odin/Calculator',
-        name: 'Odin Calculator',
-        component: odinCalculator
-    }
+
 ]
 
 const router = createRouter({

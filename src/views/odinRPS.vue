@@ -1,17 +1,18 @@
 <template>
+  <navigation-bar></navigation-bar>
   <div class="body">
     <!-- introPopup -->
     <div class="introPopup">
 
     </div>
     <!-- gameEndPopup -->
-    <div id="gameOver" class="gameEndPopup">
-      <h1 id="gameOverH-el">Game Over!</h1>
-      <p id="lastGame-el">Game history: No history yet</p>
-      <button id="restart-btn">restart game</button>
+    <div class="gameEndPopup" ref="gameOverDiv">
+      <h1>{{ gameOverHel }}</h1>
+      <p>{{ lastGameEl }}</p>
+      <button @click="restartGame">restart game</button>
     </div>
 
-    <div class="actualBody" id="mainBodyEl">
+    <div class="actualBody" ref="mainBodyEl">
 
       <!-- header -->
       <div class="header">
@@ -23,24 +24,29 @@
         <div class="userContainer">
           <h2 class="rM readability">ヒーロー</h2>
           <h2 class="readability rM">(hero)</h2>
-          <h2 id="playerScore-el" class="score rM readability">Player Score 0</h2>
+          <h2 class="score rM readability">Player Score {{ userScore }}</h2>
         </div>
 
-        <div class="gifContainer" id="gifContainer">
-
-
+        <div class="gifContainer" id="gifContainer" ref="gifContainer">
+          <img v-if="draw" src="../assets/odinRPS/draw.gif" alt="img" class="gif">
+          <img v-if="computerPaper" src="../assets/odinRPS/computerPaper.gif" alt="img" class="gif">
+          <img v-if="computerRock" src="../assets/odinRPS/computerRock.gif" alt="img" class="gif">
+          <img v-if="computerScissor" src="../assets/odinRPS/computerScissor.gif" alt="img" class="gif">
+          <img v-if="userPaper" src="../assets/odinRPS/userPaper.gif" alt="img" class="gif">
+          <img v-if="userRock" src="../assets/odinRPS/userRock.gif" alt="img" class="gif">
+          <img v-if="userScissor" src="../assets/odinRPS/userScissor.gif" alt="img" class="gif">
         </div>
 
         <div class="villainContainer">
           <h2 class="rM readability">悪党</h2>
           <h2 class="readability rM">(villain)</h2>
-          <h2 id="computerScore-el" class="score rM readability">Computer Score</h2>
+          <h2 class="score rM readability">Computer Score {{ computerScore }}</h2>
         </div>
       </div>
 
       <!-- description what happened this round -->
       <div class="descriptionContainer">
-        <p id="roundStatus-el" class="description readability">choose your Weapon</p>
+        <p id="roundStatus-el" class="description readability">{{ roundStatusEl }}</p>
 
       </div>
 
@@ -48,9 +54,9 @@
       <div class="buttonContainer">
         <div class="selectionContainer">
           <!-- button active class for press animation -->
-          <img src="../assets/odinRPS/rock.png" id="rock-btn" class="rockBtn" alt="rock">
-          <img src="../assets/odinRPS/paper.png" id="paper-btn" class="paperBtn" alt="paper">
-          <img src="../assets/odinRPS/scissor.png" id="scissor-btn" class="scissorBtn" alt="scissor">
+          <img src="../assets/odinRPS/rock.png" class="rockBtn" alt="rock" ref="rockBtn" @click="rockF">
+          <img src="../assets/odinRPS/paper.png" class="paperBtn" alt="paper" ref="paperBtn" @click="paperF">
+          <img src="../assets/odinRPS/scissor.png" class="scissorBtn" alt="scissor" ref="scissorBtn" @click="scissorF">
         </div>
       </div>
 
@@ -71,10 +77,20 @@
 
 //Logic Section
 
+import {ref} from "vue";
+import NavigationBar from "@/components/NavigationBar.vue";
+
 const selections = ["rock", "paper", "scissor"]
-let userScore = 0
-let computerScore = 0
+const userScore = ref(0)
+const computerScore = ref(0)
 let computerSelection = ""
+const draw = ref(false)
+const computerPaper = ref(false)
+const computerRock = ref(false)
+const computerScissor = ref(false)
+const userPaper = ref(false)
+const userRock = ref(false)
+const userScissor = ref(false)
 
 function getComputerChoice() {
   return computerSelection = selections[Math.floor(Math.random() * 3)]
@@ -84,76 +100,90 @@ function getComputerChoice() {
 //this function should return:
 //a winner with a string like "You Lose! Rock beats Scissor"
 //or "It's a Draw!"
-function playRound(user) {
-  let computer = getComputerChoice(computerSelection)
 
+const playRound = async (user) => {
+  let computer = getComputerChoice(computerSelection)
+  draw.value = false
+  computerPaper.value = false
+  computerRock.value = false
+  computerScissor.value = false
+  userPaper.value = false
+  userRock.value = false
+  userScissor.value = false
   if (user === computer) {
-    createAppendGif("./images/draw.gif")
-    roundStatusEl.textContent = `It's a Draw! You choose ${user} and the computer choose ${computer}!`
+    // createAppendGif("../assets/odinRPS/draw.gif")
+    roundStatusEl.value = `It's a Draw! You choose ${user} and the computer choose ${computer}!`
+    draw.value= true
   } else if (user === "rock" && computer === "paper") {
-    roundStatusEl.textContent = `You Lost! you chose ${user} and the computer chose ${computer}`
-    computerScore += 1
-    updateScoreEl()
+    roundStatusEl.value = `You Lost! you chose ${user} and the computer chose ${computer}`
+    computerScore.value += 1
+    // updateScoreEl()
     checkWinner()
-    if (computerScore < 5) {
-      showGif("paper", "computer")
-    }
+    // if (computerScore.value < 5) {
+    //   await showGif("paper", "computer")
+    // }
+    computerPaper.value= true
   } else if (user === "rock" && computer === "scissor") {
-    roundStatusEl.textContent = `You Won! you chose ${user} and the computer chose ${computer}`
-    userScore += 1
-    updateScoreEl()
+    roundStatusEl.value = `You Won! you chose ${user} and the computer chose ${computer}`
+    userScore.value += 1
+    // updateScoreEl()
     checkWinner()
-    if (userScore < 5) {
-      showGif("rock", "user")
-    }
+    // if (userScore.value < 5) {
+    //   showGif("rock", "user")
+    // }
+    userRock.value = true
   } else if (user === "paper" && computer === "rock") {
-    roundStatusEl.textContent = `You Won! you chose ${user} and the computer chose ${computer}`
-    userScore += 1
-    updateScoreEl()
+    roundStatusEl.value = `You Won! you chose ${user} and the computer chose ${computer}`
+    userScore.value += 1
+    // updateScoreEl()
     checkWinner()
-    if (userScore < 5) {
-      showGif("paper", "user")
-    }
+    // if (userScore.value < 5) {
+    //   showGif("paper", "user")
+    // }
+    userPaper.value= true
   } else if (user === "paper" && computer === "scissor") {
-    roundStatusEl.textContent = `You Lost! you chose ${user} and the computer chose ${computer}`
-    computerScore += 1
-    updateScoreEl()
+    roundStatusEl.value = `You Lost! you chose ${user} and the computer chose ${computer}`
+    computerScore.value += 1
+    // updateScoreEl()
     checkWinner()
-    if (computerScore < 5) {
-      showGif("scissor", "computer")
-    }
+    // if (computerScore.value < 5) {
+    //   showGif("scissor", "computer")
+    // }
+    computerScissor.value = true
   } else if (user === "scissor" && computer === "rock") {
-    roundStatusEl.textContent = `You Lost! you chose ${user} and the computer chose ${computer}`
-    computerScore += 1
-    updateScoreEl()
+    roundStatusEl.value = `You Lost! you chose ${user} and the computer chose ${computer}`
+    computerScore.value += 1
+    // updateScoreEl()
     checkWinner()
-    if (computerScore < 5) {
-      showGif("rock", "computer")
-    }
+    // if (computerScore.value < 5) {
+    //   showGif("rock", "computer")
+    // }
+    computerRock.value = true
   } else if (user === "scissor" && computer === "paper") {
-    roundStatusEl.textContent = `You Won! you chose ${user} and the computer chose ${computer}`
-    userScore += 1
-    updateScoreEl()
+    roundStatusEl.value = `You Won! you chose ${user} and the computer chose ${computer}`
+    userScore.value += 1
+    // updateScoreEl()
     checkWinner()
-    if (userScore < 5) {
-      showGif("scissor", "user")
-    }
+    // if (userScore.value < 5) {
+    //   showGif("scissor", "user")
+    // }
+    userScissor.value = true
   }
 }
 
 function checkWinner() {
-  if (userScore === 5) {
-    gameOverHEl.textContent = `You Won!`
-    let message = (`You reached ${userScore} Points while the Villain reached ${computerScore} Points!`)
+  if (userScore.value === 5) {
+    gameOverHel.value = `You Won!`
+    let message = (`You reached ${userScore.value} Points while the Villain reached ${computerScore.value} Points!`)
     lastGame(message)
     gameOver()
-    callBackGif()
-  } else if (computerScore === 5) {
-    gameOverHEl.textContent = `Game Over!`
-    let message = (`You Lost! you reached ${userScore} Points while the Villain reached ${computerScore} Points!`)
+    // callBackGif()
+  } else if (computerScore.value === 5) {
+    gameOverHel.value = `Game Over!`
+    let message = (`You Lost! you reached ${userScore.value} Points while the Villain reached ${computerScore.value} Points!`)
     lastGame(message)
     gameOver()
-    callBackGif()
+    // callBackGif()
   }
 }
 
@@ -161,121 +191,137 @@ function checkWinner() {
 //Intro Popup Section
 
 //Outro Popup Section
-const gameOverDiv = document.querySelector("#gameOver")
-const gameOverHEl = document.querySelector("#gameOverH-el")
-const lastGameEl = document.querySelector("#lastGame-el")
-
-const restartBtn = document.querySelector("#restart-btn")
+// const gameOverDiv = document.querySelector("#gameOver")
+const gameOverDiv = ref()
+// const gameOverHEl = document.querySelector("#gameOver-el")
+const gameOverHel = ref('')
+// const lastGameEl = document.querySelector("#lastGame-el")
+const lastGameEl = ref()
+// const restartBtn = document.querySelector("#restart-btn")
 
 //gameOver Popup function
 function lastGame(x) {
-  lastGameEl.textContent = x
+  lastGameEl.value = x
 }
 
+
+const mainBodyEl = ref()
+
 function gameOver() {
-  gameOverDiv.style.visibility = "visible"
-  mainBodyEl.style.visibility = "hidden"
+  gameOverDiv.value.style.visibility = "visible"
+  mainBodyEl.value.style.visibility = "hidden"
 }
 
 //Header Section
 
 //ScoreBoard Section
-const playerScoreEl = document.querySelector("#playerScore-el")
-const computerScoreEl = document.querySelector("#computerScore-el")
-playerScoreEl.textContent = userScore
-computerScoreEl.textContent = computerScore
+// const playerScoreEl = document.querySelector("#playerScore-el")
+// const computerScoreEl = document.querySelector("#computerScore-el")
 
-//update scoreBoard after each round function
-
-function updateScoreEl() {
-  playerScoreEl.textContent = userScore
-  computerScoreEl.textContent = computerScore
-}
+const gifContainer = ref()
+// const gifImg = ref()
+// const imgSource = ref('')
 
 //gifContainer Section
-function createAppendGif(x) {
-  const gifContainer = document.querySelector("#gifContainer")
-  const gifImg = document.createElement("img");
-  gifImg.classList.add("gif")
-  gifImg.setAttribute("id", "gif")
-  gifImg.src = x + "?t=" + Date.now();
-  gifContainer.appendChild(gifImg)
-}
+// function createAppendGif(x) {
+  // // const gifImg = document.createElement("img");
+  // gifImg.value.classList.add("gif")
+  // gifImg.value.setAttribute("id", "gif")
+  // gifImg.value.src = `${x}  ${Date.now()}`;
+  // // gifContainer.value.appendChild(gifImg.value)
+  // gifImg.value.src = x
+  // console.log(gifImg.value)
+// }
 
 
-function callBackGif() {
-  const gifContainer = document.querySelector("#gifContainer");
-  gifContainer.innerHTML = "";
-}
+// function callBackGif() {
+//   const gifContainer = document.querySelector("#gifContainer");
+//   gifContainer.innerHTML = "";
+// }
 
 
 //function show rock gif if rock wins the round
-function showGif(whatGif, whatWinner) {
-  if (whatGif === "rock" && whatWinner === "computer") {
-    createAppendGif("../assets/odinRPS/computerRock.gif")
-
-  } else if (whatGif === "scissor" && whatWinner === "computer") {
-    createAppendGif("../assets/odinRPS/computerScissor.gif")
-
-  } else if (whatGif === "paper" && whatWinner === "computer") {
-    createAppendGif("../assets/odinRPS/computerPaper.gif")
-
-  } else if (whatGif === "rock" && whatWinner === "user") {
-    createAppendGif("../assets/odinRPS/userRock.gif")
-
-  } else if (whatGif === "scissor" && whatWinner === "user") {
-    createAppendGif("../assets/odinRPS/userScissor.gif")
-
-  } else if (whatGif === "paper" && whatWinner === "user") {
-    createAppendGif("../assets/odinRPS/userPaper.gif")
-
-  }
-}
+// const showGif = (whatGif, whatWinner) => {
+//   if (whatGif === "rock" && whatWinner === "computer") {
+//     // createAppendGif("../assets/odinRPS/computerRock.gif")
+//     computerRock.value = true
+//   } else if (whatGif === "scissor" && whatWinner === "computer") {
+//     // createAppendGif("../assets/odinRPS/computerScissor.gif")
+//     computerScissor.value = true
+//   } else if (whatGif === "paper" && whatWinner === "computer") {
+//     // createAppendGif("../assets/odinRPS/computerPaper.gif")
+//     computerPaper.value = true
+//   } else if (whatGif === "rock" && whatWinner === "user") {
+//     // createAppendGif("../assets/odinRPS/userRock.gif")
+//     userRock.value = true
+//   } else if (whatGif === "scissor" && whatWinner === "user") {
+//     // createAppendGif("../assets/odinRPS/userScissor.gif")
+//
+//   } else if (whatGif === "paper" && whatWinner === "user") {
+//     // createAppendGif("../assets/odinRPS/userPaper.gif")
+//     userPaper.value = true
+//   }
+// }
 
 
 //description Section
-const roundStatusEl = document.querySelector("#roundStatus-el")
-
+// const roundStatusEl.value = document.querySelector("#roundStatus-el")
+const roundStatusEl = ref('choose your Weapon')
 //Button Section
-const rockBtn = document.querySelector("#rock-btn")
-const paperBtn = document.querySelector("#paper-btn")
-const scissorBtn = document.querySelector("#scissor-btn")
+// const rockBtn = document.querySelector("#rock-btn")
+const rockBtn = ref()
+// const paperBtn = document.querySelector("#paper-btn")
+const paperBtn = ref()
+// const scissorBtn = document.querySelector("#scissor-btn")
+const scissorBtn = ref()
 
 //when pressed rock,paper,scissor run playRound(selection)
-rockBtn.addEventListener("click", function () {
-  callBackGif()
+
+// rockBtn.addEventListener("click", function () {
+const rockF = () => {
+  // callBackGif()
   playRound(selections[0])
   btnAnimation(rockBtn)
-})
-paperBtn.addEventListener("click", function () {
-  callBackGif()
+}
+
+// paperBtn.addEventListener("click", function () {
+const paperF = () => {
+  // callBackGif()
   playRound(selections[1])
   btnAnimation(paperBtn)
-})
-scissorBtn.addEventListener("click", function () {
-  callBackGif()
+}
+// scissorBtn.addEventListener("click", function () {
+const scissorF = () => {
+  // callBackGif()
   playRound(selections[2])
   btnAnimation(scissorBtn)
-})
-restartBtn.addEventListener("click", function () {
-  restartGame()
-})
+}
+// restartBtn.addEventListener("click", function () {
+//   restartGame()
+// })
 
 //restartGame
 function restartGame() {
-  userScore = 0
-  computerScore = 0
-  updateScoreEl()
-  gameOverDiv.style.visibility = "hidden"
-  mainBodyEl.style.visibility = "visible"
-  roundStatusEl.textContent = "Choose your Weapon"
+  draw.value = false
+  computerPaper.value = false
+  computerRock.value = false
+  computerScissor.value = false
+  userPaper.value = false
+  userRock.value = false
+  userScissor.value = false
+  userScore.value = 0
+  computerScore.value = 0
+  // updateScoreEl()
+  gameOverDiv.value.style.visibility = "hidden"
+  mainBodyEl.value.style.visibility = "visible"
+  roundStatusEl.value = "Choose your Weapon"
 }
 
 /* button click animation */
 function btnAnimation(x) {
-  x.classList.add("buttonActive")
+  x.value.classList.add("buttonActive")
   setTimeout(() => {
-    x.classList.remove("buttonActive")
+    x.value.classList.remove("buttonActive")
   }, 150);
 }
 
