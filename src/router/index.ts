@@ -18,12 +18,12 @@ const routes: Array<RouteRecordRaw> = [
         component: HomeView
     },
     {
-        path: '/odin/Form',
+        path: '/odinForm',
         name: 'odin Form',
         component: odinSignUp
     },
     {
-        path: '/odin/Dashboard',
+        path: '/odinDashboard',
         name: 'Odin Dashboard',
         component: odinDashboard
     },
@@ -33,37 +33,37 @@ const routes: Array<RouteRecordRaw> = [
         component: discordHelp
     },
     {
-        path: '/odin/Practice',
+        path: '/odinPractice',
         name: 'Odin Practice',
         component: odinPractice
     },
     {
-        path: '/odin/Library',
+        path: '/odinLibrary',
         name: 'Odin Library',
         component: odinLibrary
     },
     {
-        path: '/odin/LandingPage',
+        path: '/odinLandingPage',
         name: 'Odin Landing page',
         component: odinLandingPage
     },
     {
-        path: '/scrimba/ScoreBoard',
+        path: '/scrimbaScoreBoard',
         name: 'Scrimba Score-Board',
         component: scrimbaScoreBoard
     },
     {
-        path: '/scrimba/UnitConversion',
+        path: '/scrimbaUnitConversion',
         name: 'Unit Conversion',
         component: scrimbaUnitConversion
     },
     {
-        path: '/scrimba/PasswordGenerator',
+        path: '/scrimbaPasswordGenerator',
         name: 'Password generator',
         component: scrimbaPasswordGenerator
     },
     {
-        path: '/odin/RPS',
+        path: '/odinRPS',
         name: 'Odin Rock Paper Scissor',
         component: odinRPS
     },
