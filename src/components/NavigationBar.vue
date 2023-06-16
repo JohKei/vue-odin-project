@@ -21,7 +21,7 @@
           <router-link to="/scrimbaPasswordGenerator">Scrimba Password generator</router-link>
           <router-link to="/odinRPS">Odin Rock Paper Scissor</router-link>
           <router-link to="/odinEtchaSketch">Odin Etch a Sketch</router-link>
-          <router-link to="#">Odin Calculator</router-link>
+          <router-link to="/odinCalculator">Odin Calculator</router-link>
           <h2>Odin JS Path</h2>
           <h3>Intermediate HTML and CSS</h3>
           <router-link to="/odinForm">Odin Form</router-link>
