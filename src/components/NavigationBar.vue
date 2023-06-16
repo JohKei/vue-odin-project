@@ -1,4 +1,5 @@
 <template>
+  <!--Todo: refactor Navbar-->
   <div class="customMenu" :class="{customMenuBottomBorder: !navActive}">
     <img src="../assets/menu.svg" alt="Menu Icon" class="menuIcon" @click="navActive = !navActive">
     <div v-if="navActive" class="customNavbar">
@@ -11,10 +12,21 @@
           <i v-if="!odinContentActive" class="arrow right"></i>
         </button>
         <div v-if="odinContentActive" class="odinDropContent">
-          <h3 class="semHeading">Intermediate HTML and CSS</h3>
+          <h2>Odin Foundations</h2>
+          <h3>HTML & CSS basics</h3>
+          <router-link to="/odinLandingPage">Odin Landing Page</router-link>
+          <h3>Javascript Basics</h3>
+          <router-link to="/scrimbaScoreBoard">Scrimba Score board</router-link>
+          <router-link to="/scrimbaUnitConversion">Scrimba Unit conversion</router-link>
+          <router-link to="/scrimbaPasswordGenerator">Scrimba Password generator</router-link>
+          <router-link to="/odinRPS">Odin Rock Paper Scissor</router-link>
+          <router-link to="#">Odin Etch a Sketch</router-link>
+          <router-link to="#">Odin Calculator</router-link>
+          <h2>Odin JS Path</h2>
+          <h3>Intermediate HTML and CSS</h3>
           <router-link to="/odinForm">Odin Form</router-link>
           <router-link to="/odinDashboard">Odin Dashboard</router-link>
-          <h3 class="semHeading">Javascript</h3>
+          <h3>Javascript</h3>
           <router-link to="/odinLibrary">Odin Library</router-link>
         </div>
       </div>
@@ -128,14 +140,20 @@ a {
 
 .odinDropContent > a,
 .personalDropContent > a {
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
-.semHeading{
-  text-align: center;
-  font-size: 1.3rem;
+
+h3 {
+  font-size: 1.2rem;
   margin: 0;
 }
-.odinProjectsDropdownContainer{
+
+h2 {
+  font-size: 1.4rem;
+  margin: 0;
+}
+
+.odinProjectsDropdownContainer {
   display: flex;
   flex-direction: column;
 }
