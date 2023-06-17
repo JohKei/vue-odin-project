@@ -202,7 +202,7 @@ function btnAnimation(x) {
 
 <style scoped lang="css">
 .body {
-
+  background-color: black;
 }
 
 .rM {
