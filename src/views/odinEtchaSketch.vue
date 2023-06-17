@@ -68,7 +68,7 @@ function createRandomRgbValue() {
 
 <style scoped lang="css">
 .body {
-  background-image: url(../assets/odinEtchAsketch/backGround.png);
+  background-color: black;
   height: 100vh;
   display: flex;
   gap: 20px;

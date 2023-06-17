@@ -6,7 +6,7 @@
         <img src="../assets/odin.png" alt="TOP Logo" class="odinLogo">
         <p class="slogan">The Odin Project</p>
       </div>
-      <p class="photoBy">Photo created by <a href="https://www.midjourney.com/home/" target="_blank">midjourney</a></p>
+      <p class="photoBy">Photo created by <a href="https://www.midjourney.com/home/" target="_blank">midJourney</a></p>
     </div>
     <div class="rightSide">
       <div class="contentContainer">
@@ -22,59 +22,78 @@
         </p>
       </div>
       <div class="formContainer">
-        <Form @submit="onSubmit" class="form" id="odinForm">
+        <Form @submit="onSubmit" class="form" id="odinForm" :validation-schema="formRules">
           <div class="inputContainer form-floating">
-            <Field type="text" name="firstName" id="firstName" class="form-control" placeholder="John"/>
+            <Field type="text"
+                   name="firstName"
+                   id="firstName"
+                   class="form-control"
+                   placeholder="John"
+            />
             <label for="firstName">
               First Name
             </label>
+            <ErrorMessage name="firstName"></ErrorMessage>
           </div>
           <div class="inputContainer form-floating">
-            <Field type="text" name="lastName" id="lastName" class="form-control" placeholder="Wick"/>
+            <Field type="text"
+                   name="lastName"
+                   id="lastName"
+                   class="form-control"
+                   placeholder="Wick"
+            />
             <label for="lastName">
               Last Name
             </label>
+            <ErrorMessage name="lastName"></ErrorMessage>
           </div>
           <div class="inputContainer form-floating">
-            <Field type="email" name="mail" class="form-control" id="mail"
-                   :rules="veeValidate" placeholder="Email"
-                   ref="email"
-                   @input="checkEmail"
-                   :class="{'is-valid':isValidEmail, 'is-invalid':isInvalidEmail}"
+            <Field type="email"
+                   name="mail"
+                   class="form-control"
+                   id="mail"
+                   placeholder="john.wick@wick.com"
             />
-            <ErrorMessage name="mail"/>
             <label for="mail">
               Email
             </label>
+            <ErrorMessage name="mail"/>
           </div>
           <div class="inputContainer form-floating">
-            <Field type="text" name="phoneNumber" class="form-control" placeholder="Phone Number" id="phoneNumber"/>
+            <Field type="text"
+                   name="phoneNumber"
+                   class="form-control"
+                   placeholder="Phone Number"
+                   id="phoneNumber"
+            />
             <label for="phoneNumber">
               Phone Number
             </label>
+            <ErrorMessage name="phoneNumber"></ErrorMessage>
           </div>
           <div class="inputContainer form-floating">
-            <Field type="password" name="password" class="form-control" placeholder="Password"
+            <Field type="password"
+                   name="password"
+                   class="form-control"
+                   placeholder="Password"
                    id="password"
-                   v-model="passwordOne"
-                   @input="checkPassword"
-                   :class="{'is-valid':isValidPassword, 'is-invalid':isInvalidPassword}"
             />
             <label for="password">
               Password
             </label>
+            <ErrorMessage name="password"></ErrorMessage>
           </div>
           <div class="inputContainer form-floating">
-            <Field type="password" name="confirmPassword" id="confirmPassword" class="form-control"
+            <Field type="password"
+                   name="confirmPassword"
+                   id="confirmPassword"
+                   class="form-control"
                    placeholder="confirm Password"
-                   v-model="passwordTwo"
-                   @input="checkPassword"
-                   :class="{'is-valid':isValidPassword, 'is-invalid':isInvalidPassword}"
             />
-            <span v-if="errorMessage">{{ errorMessage }}</span>
             <label for="confirmPassword">
               confirm Password
             </label>
+            <ErrorMessage name="confirmPassword"></ErrorMessage>
           </div>
         </Form>
       </div>
@@ -87,61 +106,29 @@
 </template>
 
 <script setup lang="ts">
-import {Form, Field, ErrorMessage} from 'vee-validate'
-import {ref} from "vue";
+import {Form, Field, ErrorMessage, configure} from 'vee-validate'
 import NavigationBar from "@/components/NavigationBar.vue";
+import * as yup from 'yup'
 
+const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
 
-const email = ref('')
+const formRules = yup.object({
+  firstName : yup.string().required('This Field is required').min(3),
+  lastName : yup.string().required('This Field is required').min(3),
+  mail : yup.string().required('This Field is required').email(),
+  phoneNumber : yup.string().required('This Field is required').matches(phoneRegExp, 'Phone number is not valid'),
+  password: yup.string().required('This Field is required').matches(passwordRegex, '1 character, 1 uppercase, 1 lowercase'),
+  confirmPassword : yup.string().required('This Field is required').oneOf([yup.ref('password')], 'Passwords do not match')
+})
 
-function onSubmit(values: object) {
-  if (checkPassword() && checkEmail(email.value)) {
-    alert(JSON.stringify(values, null, 2));
-  }
+configure({
+  validateOnInput: true
+})
+
+function onSubmit(values:object) {
+  console.log("Submitted! Here's what im sending:",values)
 }
-
-const isValidPassword = ref(false)
-const isInvalidPassword = ref(false)
-const isValidEmail = ref(false)
-const isInvalidEmail = ref(false)
-
-
-const veeValidate = (value: string) => {
-  if (!value) {
-    return 'This field is required'
-  }
-  const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-  if (!regex.test(value)) {
-    isInvalidEmail.value = true
-    return 'This field must be a valid email';
-  }
-  isInvalidEmail.value = false
-  isValidEmail.value = true
-  return true
-}
-const errorMessage = ref('')
-const passwordOne = ref('')
-const passwordTwo = ref('')
-const checkPassword = () => {
-  if (passwordOne.value != passwordTwo.value) {
-    errorMessage.value = 'Passwords do not Match!'
-    isInvalidPassword.value = true
-    return false
-  } else if (passwordOne.value === passwordTwo.value) {
-    errorMessage.value = ''
-    isInvalidPassword.value = false
-    isValidPassword.value = true
-    return true
-  }
-}
-
-const checkEmail = (value: string) => {
-  const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-  if (!regex.test(value)) {
-    return 'This field must be a valid email';
-  }
-}
-
 </script>
 
 <style scoped lang="css">
