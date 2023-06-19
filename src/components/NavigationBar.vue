@@ -1,6 +1,6 @@
 <template>
   <div class="navMenu" :class="{customMenuBottomBorder: !navActive}">
-    <img src="../assets/menu.svg" alt="Menu Icon" class="toggleNavbar" @click="navActive = !navActive">
+    <svg-icon type="mdi" :path="icons.menu" class="toggleNavbar" @click="navActive = !navActive"/>
     <div v-if="navActive" class="navBar">
       <router-link to="/" class="routerLinks">Home</router-link>
       <router-link to="#" class="routerLinks">About</router-link>
@@ -19,14 +19,14 @@
           <div class="projectContainer" v-if="foundations">
             <h3 class="courseTopics">Odin HTML & CSS basics</h3>
             <router-link to="/odinLandingPage" class="routerLinks">Odin Landing Page</router-link>
+            <h3 class="courseTopics">Scrimba: first touch Javascript</h3>
+            <router-link to="/scrimbaScoreBoard" class="routerLinks">Scrimba Score board</router-link>
+            <router-link to="/scrimbaPasswordGenerator" class="routerLinks">Scrimba Password generator</router-link>
+            <router-link to="/scrimbaUnitConversion" class="routerLinks">Scrimba Unit conversion</router-link>
             <h3 class="courseTopics">Odin Javascript Basics</h3>
             <router-link to="/odinRPS" class="routerLinks">Odin Rock Paper Scissor</router-link>
             <router-link to="/odinEtchaSketch" class="routerLinks">Odin Etch a Sketch</router-link>
             <router-link to="/odinCalculator" class="routerLinks">Odin Calculator</router-link>
-            <h3 class="courseTopics">Scrimba first touch Javascript</h3>
-            <router-link to="/scrimbaScoreBoard" class="routerLinks">Scrimba Score board</router-link>
-            <router-link to="/scrimbaPasswordGenerator" class="routerLinks">Scrimba Password generator</router-link>
-            <router-link to="/scrimbaUnitConversion" class="routerLinks">Scrimba Unit conversion</router-link>
           </div>
           <button class="toggleButton" @click="jsPath = !jsPath">
             Odin JS Path
@@ -63,18 +63,17 @@
 
 <script setup lang="ts">
 import {ref} from "vue";
+import SvgIcon from '@jamescoyle/vue-icon';
+import {mdiMenu} from '@mdi/js';
 
 const navActive = ref(false)
 const odinContentActive = ref(true)
 const personalContentActive = ref(true)
 const foundations = ref(false)
 const jsPath = ref(true)
-
-// Todo: Transition opening Navbar & dropsDowns
-// Todo: reName containerDivs for better readability
-// Todo: Vue themed color palette
-// Todo: font sizing
-
+const icons = {
+  menu: mdiMenu
+}
 </script>
 
 <style scoped lang="css">
@@ -113,8 +112,9 @@ const jsPath = ref(true)
   text-align: center;
   color: black;
   background-color: inherit;
+  font-size: 1.4rem;
+  font-weight: 700;
 }
-
 
 .projectContainer {
   display: flex;
@@ -139,11 +139,18 @@ const jsPath = ref(true)
   -webkit-transform: rotate(-45deg);
 }
 
-
 .routerLinks {
   font-size: 1rem;
   color: green;
   text-decoration: none;
+}
+
+.routerLinks {
+  color: black;
+}
+
+.routerLinks:hover {
+  color: rgb(33, 230, 193);
 }
 
 .courseTopics {
