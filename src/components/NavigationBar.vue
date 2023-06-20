@@ -39,6 +39,7 @@
             <router-link to="/odinDashboard" class="routerLinks">Odin Dashboard</router-link>
             <h3 class="courseTopics">Javascript</h3>
             <router-link to="/odinLibrary" class="routerLinks">Odin Library</router-link>
+            <router-link to="/odinTicTacToe" class="routerLinks">Odin Tic Tac Toe</router-link>
           </div>
         </div>
       </div>
