@@ -15,7 +15,7 @@
       </ul>
     </div>
     <button @click="people.logOut()">Log</button>
-    <h2>Stats: {{stats.setPeople.value}}</h2>
+    <h2>Stats: {{ stats.setPeople.value }}</h2>
 
   </div>
 </template>
@@ -29,18 +29,18 @@ import {computed, reactive, ref} from "vue";
 const people = (function () {
   const input = ref('')
   const _state = reactive({
-    people : ['Will', 'Smith'],
+    people: ['Will', 'Smith'],
   })
 
-  const peopleArr = computed(()=> _state.people)
+  const peopleArr = computed(() => _state.people)
   const addPerson = () => {
     _state.people.push(input.value)
     input.value = ''
   }
-  const removePerson = (who:string) =>{
+  const removePerson = (who: string) => {
     const personIndex = _state.people.indexOf(who)
-    if (personIndex !== -1){
-      _state.people.splice(personIndex,1)
+    if (personIndex !== -1) {
+      _state.people.splice(personIndex, 1)
     }
   }
 
@@ -56,13 +56,24 @@ const people = (function () {
     input
   }
 })()
-console.log(people)
 
-const stats = (function (){
+const stats = (function () {
   const setPeople = computed(() => people.array.length)
 
   return {setPeople}
 })()
+
+const human = {
+  species: 'Human',
+  create: function (values:any){
+    const instance = Object.create(this)
+    Object.keys(values).forEach(function (key){
+      instance[key] = values[key]
+    })
+    return instance
+  },
+}
+
 </script>
 
 
