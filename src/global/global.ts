@@ -30,7 +30,8 @@ class Book implements bookInterface {
     title: string
     topic: string
     cover: string
-    assignId(){
+
+    assignId() {
         this.id = uuidv4()
     }
 
@@ -40,7 +41,6 @@ class Book implements bookInterface {
                 title: string,
                 topic: string,
                 cover: string
-
     ) {
         this.id = undefined
         this.author = author
