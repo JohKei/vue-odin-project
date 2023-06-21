@@ -1,89 +1,67 @@
 <template>
   <navigation-bar></navigation-bar>
   <div class="body">
-    <h1>Tic Tac Toe!</h1>
-    <ol>
-      <li v-for="cell in board" :key="cell">
-        <button @click="cell.addToken('x')">Value: {{ cell.getValue.value }}</button>
+    <h1>Tic Tac Toe</h1>
+    <button @click="gameBoard.createBoard()">create board</button>
+    <button @click="gameBoard.resetBoard()">resetBoard</button>
+    <ul>
+      <li v-for="item in gameBoard.board" :key="item">
+        <button @click="item.addToken('x')">Value: {{ item.getValue }}</button>
       </li>
-    </ol>
-    <button @click="GameBoard().logPrivate()">Log private Board</button>
-    <button @click="logActualBoard(board)">Log used board</button>
+    </ul>
+    <button @click="console.log(gameBoard.board)">Log</button>
   </div>
 </template>
 
 <script setup lang="ts">
 import NavigationBar from "@/components/NavigationBar.vue";
 import {computed, reactive, ref} from "vue";
-import {Board, Cell} from '@/global/global'
-// Todo: as little global scoped code as possible -> use modules & factory()
-// Todo: GameBoard[] inside a GameBoard{} <- but why?
-// Todo: players inside of an {}
-// Todo: {} to control the gameFlow
+import {Board, Cell} from "@/global/global";
 
-const Player = (name: string, weapon: string) => {
-
-  const hello = () => {
-    console.log(name + ' is greeting you!')
-  }
-  return {name, weapon, hello}
-}
 
 const cell = (): Cell => {
-  let _value = ref()
-
+  const _tokenValue = ref()
   const addToken = (player: string) => {
-    _value.value = player
+    _tokenValue.value = player
   }
-
-  const getValue = computed(() => _value.value)
-
+  const getValue = computed(() => _tokenValue.value)
   return {
     addToken,
     getValue
   }
 }
 
-const GameBoard = () => {
-  const _cols = 3
-  const _rows = 3
-  const _board: Board<Cell> = []
 
-  for (let i = 1; i <= _rows * _cols; i++) {
-    _board.push(cell())
+const gameBoard = reactive({
+  board: [] as Board<Cell>,
+
+  createBoard: function () {
+    if(this.board.length){
+      this.resetBoard()
+    }else{
+      for (let i = 1; i <= 9; i++) {
+        this.board.push(cell())
+      }
+    }
+
+  },
+
+  resetBoard: function () {
+    this.board.splice(0)
+    this.createBoard()
   }
-  const board = () => _board
+})
 
-
-  const logPrivate = () => {
-    const loggedBoard: any = []
-    _board.forEach((item) => {
-      loggedBoard.push(item.getValue.value)
-    })
-    console.table(loggedBoard)
-  }
-
-
-  return {logPrivate, board}
-}
-
-const logActualBoard = (arg: Board<Cell>) => {
-  const loggedBoard: any = []
-  arg.forEach((item) => {
-    loggedBoard.push(item.getValue.value)
-  })
-  console.table(loggedBoard)
-}
-
-// const board:Board<Cell> = GameBoard().board()
-const board = GameBoard().board()
 </script>
 
 <style scoped lang="css">
 .body {
   height: 100vh;
-  display: grid;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
+
+
 </style>
