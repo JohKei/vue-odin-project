@@ -1,3 +1,5 @@
+import {ComputedRef} from "vue";
+
 export {
     bookInterface,
     Book,
@@ -53,6 +55,6 @@ class Book implements bookInterface {
 // Cell && Board -> odinTicTacToe
 interface Cell {
     addToken: (player: string) => void
-    getValue: () => string
+    getValue: ComputedRef<string>
 }
 type Board<T extends Cell> = Array<T>
