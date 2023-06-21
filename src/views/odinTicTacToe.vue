@@ -7,41 +7,37 @@
 
 <script setup lang="ts">
 import NavigationBar from "@/components/NavigationBar.vue";
+import {Cell, Board} from "@/global/global";
 // Todo: as little global scoped code as possible -> use modules & factory()
 // Todo: gameBoard[] inside a gameBoard{} <- but why?
 // Todo: players inside of an {}
 // Todo: {} to control the gameFlow
 
-interface Cell {
-  addToken: (player: string) => void
-  getValue: () => string
-}
-type Board<T extends Cell> = Array<T>
 
 
 // cell() seems to be a factory function
 const cell = ():Cell => {
-  let value = ''
+  let _value = ''
 
   const addToken = (player:string) => {
-    value = player
+    _value = player
   }
 
-  const getValue = () => value
+  const getValue = () => _value
 
   return {addToken, getValue}
 }
 
 // gameBoard() seems to be a factory function
 const gameBoard = () => {
-  const rows = 3
-  const columns = 3
-  const board:Board<Cell> = []
+  const _rows = 3
+  const _columns = 3
+  const _board:Board<Cell> = []
 
-  for (let i = 1; i <= rows * columns; i++) {
-    board.push(cell())
+  for (let i = 1; i <= _rows * _columns; i++) {
+    _board.push(cell())
   }
-  const getBoard = () => board
+  const getBoard = () => _board
 
   return {getBoard}
 }
