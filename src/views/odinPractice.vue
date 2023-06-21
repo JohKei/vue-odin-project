@@ -6,17 +6,14 @@
 </template>
 
 
-<script setup lang="js">
+<script setup lang="ts">
 import NavigationBar from "@/components/NavigationBar.vue";
-
-
-
 
 </script>
 
 
 <style scoped lang="css">
-.practiceBody{
+.practiceBody {
   display: grid;
   width: 100vw;
   height: 100vh;
