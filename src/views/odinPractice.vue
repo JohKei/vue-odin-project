@@ -3,10 +3,10 @@
   <div class="practiceBody">
     <div>
       <h1>People</h1>
-      <input type="text" v-model="people.input">
-      <button @click="people.addPerson()">Add Person</button>
+      <input type="text" v-model="people.input.value">
+      <button @click="people.addPerson">Add Person</button>
       <ul>
-        <li v-for="person in people.people" :key="person">
+        <li v-for="person in people.array" :key="person">
           <div>
             <span>{{ person }}</span>
             <button @click="people.removePerson(person)">x</button>
@@ -14,6 +14,8 @@
         </li>
       </ul>
     </div>
+    <button @click="people.logOut()">Log</button>
+    <h2>Stats: {{stats.setPeople.value}}</h2>
 
   </div>
 </template>
@@ -21,24 +23,46 @@
 
 <script setup lang="ts">
 import NavigationBar from "@/components/NavigationBar.vue";
-import {reactive} from "vue";
+import {computed, reactive, ref} from "vue";
 
-// Modular JS below
-const people = reactive({
-  people: ['Will', 'Laura'],
-  input: '',
-  addPerson: function () {
-    this.people.push(this.input)
-    this.input = ''
-  },
-  removePerson: function (who:string){
-    const indexToRemove = this.people.indexOf(who)
-    this.people.splice(indexToRemove,1)
+// Revealing Modular pattern
+const people = (function () {
+  const input = ref('')
+  const _state = reactive({
+    people : ['Will', 'Smith'],
+  })
+
+  const peopleArr = computed(()=> _state.people)
+  const addPerson = () => {
+    _state.people.push(input.value)
+    input.value = ''
+  }
+  const removePerson = (who:string) =>{
+    const personIndex = _state.people.indexOf(who)
+    if (personIndex !== -1){
+      _state.people.splice(personIndex,1)
+    }
   }
 
-})
+  const log = () => {
+    console.log(peopleArr.value)
+  }
 
+  return {
+    array: peopleArr.value,
+    logOut: log,
+    addPerson,
+    removePerson,
+    input
+  }
+})()
+console.log(people)
 
+const stats = (function (){
+  const setPeople = computed(() => people.array.length)
+
+  return {setPeople}
+})()
 </script>
 
 
