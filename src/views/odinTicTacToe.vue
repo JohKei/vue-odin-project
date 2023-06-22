@@ -83,7 +83,6 @@ const gameHandler = reactive({
   possibleEnds: {},
   whoisTurn: ''
 })
-// Todo: Flex reverse so bottom-left = arr[0] and top-right = arr[8]
 </script>
 
 <style scoped lang="css">
