@@ -27,7 +27,7 @@ import {Board, Cell, formObject} from "@/global/ticTacToeTypes";
 import StartModal from "@/components/odinTicTacToe/startModal.vue";
 
 // Todo: @start playerOne selects either X or Y + update's whoisTurn(default ' ') = selection
-// Todo: @click on Cell -> addToken(whoisTurn) -> checkWinner(PossibleSolutions[solution[]]) -> update whoisTurn = (!current)
+// Todo: @click on Cell -> addToken(whoisTurn) -> calculateGame(PossibleSolutions[solution[]]) -> update whoisTurn = (!current)
 
 onMounted(async () => {
   gameHandler.startModal = true
@@ -38,7 +38,7 @@ const cell = (): Cell => {
   const addToken = (player: string) => {
     _tokenValue.value = player
     gameHandler.toggleWhoisTurn()
-    gameHandler.checkWinner()
+    gameHandler.calculateGame()
   }
   const getValue = computed(() => _tokenValue.value)
   return {
@@ -96,46 +96,48 @@ const gameHandler = reactive({
       this.whoisTurn = 'X'
     }
   },
-
-  checkWinner: function () {
-    // console.table(gameBoard.logBoard());
-    const board = gameBoard.logBoard()
-    const boardObj = {
-      0: '',
-      1: '',
-      2: '',
-      3: '',
-      4: '',
-      5: '',
-      6: '',
-      7: '',
-      8: ''
-    }
-    // console.log(board.indexOf('X'))
+  board: [],
+  boardObj: {
+    0: '',
+    1: '',
+    2: '',
+    3: '',
+    4: '',
+    5: '',
+    6: '',
+    7: '',
+    8: ''
+  },
+  calculateGame: function () {
+    this.board = gameBoard.logBoard()
     // Todo: typing!
-    for (let i = 0; i < board.length; i++) {
-      boardObj[i] = board[i]
+    for (let i = 0; i < this.board.length; i++) {
+      this.boardObj[i] = this.board[i]
     }
+    this.checkWinner()
+    this.checkDraw()
+  },
+
+  checkWinner: function ():any {
     this.possibleEnds.forEach((item) => {
-      if (boardObj[item[0]] === 'X' && boardObj[item[1]] === 'X' && boardObj[item[2]] === 'X') {
-        alert('We have a Winner X')
-      }else if (boardObj[item[0]] === 'O' && boardObj[item[1]] === 'O' && boardObj[item[2]] === 'O'){
-        alert('We have a Winner O')
+      if (this.boardObj[item[0]] === 'X' && this.boardObj[item[1]] === 'X' && this.boardObj[item[2]] === 'X') {
+        alert('X')
+        return true
+      } else if (this.boardObj[item[0]] === 'O' && this.boardObj[item[1]] === 'O' && this.boardObj[item[2]] === 'O') {
+        alert('O')
+        return true
+      }else{
+        return
       }
 
     })
-    if (board.every((item:string)=>{
-      return item === 'X' || item === 'O'
-    })){
-      alert('Its a Draw!')
-      return
+  },
+  checkDraw: function () {
+    if (this.board.every((item: string) => {return item === 'X' || item === 'O'}) && !this.checkWinner()  ) {
+      alert('Draw')
+      return true
       //
     }
-
-  },
-
-  checkDraw: function (){
-  //
   }
 })
 const getForm = (form: formObject) => {
