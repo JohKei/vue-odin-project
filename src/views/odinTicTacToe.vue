@@ -14,8 +14,13 @@
 
 <script setup lang="ts">
 import NavigationBar from "@/components/NavigationBar.vue";
-import {computed, ComputedRef, onMounted, reactive, Ref, ref} from "vue";
+import {computed, onMounted, reactive, ref} from "vue";
 import {Board, Cell} from "@/global/global";
+
+// Todo: start Modal
+// Todo: @start playerOne selects either X or Y + update's whoisTurn(default ' ') = selection
+// Todo: @click on Cell -> addToken(whoisTurn) -> checkWinner(PossibleSolutions[solution[]]) -> update whoisTurn = (!current)
+
 
 onMounted(() => {
   gameBoard.createBoard()
