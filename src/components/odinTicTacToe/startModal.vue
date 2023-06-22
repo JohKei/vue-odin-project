@@ -64,7 +64,7 @@
                  name="playerTwoName"
                  placeholder="playerTwoName"
                  class="form-control"
-                 :disabled="!disableAiMode"
+                 :disabled="modalHandler.formObject.disablePlayerTwo"
                  v-model="modalHandler.formObject.playerTwoName"
           />
           <label for="playerTwoName">
@@ -76,7 +76,7 @@
               name="aiMode"
               as="select"
               class="form-select centerInputs"
-              :disabled="disableAiMode"
+              :disabled="modalHandler.formObject.disableAi"
               v-model="modalHandler.formObject.aiMode"
           >
             <option value="">Choose Ai mode</option>
@@ -92,8 +92,9 @@
 
 
 <script setup lang="ts">
-import {computed, reactive, ref, toRef, watch} from "vue";
+import {reactive, ref, toRef, watch} from "vue";
 import {Form, Field} from 'vee-validate';
+// Todo: find when i can resetForm()
 // eslint-disable-next-line no-undef
 const props = defineProps<{
   showModal: boolean
@@ -104,8 +105,6 @@ const emits = defineEmits<{
   (e: 'closeModal'): void
   (e: 'sendForm', obj: object): void
 }>()
-
-// Todo: delete player2 input if enemy == Ai else set aiMode value = '' if enemy == otherPlayer -> watch()
 
 const modalHandler = reactive({
 
@@ -122,7 +121,9 @@ const modalHandler = reactive({
     playerOneSelection: 'X',
     enemy: '',
     playerTwoName: '',
-    aiMode: ''
+    disablePlayerTwo: true,
+    aiMode: '',
+    disableAi: true
   },
 
   resetFormObj: function () {
@@ -135,20 +136,29 @@ const modalHandler = reactive({
     emits('closeModal')
     emits('sendForm', this.formObject)
   },
-
-
 })
 
-const disableAiMode = computed(() => {
-  return modalHandler.formObject.enemy === 'Human';
+watch(modalHandler.formObject, () => {
+  if (modalHandler.formObject.enemy === 'Human') {
+    modalHandler.formObject.disablePlayerTwo = false
+    modalHandler.formObject.disableAi = true
+    modalHandler.formObject.aiMode = ''
+  } else if (modalHandler.formObject.enemy === "AI") {
+    modalHandler.formObject.disableAi = false
+    modalHandler.formObject.disablePlayerTwo = true
+    modalHandler.formObject.playerTwoName = ''
+  } else if (modalHandler.formObject.enemy === '') {
+    modalHandler.formObject.playerTwoName = ''
+    modalHandler.formObject.aiMode = ''
+    modalHandler.formObject.disablePlayerTwo = true
+    modalHandler.formObject.disableAi = true
+  }
 })
 
 const submit = () => {
   console.log(modalHandler.formObject)
   modalHandler.closeModal()
-
 }
-
 
 </script>
 
