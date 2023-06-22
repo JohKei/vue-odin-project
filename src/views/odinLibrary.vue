@@ -40,7 +40,7 @@
       </div>
     </div>
   </div>
-  <Teleport to="#bookModal">
+  <Teleport to="#modal">
     <odin-library-modal
         :book-from-parent="selectedBook"
         :show="isModalOpen"
@@ -58,7 +58,7 @@
 import NavigationBar from "@/components/NavigationBar.vue";
 import {computed, ref} from "vue";
 import {v4 as uuidv4} from 'uuid';
-import {bookInterface, Book} from "@/global/global";
+import {bookInterface, Book} from "@/global/odinLibraryTypes";
 import OdinLibrarySideBar from "@/components/odinLibrarySideBar.vue";
 import OdinLibraryModal from "@/components/odinLibraryModal.vue";
 import SvgIcon from '@jamescoyle/vue-icon';

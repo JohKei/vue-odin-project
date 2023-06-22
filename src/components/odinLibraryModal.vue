@@ -118,7 +118,7 @@
 
 <script setup lang="ts">
 import {ref, toRef, watch} from "vue";
-import {bookInterface} from "@/global/global";
+import {bookInterface} from "@/global/odinLibraryTypes";
 import SvgIcon from '@jamescoyle/vue-icon';
 import {Field, Form, ErrorMessage, configure} from 'vee-validate';
 import * as yup from 'yup'

@@ -1,11 +1,12 @@
 export {
     bookInterface,
-    Book
+    Book,
 }
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import {v4 as uuidv4} from 'uuid';
 
+// bookInterface && Book -> odinLibrary Project
 interface bookInterface {
     id: undefined | string
     author: string
@@ -25,7 +26,8 @@ class Book implements bookInterface {
     title: string
     topic: string
     cover: string
-    assignId(){
+
+    assignId() {
         this.id = uuidv4()
     }
 
@@ -35,7 +37,6 @@ class Book implements bookInterface {
                 title: string,
                 topic: string,
                 cover: string
-
     ) {
         this.id = undefined
         this.author = author

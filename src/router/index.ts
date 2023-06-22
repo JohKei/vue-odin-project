@@ -12,6 +12,7 @@ import scrimbaPasswordGenerator from "@/views/scrimbaPasswordGenerator.vue";
 import odinRPS from "@/views/odinRPS.vue";
 import odinEtchaSketch from "@/views/odinEtchaSketch.vue";
 import odinCalculator from "@/views/odinCalculator.vue";
+import odinTicTacToe from "@/views/odinTicTacToe.vue";
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -78,6 +79,11 @@ const routes: Array<RouteRecordRaw> = [
         path: '/odinCalculator',
         name: 'Odin Calculator',
         component: odinCalculator
+    },
+    {
+        path: '/odinTicTacToe',
+        name: 'Odin Tic Tac Toe',
+        component: odinTicTacToe
     }
 
 ]

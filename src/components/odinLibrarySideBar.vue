@@ -93,7 +93,7 @@ import {
   mdiUnicorn,
   mdiZodiacLibra
 } from "@mdi/js";
-import {bookInterface} from "@/global/global";
+import {bookInterface} from "@/global/odinLibraryTypes";
 
 const icons = {
   unicornSvg: mdiUnicorn,
