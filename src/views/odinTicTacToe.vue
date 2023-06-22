@@ -2,12 +2,19 @@
   <navigation-bar></navigation-bar>
   <div class="body">
     <h1>Tic Tac Toe</h1>
+    <Teleport to="#modal">
+      <start-modal
+          :show-modal="gameHandler.startModal"
+          @close-modal="gameHandler.startModal = false"
+      >
+      </start-modal>
+    </Teleport>
     <ul class="board">
       <li v-for="item in gameBoard.board" :key="item" class="cell" @click="item.addToken('x')">
         {{ item.getValue }}
       </li>
     </ul>
-    <button @click="gameBoard.logBoard()">Log</button>
+    <button @click="gameHandler.toggleModal()">Log</button>
     <button @click="gameBoard.resetBoard()">resetBoard</button>
   </div>
 </template>
@@ -16,14 +23,16 @@
 import NavigationBar from "@/components/NavigationBar.vue";
 import {computed, onMounted, reactive, ref} from "vue";
 import {Board, Cell} from "@/global/global";
+import StartModal from "@/components/odinTicTacToe/startModal.vue";
 
 // Todo: start Modal
 // Todo: @start playerOne selects either X or Y + update's whoisTurn(default ' ') = selection
 // Todo: @click on Cell -> addToken(whoisTurn) -> checkWinner(PossibleSolutions[solution[]]) -> update whoisTurn = (!current)
 
 
-onMounted(() => {
-  gameBoard.createBoard()
+onMounted(async () => {
+//
+  gameHandler.startModal = true
 })
 
 const cell = (): Cell => {
@@ -59,11 +68,12 @@ const gameBoard = reactive({
   },
 
   logBoard: function () {
-    const loggedBoard:any = []
+    // Todo: typing logBoard
+    const logBoard: any = []
     this.board.forEach((item: Cell) => {
-      loggedBoard.push(item.getValue)
+      logBoard.push(item.getValue)
     })
-    console.table(loggedBoard)
+    console.table(logBoard)
   }
 })
 const player = reactive({
@@ -80,8 +90,14 @@ const player = reactive({
 
 })
 const gameHandler = reactive({
+  startModal: false,
+  endModal: false,
   possibleEnds: {},
-  whoisTurn: ''
+  whoisTurn: '',
+
+  toggleModal: function () {
+    this.startModal = !this.startModal
+  }
 })
 </script>
 
@@ -92,6 +108,7 @@ const gameHandler = reactive({
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 20px;
 }
 
 .board {

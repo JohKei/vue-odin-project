@@ -40,7 +40,7 @@
       </div>
     </div>
   </div>
-  <Teleport to="#bookModal">
+  <Teleport to="#modal">
     <odin-library-modal
         :book-from-parent="selectedBook"
         :show="isModalOpen"
