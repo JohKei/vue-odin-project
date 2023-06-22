@@ -38,6 +38,7 @@ const cell = (): Cell => {
   const addToken = (player: string) => {
     _tokenValue.value = player
     gameHandler.toggleWhoisTurn()
+    gameHandler.checkWinner()
   }
   const getValue = computed(() => _tokenValue.value)
   return {
@@ -65,7 +66,7 @@ const gameBoard = reactive({
     this.board.forEach((item: Cell) => {
       logBoard.push(item.getValue)
     })
-    console.table(logBoard)
+    return logBoard
   }
 })
 
@@ -94,14 +95,53 @@ const gameHandler = reactive({
     } else if (this.whoisTurn === 'O') {
       this.whoisTurn = 'X'
     }
+  },
+
+  checkWinner: function () {
+    // console.table(gameBoard.logBoard());
+    const board = gameBoard.logBoard()
+    const boardObj = {
+      0: '',
+      1: '',
+      2: '',
+      3: '',
+      4: '',
+      5: '',
+      6: '',
+      7: '',
+      8: ''
+    }
+    // console.log(board.indexOf('X'))
+    // Todo: typing!
+    for (let i = 0; i < board.length; i++) {
+      boardObj[i] = board[i]
+    }
+    this.possibleEnds.forEach((item) => {
+      if (boardObj[item[0]] === 'X' && boardObj[item[1]] === 'X' && boardObj[item[2]] === 'X') {
+        alert('We have a Winner X')
+      }else if (boardObj[item[0]] === 'O' && boardObj[item[1]] === 'O' && boardObj[item[2]] === 'O'){
+        alert('We have a Winner O')
+      }
+
+    })
+    if (board.every((item:string)=>{
+      return item === 'X' || item === 'O'
+    })){
+      alert('Its a Draw!')
+      return
+      //
+    }
+
+  },
+
+  checkDraw: function (){
+  //
   }
 })
 const getForm = (form: formObject) => {
   gameBoard.createBoard()
-  console.log(form)
   gameHandler.whoisTurn = form.playerOneSelection
 }
-console.log(gameHandler.possibleEnds.length)
 </script>
 
 <style scoped lang="css">
