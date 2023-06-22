@@ -1,0 +1,73 @@
+<mxfile host="app.diagrams.net" modified="2023-06-22T06:34:46.768Z" agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/114.0" etag="NIVz1Vg_ivqezgrXd-7a" version="21.5.0" type="github">
+  <diagram name="Page-1" id="88H4PMWL79CoLvkHlcIC">
+    <mxGraphModel dx="4206" dy="1955" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Gl-RGe0RLI3w3fjylHqW-1" value="Tic Tac Toe Structure" style="rounded=0;whiteSpace=wrap;html=1;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;fontSize=15;" parent="1" vertex="1">
+          <mxGeometry x="-1140" y="-500" width="190" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="TEJx-HJHPEcDZVKEFD9_-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="TEJx-HJHPEcDZVKEFD9_-1" target="TEJx-HJHPEcDZVKEFD9_-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TEJx-HJHPEcDZVKEFD9_-1" value="&lt;div style=&quot;font-size: 15px;&quot;&gt;Cell&lt;/div&gt;&lt;div style=&quot;font-size: 15px;&quot;&gt;addToken(Player:string)&lt;br style=&quot;font-size: 15px;&quot;&gt;&lt;br style=&quot;font-size: 15px;&quot;&gt;getValue()&lt;br style=&quot;font-size: 15px;&quot;&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;fontSize=15;" vertex="1" parent="1">
+          <mxGeometry x="-1210" y="-440" width="240" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="TEJx-HJHPEcDZVKEFD9_-42" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="TEJx-HJHPEcDZVKEFD9_-2" target="TEJx-HJHPEcDZVKEFD9_-23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TEJx-HJHPEcDZVKEFD9_-2" value="Player&lt;br style=&quot;font-size: 15px;&quot;&gt;&lt;br style=&quot;font-size: 15px;&quot;&gt;&lt;div style=&quot;font-size: 15px;&quot;&gt;playerOne: &#39;name&#39;&lt;/div&gt;&lt;div style=&quot;font-size: 15px;&quot;&gt;&lt;br style=&quot;font-size: 15px;&quot;&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 15px;&quot;&gt;playerOneSelect: &#39;X&#39;&lt;/div&gt;&lt;div style=&quot;font-size: 15px;&quot;&gt;&lt;br style=&quot;font-size: 15px;&quot;&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 15px;&quot;&gt;playerTwo: &#39;name&#39;&lt;/div&gt;&lt;div style=&quot;font-size: 15px;&quot;&gt;&lt;br style=&quot;font-size: 15px;&quot;&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 15px;&quot;&gt;playerTwoSelect: computed()&lt;/div&gt;&lt;div style=&quot;font-size: 15px;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 15px;&quot;&gt;&lt;br style=&quot;font-size: 15px;&quot;&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 15px;&quot;&gt;not used so far&lt;/div&gt;&lt;div style=&quot;font-size: 15px;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 15px;&quot;&gt;whoisTurn : ref(&#39; &#39;)&lt;/div&gt;&lt;div style=&quot;font-size: 15px;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 15px;&quot;&gt;updateTurn : function ( ) -&amp;gt; !currentTurn&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;fontSize=15;" vertex="1" parent="1">
+          <mxGeometry x="-1665" y="240" width="360" height="360" as="geometry" />
+        </mxCell>
+        <mxCell id="TEJx-HJHPEcDZVKEFD9_-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=-0.002;entryY=0.323;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="TEJx-HJHPEcDZVKEFD9_-6" target="TEJx-HJHPEcDZVKEFD9_-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TEJx-HJHPEcDZVKEFD9_-41" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" edge="1" parent="1" source="TEJx-HJHPEcDZVKEFD9_-6" target="TEJx-HJHPEcDZVKEFD9_-23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TEJx-HJHPEcDZVKEFD9_-6" value="Board = reactive{ }&lt;br style=&quot;font-size: 15px;&quot;&gt;&lt;br style=&quot;font-size: 15px;&quot;&gt;&lt;div style=&quot;font-size: 15px;&quot;&gt;board : [ ]&lt;/div&gt;&lt;div style=&quot;font-size: 15px;&quot;&gt;&lt;br style=&quot;font-size: 15px;&quot;&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 15px;&quot;&gt;createBoard : ( ) -&amp;gt; Pushes Cell&lt;/div&gt;&lt;div style=&quot;font-size: 15px;&quot;&gt;&lt;br style=&quot;font-size: 15px;&quot;&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 15px;&quot;&gt;resetBoard : ( ) &lt;br style=&quot;font-size: 15px;&quot;&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 15px;&quot;&gt;&lt;br style=&quot;font-size: 15px;&quot;&gt;logBoard : ( )&lt;br style=&quot;font-size: 15px;&quot;&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;fontSize=15;" vertex="1" parent="1">
+          <mxGeometry x="-1230" y="-100" width="240" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="TEJx-HJHPEcDZVKEFD9_-16" value="Dom:&lt;br style=&quot;font-size: 15px;&quot;&gt;&lt;div style=&quot;font-size: 15px;&quot;&gt;&lt;br style=&quot;font-size: 15px;&quot;&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 15px;&quot;&gt;v-for item in board [ ] -&amp;gt; 3x3 Cell ( )&lt;br style=&quot;font-size: 15px;&quot;&gt;&lt;br style=&quot;font-size: 15px;&quot;&gt;@click addToken(Player: string) &lt;br style=&quot;font-size: 15px;&quot;&gt;&lt;br style=&quot;font-size: 15px;&quot;&gt;&lt;br style=&quot;font-size: 15px;&quot;&gt;&amp;lt;button @click logBoard ( )&amp;gt;&lt;/div&gt;&lt;div style=&quot;font-size: 15px;&quot;&gt;&amp;lt;Button @click resetBoard( )&amp;gt;&lt;br style=&quot;font-size: 15px;&quot;&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;fontSize=15;" vertex="1" parent="1">
+          <mxGeometry x="-890" y="-130" width="270" height="270" as="geometry" />
+        </mxCell>
+        <mxCell id="TEJx-HJHPEcDZVKEFD9_-36" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="TEJx-HJHPEcDZVKEFD9_-18" target="TEJx-HJHPEcDZVKEFD9_-27">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TEJx-HJHPEcDZVKEFD9_-18" value="onMounted ( ) &lt;br style=&quot;font-size: 15px;&quot;&gt;&lt;br style=&quot;font-size: 15px;&quot;&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;modalOpen = true&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;direction=south;fontSize=15;arcSize=0;" vertex="1" parent="1">
+          <mxGeometry x="-1690" y="-450" width="430" height="270" as="geometry" />
+        </mxCell>
+        <mxCell id="TEJx-HJHPEcDZVKEFD9_-43" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="TEJx-HJHPEcDZVKEFD9_-23" target="TEJx-HJHPEcDZVKEFD9_-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TEJx-HJHPEcDZVKEFD9_-44" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=0;exitDx=0;exitDy=0;entryX=0.003;entryY=0.326;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="TEJx-HJHPEcDZVKEFD9_-23" target="TEJx-HJHPEcDZVKEFD9_-33">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TEJx-HJHPEcDZVKEFD9_-23" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;gameHandler&lt;/font&gt;&lt;br&gt;&lt;br&gt;return whoisTurn (&#39;X or O&#39; ) for @click on Cell&lt;br&gt;&lt;br&gt;update whoisTurn ( )&lt;br&gt;&lt;br&gt;&lt;div&gt;checkWinner ( )&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;@gameEnd -&amp;gt; open gameEndModal&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;direction=south;fontSize=15;" vertex="1" parent="1">
+          <mxGeometry x="-1210" y="240" width="290" height="350" as="geometry" />
+        </mxCell>
+        <mxCell id="TEJx-HJHPEcDZVKEFD9_-37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.188;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="TEJx-HJHPEcDZVKEFD9_-27" target="TEJx-HJHPEcDZVKEFD9_-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TEJx-HJHPEcDZVKEFD9_-39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="TEJx-HJHPEcDZVKEFD9_-27" target="TEJx-HJHPEcDZVKEFD9_-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TEJx-HJHPEcDZVKEFD9_-27" value="Modal&lt;br style=&quot;font-size: 15px;&quot;&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;createBoard ( ) &lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;playerName refs&lt;br&gt;&lt;br&gt;playerSelection refs&lt;br&gt;&lt;br&gt;call update whoisTurn&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontSize=15;" vertex="1" parent="1">
+          <mxGeometry x="-1610" y="-120" width="250" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="TEJx-HJHPEcDZVKEFD9_-46" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="TEJx-HJHPEcDZVKEFD9_-33" target="TEJx-HJHPEcDZVKEFD9_-27">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-670" y="650" />
+              <mxPoint x="-1760" y="650" />
+              <mxPoint x="-1760" y="10" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TEJx-HJHPEcDZVKEFD9_-33" value="gameEndModal&lt;br style=&quot;font-size: 15px;&quot;&gt;&lt;br style=&quot;font-size: 15px;&quot;&gt;show whoisWinner&lt;br style=&quot;font-size: 15px;&quot;&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;restart Game ( ) -&amp;gt; open startModal again&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontSize=15;" vertex="1" parent="1">
+          <mxGeometry x="-850" y="240" width="360" height="270" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
