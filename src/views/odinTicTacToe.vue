@@ -23,7 +23,7 @@
 <script setup lang="ts">
 import NavigationBar from "@/components/NavigationBar.vue";
 import {computed, onMounted, reactive, ref} from "vue";
-import {Board, Cell ,formObject} from "@/global/tictactoeTypes";
+import {Board, Cell ,formObject} from "@/global/ticTacToeTypes";
 import StartModal from "@/components/odinTicTacToe/startModal.vue";
 
 // Todo: @start playerOne selects either X or Y + update's whoisTurn(default ' ') = selection

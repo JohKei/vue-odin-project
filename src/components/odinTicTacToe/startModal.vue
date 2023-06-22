@@ -94,7 +94,7 @@
 <script setup lang="ts">
 import {reactive, ref, toRef, watch} from "vue";
 import {Form, Field} from 'vee-validate';
-import {formObject} from "@/global/tictactoeTypes";
+import {formObject} from "@/global/ticTacToeTypes";
 // Todo: find when i can resetForm()
 // eslint-disable-next-line no-undef
 const props = defineProps<{
