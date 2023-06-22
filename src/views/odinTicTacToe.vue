@@ -1,29 +1,29 @@
 <template>
   <navigation-bar></navigation-bar>
   <div class="body">
-    <h1>Tic Tac Toe</h1>
+    <h1>Tic Tac Toe, aller</h1>
     <Teleport to="#modal">
       <start-modal
           :show-modal="gameHandler.startModal"
           @close-modal="gameHandler.startModal = false"
-          @send-form="gameHandler.getForm"
+          @send-form="getForm"
       >
       </start-modal>
     </Teleport>
     <ul class="board">
-      <li v-for="item in gameBoard.board" :key="item" class="cell" @click="item.addToken('x')">
+      <li v-for="item in gameBoard.board" :key="item" class="cell" @click="item.addToken(gameHandler.whoisTurn)">
         {{ item.getValue }}
       </li>
     </ul>
-    <button @click="gameHandler.toggleModal()">Log</button>
-    <button @click="gameBoard.resetBoard()">resetBoard</button>
+    <button @click="gameBoard.logBoard()">Log</button>
+    <button @click="gameBoard.createBoard()">resetBoard</button>
   </div>
 </template>
 
 <script setup lang="ts">
 import NavigationBar from "@/components/NavigationBar.vue";
 import {computed, onMounted, reactive, ref} from "vue";
-import {Board, Cell ,formObject} from "@/global/ticTacToeTypes";
+import {Board, Cell, formObject} from "@/global/ticTacToeTypes";
 import StartModal from "@/components/odinTicTacToe/startModal.vue";
 
 // Todo: @start playerOne selects either X or Y + update's whoisTurn(default ' ') = selection
@@ -37,6 +37,7 @@ const cell = (): Cell => {
   const _tokenValue = ref()
   const addToken = (player: string) => {
     _tokenValue.value = player
+    gameHandler.toggleWhoisTurn()
   }
   const getValue = computed(() => _tokenValue.value)
   return {
@@ -45,24 +46,17 @@ const cell = (): Cell => {
   }
 }
 
-
 const gameBoard = reactive({
   board: [] as Board<Cell>,
 
   createBoard: function () {
     if (this.board.length) {
-      this.resetBoard()
-    } else {
-      for (let i = 1; i <= 9; i++) {
-        this.board.push(cell())
-      }
+      this.board.splice(0)
+    }
+    for (let i = 1; i <= 9; i++) {
+      this.board.push(cell())
     }
 
-  },
-
-  resetBoard: function () {
-    this.board.splice(0)
-    this.createBoard()
   },
 
   logBoard: function () {
@@ -74,37 +68,40 @@ const gameBoard = reactive({
     console.table(logBoard)
   }
 })
-const player = reactive({
-  playerOne: '',
-  playerOneSelect: '',
-  playerTwoName: '',
-  playerTwoSelect: computed(() => {
-    if (player.playerOne === 'x') {
-      return 'y'
-    } else {
-      return 'x'
-    }
-  })
-
-})
 
 const gameHandler = reactive({
   startModal: false,
   endModal: false,
-  possibleEnds: {},
+  possibleEnds: [
+    [0, 1, 2],
+    [0, 4, 8],
+    [2, 4, 6],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [3, 4, 5],
+    [6, 7, 8],
+  ],
   whoisTurn: '',
 
   toggleModal: function () {
     this.startModal = !this.startModal
   },
 
-  getForm :async function (form:formObject){
-    if (form.playerOneName!=''){
-      await console.log(form)
+  toggleWhoisTurn: function () {
+    if (this.whoisTurn === 'X') {
+      this.whoisTurn = 'O'
+    } else if (this.whoisTurn === 'O') {
+      this.whoisTurn = 'X'
     }
-
   }
 })
+const getForm = (form: formObject) => {
+  gameBoard.createBoard()
+  console.log(form)
+  gameHandler.whoisTurn = form.playerOneSelection
+}
+console.log(gameHandler.possibleEnds.length)
 </script>
 
 <style scoped lang="css">

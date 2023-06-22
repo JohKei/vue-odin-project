@@ -95,7 +95,7 @@
 import {reactive, ref, toRef, watch} from "vue";
 import {Form, Field} from 'vee-validate';
 import {formObject} from "@/global/ticTacToeTypes";
-// Todo: find when i can resetForm()
+// Todo: find a way to resetForm() without loosing the pass back to parent
 // eslint-disable-next-line no-undef
 const props = defineProps<{
   showModal: boolean
