@@ -59,8 +59,30 @@
             <option value="AI">Ai</option>
           </Field>
         </div>
+        <div class="form-floating mb-1">
+          <Field type="text"
+                 name="playerTwoName"
+                 placeholder="playerTwoName"
+                 class="form-control"
+                 :disabled="!disableAiMode"
+                 v-model="modalHandler.formObject.playerTwoName"
+          />
+          <label for="playerTwoName">
+            Player 2
+          </label>
+        </div>
         <div class="inputContainer">
-
+          <Field
+              name="aiMode"
+              as="select"
+              class="form-select centerInputs"
+              :disabled="disableAiMode"
+              v-model="modalHandler.formObject.aiMode"
+          >
+            <option value="">Choose Ai mode</option>
+            <option value="easy">easy</option>
+            <option value="hard">unbeatable</option>
+          </Field>
         </div>
         <button class="startButton btn btn-success" type="submit">Start Game</button>
       </Form>
@@ -70,7 +92,7 @@
 
 
 <script setup lang="ts">
-import {reactive, ref, toRef, watch} from "vue";
+import {computed, reactive, ref, toRef, watch} from "vue";
 import {Form, Field} from 'vee-validate';
 // eslint-disable-next-line no-undef
 const props = defineProps<{
@@ -82,6 +104,8 @@ const emits = defineEmits<{
   (e: 'closeModal'): void
   (e: 'sendForm', obj: object): void
 }>()
+
+// Todo: delete player2 input if enemy == Ai else set aiMode value = '' if enemy == otherPlayer -> watch()
 
 const modalHandler = reactive({
 
@@ -96,7 +120,9 @@ const modalHandler = reactive({
   formObject: {
     playerOneName: '',
     playerOneSelection: 'X',
-    enemy: ''
+    enemy: '',
+    playerTwoName: '',
+    aiMode: ''
   },
 
   resetFormObj: function () {
@@ -105,12 +131,16 @@ const modalHandler = reactive({
     this.formObject.enemy = ''
   },
 
-  closeModal: async function () {
-    await emits('closeModal', this.showModal.value)
-    await emits('sendForm', this.formObject)
+  closeModal: function () {
+    emits('closeModal')
+    emits('sendForm', this.formObject)
   },
 
 
+})
+
+const disableAiMode = computed(() => {
+  return modalHandler.formObject.enemy === 'Human';
 })
 
 const submit = () => {
@@ -186,4 +216,5 @@ const submit = () => {
 .formCheckContainer > p {
   margin: 0;
 }
+
 </style>
