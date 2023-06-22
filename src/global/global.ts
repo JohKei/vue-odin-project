@@ -1,10 +1,6 @@
-import {ComputedRef} from "vue";
-
 export {
     bookInterface,
     Book,
-    Cell,
-    Board
 }
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -51,10 +47,3 @@ class Book implements bookInterface {
         this.cover = cover
     }
 }
-
-// Cell && Board -> odinTicTacToe
-interface Cell {
-    addToken: (player: string) => void
-    getValue: ComputedRef<string>
-}
-type Board<T extends Cell> = Array<T>

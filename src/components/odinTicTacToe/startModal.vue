@@ -94,6 +94,7 @@
 <script setup lang="ts">
 import {reactive, ref, toRef, watch} from "vue";
 import {Form, Field} from 'vee-validate';
+import {formObject} from "@/global/tictactoeTypes";
 // Todo: find when i can resetForm()
 // eslint-disable-next-line no-undef
 const props = defineProps<{
@@ -103,7 +104,7 @@ const props = defineProps<{
 // eslint-disable-next-line no-undef
 const emits = defineEmits<{
   (e: 'closeModal'): void
-  (e: 'sendForm', obj: object): void
+  (e: 'sendForm', obj: formObject): void
 }>()
 
 const modalHandler = reactive({
@@ -134,7 +135,6 @@ const modalHandler = reactive({
 
   closeModal: function () {
     emits('closeModal')
-    emits('sendForm', this.formObject)
   },
 })
 
@@ -156,7 +156,7 @@ watch(modalHandler.formObject, () => {
 })
 
 const submit = () => {
-  console.log(modalHandler.formObject)
+  emits('sendForm', modalHandler.formObject)
   modalHandler.closeModal()
 }
 

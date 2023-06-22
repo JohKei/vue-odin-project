@@ -6,6 +6,7 @@
       <start-modal
           :show-modal="gameHandler.startModal"
           @close-modal="gameHandler.startModal = false"
+          @send-form="gameHandler.getForm"
       >
       </start-modal>
     </Teleport>
@@ -22,16 +23,13 @@
 <script setup lang="ts">
 import NavigationBar from "@/components/NavigationBar.vue";
 import {computed, onMounted, reactive, ref} from "vue";
-import {Board, Cell} from "@/global/global";
+import {Board, Cell ,formObject} from "@/global/tictactoeTypes";
 import StartModal from "@/components/odinTicTacToe/startModal.vue";
 
-// Todo: start Modal
 // Todo: @start playerOne selects either X or Y + update's whoisTurn(default ' ') = selection
 // Todo: @click on Cell -> addToken(whoisTurn) -> checkWinner(PossibleSolutions[solution[]]) -> update whoisTurn = (!current)
 
-
 onMounted(async () => {
-//
   gameHandler.startModal = true
 })
 
@@ -89,6 +87,7 @@ const player = reactive({
   })
 
 })
+
 const gameHandler = reactive({
   startModal: false,
   endModal: false,
@@ -97,6 +96,13 @@ const gameHandler = reactive({
 
   toggleModal: function () {
     this.startModal = !this.startModal
+  },
+
+  getForm :async function (form:formObject){
+    if (form.playerOneName!=''){
+      await console.log(form)
+    }
+
   }
 })
 </script>
