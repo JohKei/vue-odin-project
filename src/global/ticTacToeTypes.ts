@@ -1,7 +1,8 @@
+
 export {
     Cell,
     Board,
-    formObject
+    formObject,
 }
 
 import {ComputedRef} from "vue";
@@ -10,10 +11,11 @@ interface Cell {
     addToken: (player: string) => void
     getValue: ComputedRef<string>
 }
+
 type Board<T extends Cell> = Array<T>
 
 interface formObject {
-    playerOneName : string,
+    playerOneName: string,
     playerOneSelection: string,
     enemy: string,
     playerTwoName: string,
@@ -21,3 +23,4 @@ interface formObject {
     aiMode: string,
     disableAi: boolean
 }
+

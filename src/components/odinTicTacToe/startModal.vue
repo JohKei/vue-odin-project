@@ -64,7 +64,7 @@
                  name="playerTwoName"
                  placeholder="playerTwoName"
                  class="form-control"
-                 :disabled="modalHandler.formObject.disablePlayerTwo"
+                 :disabled="!modalHandler.formObject.disablePlayerTwo"
                  v-model="modalHandler.formObject.playerTwoName"
           />
           <label for="playerTwoName">
@@ -76,7 +76,7 @@
               name="aiMode"
               as="select"
               class="form-select centerInputs"
-              :disabled="modalHandler.formObject.disableAi"
+              :disabled="!modalHandler.formObject.disableAi"
               v-model="modalHandler.formObject.aiMode"
           >
             <option value="">Choose Ai mode</option>
@@ -95,16 +95,17 @@
 import {reactive, ref, toRef, watch} from "vue";
 import {Form, Field} from 'vee-validate';
 import {formObject} from "@/global/ticTacToeTypes";
-// Todo: find a way to resetForm() without loosing the pass back to parent
 // eslint-disable-next-line no-undef
 const props = defineProps<{
   showModal: boolean
+  resetModal : boolean
 }>()
 
 // eslint-disable-next-line no-undef
 const emits = defineEmits<{
   (e: 'closeModal'): void
   (e: 'sendForm', obj: formObject): void
+  (e: 'unResetForm'):void
 }>()
 
 const modalHandler = reactive({
@@ -122,9 +123,9 @@ const modalHandler = reactive({
     playerOneSelection: 'X',
     enemy: '',
     playerTwoName: '',
-    disablePlayerTwo: true,
+    disablePlayerTwo: false,
     aiMode: '',
-    disableAi: true
+    disableAi: false
   },
 
   resetFormObj: function () {
@@ -135,23 +136,31 @@ const modalHandler = reactive({
 
   closeModal: function () {
     emits('closeModal')
+    emits('unResetForm')
   },
 })
 
 watch(modalHandler.formObject, () => {
   if (modalHandler.formObject.enemy === 'Human') {
-    modalHandler.formObject.disablePlayerTwo = false
-    modalHandler.formObject.disableAi = true
+    modalHandler.formObject.disablePlayerTwo = true
+    modalHandler.formObject.disableAi = false
     modalHandler.formObject.aiMode = ''
   } else if (modalHandler.formObject.enemy === "AI") {
-    modalHandler.formObject.disableAi = false
-    modalHandler.formObject.disablePlayerTwo = true
+    modalHandler.formObject.disableAi = true
+    modalHandler.formObject.disablePlayerTwo = false
     modalHandler.formObject.playerTwoName = ''
   } else if (modalHandler.formObject.enemy === '') {
     modalHandler.formObject.playerTwoName = ''
     modalHandler.formObject.aiMode = ''
-    modalHandler.formObject.disablePlayerTwo = true
-    modalHandler.formObject.disableAi = true
+    modalHandler.formObject.disablePlayerTwo = false
+    modalHandler.formObject.disableAi = false
+  }
+})
+
+const resetModal = toRef(props, 'resetModal')
+watch(resetModal,()=>{
+  if (resetModal.value){
+    modalHandler.resetFormObj()
   }
 })
 

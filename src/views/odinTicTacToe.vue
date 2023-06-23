@@ -7,30 +7,41 @@
           :show-modal="gameHandler.startModal"
           @close-modal="gameHandler.startModal = false"
           @send-form="getForm"
+          :reset-modal="resetModal"
+          @un-reset-form="resetModal = false"
       >
       </start-modal>
+    </Teleport>
+    <Teleport to="body">
+      <end-modal
+          :show-modal="gameHandler.endModal"
+          @close-modal="gameHandler.toggleEndModal()"
+          :game-info="playerInfo"
+      >
+
+      </end-modal>
     </Teleport>
     <ul class="board">
       <li v-for="item in gameBoard.board" :key="item" class="cell" @click="item.addToken(gameHandler.whoisTurn)">
         {{ item.getValue }}
       </li>
     </ul>
-    <button @click="gameBoard.logBoard()">Log</button>
-    <button @click="gameBoard.createBoard()">resetBoard</button>
+    <button @click="gameHandler.toggleStartModal()">Log</button>
+    <button @click="gameHandler.toggleEndModal()">resetBoard</button>
   </div>
 </template>
 
 <script setup lang="ts">
 import NavigationBar from "@/components/NavigationBar.vue";
-import {computed, onMounted, reactive, ref} from "vue";
+import {computed, ComputedRef, onMounted, reactive, ref} from "vue";
 import {Board, Cell, formObject} from "@/global/ticTacToeTypes";
 import StartModal from "@/components/odinTicTacToe/startModal.vue";
+import EndModal from "@/components/odinTicTacToe/endModal.vue";
 
-// Todo: @start playerOne selects either X or Y + update's whoisTurn(default ' ') = selection
-// Todo: @click on Cell -> addToken(whoisTurn) -> checkWinner(PossibleSolutions[solution[]]) -> update whoisTurn = (!current)
 
 onMounted(async () => {
   gameHandler.startModal = true
+  // gameHandler.endModal = true
 })
 
 const cell = (): Cell => {
@@ -38,6 +49,7 @@ const cell = (): Cell => {
   const addToken = (player: string) => {
     _tokenValue.value = player
     gameHandler.toggleWhoisTurn()
+    gameHandler.calculateGame()
   }
   const getValue = computed(() => _tokenValue.value)
   return {
@@ -60,12 +72,11 @@ const gameBoard = reactive({
   },
 
   logBoard: function () {
-    // Todo: typing logBoard
-    const logBoard: any = []
+    const logBoard: ComputedRef[] = []
     this.board.forEach((item: Cell) => {
       logBoard.push(item.getValue)
     })
-    console.table(logBoard)
+    return logBoard
   }
 })
 
@@ -84,8 +95,13 @@ const gameHandler = reactive({
   ],
   whoisTurn: '',
 
-  toggleModal: function () {
+  toggleStartModal: function () {
     this.startModal = !this.startModal
+  },
+  toggleEndModal:async function () {
+    this.endModal = !this.endModal
+    this.startModal = true
+    resetModal.value = true
   },
 
   toggleWhoisTurn: function () {
@@ -94,14 +110,67 @@ const gameHandler = reactive({
     } else if (this.whoisTurn === 'O') {
       this.whoisTurn = 'X'
     }
+  },
+
+  calculateGame: function () {
+    const board = gameBoard.logBoard()
+    this.checkWinner(board)
+    this.checkDraw(board)
+  },
+  checkWinner: function (board: unknown[]): boolean | void {
+    this.possibleEnds.forEach((item) => {
+      if (board[item[0]] === 'X' && board[item[1]] === 'X' && board[item[2]] === 'X') {
+        // alert('X')
+        playerInfo.winner = 'X'
+        this.toggleEndModal()
+        return true
+      } else if (board[item[0]] === 'O' && board[item[1]] === 'O' && board[item[2]] === 'O') {
+        // alert('O')
+        playerInfo.winner = 'O'
+        this.toggleEndModal()
+        return true
+      }
+    })
+  },
+  checkDraw: function (board: any[]) {
+    if (board.every((item: string) => {
+      return item === 'X' || item === 'O'
+    }) && !this.checkWinner(board)) {
+      // alert('Draw')
+      playerInfo.winner = 'Draw'
+      this.toggleEndModal()
+      return true
+      //
+    }
   }
 })
-const getForm = (form: formObject) => {
+
+const playerInfo = reactive({
+  playerOneName: '',
+  playerOneSelection: '',
+  playerTwoName: '',
+  playerTwoSelection: '',
+  useAi: false,
+  aiMode: '',
+  winner :'',
+  gameStatus: '',
+})
+const resetModal = ref(false)
+const getForm = (arg: formObject) => {
   gameBoard.createBoard()
-  console.log(form)
-  gameHandler.whoisTurn = form.playerOneSelection
+  gameHandler.whoisTurn = arg.playerOneSelection
+
+  playerInfo.playerOneName = arg.playerOneName
+  playerInfo.playerOneSelection = arg.playerOneSelection
+  playerInfo.playerTwoName = arg.playerTwoName
+  if (arg.playerOneSelection === 'X'){
+    playerInfo.playerTwoSelection = 'O'
+  }else{
+    playerInfo.playerTwoSelection = 'X'
+  }
+  playerInfo.useAi = arg.disableAi
+  playerInfo.aiMode = arg.aiMode
 }
-console.log(gameHandler.possibleEnds.length)
 </script>
 
 <style scoped lang="css">
