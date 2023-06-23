@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 import NavigationBar from "@/components/NavigationBar.vue";
-import {computed, onMounted, reactive, ref} from "vue";
+import {computed, ComputedRef, onMounted, reactive, ref} from "vue";
 import {Board, Cell, formObject} from "@/global/ticTacToeTypes";
 import StartModal from "@/components/odinTicTacToe/startModal.vue";
 
@@ -61,8 +61,7 @@ const gameBoard = reactive({
   },
 
   logBoard: function () {
-    // Todo: typing logBoard
-    const logBoard: any = []
+    const logBoard: [] = []
     this.board.forEach((item: Cell) => {
       logBoard.push(item.getValue)
     })
@@ -109,31 +108,24 @@ const gameHandler = reactive({
     8: ''
   },
   calculateGame: function () {
-    this.board = gameBoard.logBoard()
-    // Todo: typing!
-    for (let i = 0; i < this.board.length; i++) {
-      this.boardObj[i] = this.board[i]
-    }
-    this.checkWinner()
-    this.checkDraw()
+    const board = gameBoard.logBoard()
+    this.checkWinner(board)
+    this.checkDraw(board)
   },
 
-  checkWinner: function ():any {
+  checkWinner: function (board:[]):boolean|void {
     this.possibleEnds.forEach((item) => {
-      if (this.boardObj[item[0]] === 'X' && this.boardObj[item[1]] === 'X' && this.boardObj[item[2]] === 'X') {
+      if (board[item[0]] === 'X' && board[item[1]] === 'X' && board[item[2]] === 'X'){
         alert('X')
         return true
-      } else if (this.boardObj[item[0]] === 'O' && this.boardObj[item[1]] === 'O' && this.boardObj[item[2]] === 'O') {
+      } else if (board[item[0]] === 'O' && board[item[1]] === 'O' && board[item[2]] === 'O') {
         alert('O')
         return true
-      }else{
-        return
       }
-
     })
   },
-  checkDraw: function () {
-    if (this.board.every((item: string) => {return item === 'X' || item === 'O'}) && !this.checkWinner()  ) {
+  checkDraw: function (board:[]) {
+    if (board.every((item: string) => {return item === 'X' || item === 'O'}) && !this.checkWinner(board)  ) {
       alert('Draw')
       return true
       //
