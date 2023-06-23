@@ -15,8 +15,9 @@
     <Teleport to="body">
       <end-modal
           :show-modal="gameHandler.endModal"
-          @close-modal="gameHandler.toggleEndModal()"
+          @close-modal="gameHandler.restart()"
           :game-info="playerInfo"
+          @close-modal&reset="gameHandler.restartAndReset()"
       >
 
       </end-modal>
@@ -34,14 +35,14 @@
 <script setup lang="ts">
 import NavigationBar from "@/components/NavigationBar.vue";
 import {computed, ComputedRef, onMounted, reactive, ref} from "vue";
-import {Board, Cell, formObject} from "@/global/ticTacToeTypes";
+import {Board, Cell, formObject, GameInfo} from "@/global/ticTacToeTypes";
 import StartModal from "@/components/odinTicTacToe/startModal.vue";
 import EndModal from "@/components/odinTicTacToe/endModal.vue";
 
 
 onMounted(async () => {
-  // gameHandler.startModal = true
-  gameHandler.endModal = true
+  gameHandler.startModal = true
+  // gameHandler.endModal = true
 })
 
 const cell = (): Cell => {
@@ -98,12 +99,21 @@ const gameHandler = reactive({
   toggleStartModal: function () {
     this.startModal = !this.startModal
   },
-  toggleEndModal:async function () {
+  toggleEndModal: function () {
     this.endModal = !this.endModal
     this.startModal = true
     resetModal.value = true
   },
-
+  restartAndReset:function (){
+    this.endModal = !this.endModal
+    this.startModal = true
+    resetModal.value = true
+  },
+  restart:function (){
+    this.endModal = !this.endModal
+    this.startModal = false
+    gameBoard.createBoard()
+  },
   toggleWhoisTurn: function () {
     if (this.whoisTurn === 'X') {
       this.whoisTurn = 'O'
@@ -123,11 +133,13 @@ const gameHandler = reactive({
         // alert('X')
         playerInfo.winner = 'X'
         this.toggleEndModal()
+        this.whoisTurn = playerInfo.playerOneSelection
         return true
       } else if (board[item[0]] === 'O' && board[item[1]] === 'O' && board[item[2]] === 'O') {
         // alert('O')
         playerInfo.winner = 'O'
         this.toggleEndModal()
+        this.whoisTurn = playerInfo.playerOneSelection
         return true
       }
     })
@@ -139,13 +151,14 @@ const gameHandler = reactive({
       // alert('Draw')
       playerInfo.winner = 'Draw'
       this.toggleEndModal()
+      this.whoisTurn = playerInfo.playerOneSelection
       return true
       //
     }
   }
 })
 
-const playerInfo = reactive({
+const playerInfo:GameInfo = reactive({
   playerOneName: '',
   playerOneSelection: '',
   playerTwoName: '',

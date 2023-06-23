@@ -1,8 +1,8 @@
-
 export {
     Cell,
     Board,
     formObject,
+    GameInfo
 }
 
 import {ComputedRef} from "vue";
@@ -24,3 +24,13 @@ interface formObject {
     disableAi: boolean
 }
 
+interface GameInfo {
+    playerOneName: string,
+    playerOneSelection: string,
+    playerTwoName: string,
+    playerTwoSelection: string,
+    useAi: boolean,
+    aiMode: string,
+    winner: string,
+    gameStatus: string,
+}
