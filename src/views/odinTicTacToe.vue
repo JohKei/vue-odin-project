@@ -10,13 +10,22 @@
       >
       </start-modal>
     </Teleport>
+    <Teleport to="body">
+      <end-modal
+          :show-modal="gameHandler.endModal"
+          @close-modal="gameHandler.toggleEndModal()"
+          :game-info="playerInfo"
+      >
+
+      </end-modal>
+    </Teleport>
     <ul class="board">
       <li v-for="item in gameBoard.board" :key="item" class="cell" @click="item.addToken(gameHandler.whoisTurn)">
         {{ item.getValue }}
       </li>
     </ul>
-    <button @click="gameBoard.logBoard()">Log</button>
-    <button @click="gameBoard.createBoard()">resetBoard</button>
+    <button @click="gameHandler.toggleStartModal()">Log</button>
+    <button @click="gameHandler.toggleEndModal()">resetBoard</button>
   </div>
 </template>
 
@@ -25,10 +34,12 @@ import NavigationBar from "@/components/NavigationBar.vue";
 import {computed, ComputedRef, onMounted, reactive, ref} from "vue";
 import {Board, Cell, formObject} from "@/global/ticTacToeTypes";
 import StartModal from "@/components/odinTicTacToe/startModal.vue";
+import EndModal from "@/components/odinTicTacToe/endModal.vue";
 
 
 onMounted(async () => {
   gameHandler.startModal = true
+  // gameHandler.endModal = true
 })
 
 const cell = (): Cell => {
@@ -82,8 +93,12 @@ const gameHandler = reactive({
   ],
   whoisTurn: '',
 
-  toggleModal: function () {
+  toggleStartModal: function () {
     this.startModal = !this.startModal
+  },
+  toggleEndModal:async function () {
+    this.endModal = !this.endModal
+    this.startModal = true
   },
 
   toggleWhoisTurn: function () {
@@ -93,31 +108,23 @@ const gameHandler = reactive({
       this.whoisTurn = 'X'
     }
   },
-  board: [],
-  boardObj: {
-    0: '',
-    1: '',
-    2: '',
-    3: '',
-    4: '',
-    5: '',
-    6: '',
-    7: '',
-    8: ''
-  },
+
   calculateGame: function () {
     const board = gameBoard.logBoard()
     this.checkWinner(board)
     this.checkDraw(board)
   },
-  // Todo: ask Sandl if i can somehow type the boards right so i get no warning
   checkWinner: function (board: unknown[]): boolean | void {
     this.possibleEnds.forEach((item) => {
       if (board[item[0]] === 'X' && board[item[1]] === 'X' && board[item[2]] === 'X') {
-        alert('X')
+        // alert('X')
+        playerInfo.winner = 'X'
+        this.toggleEndModal()
         return true
       } else if (board[item[0]] === 'O' && board[item[1]] === 'O' && board[item[2]] === 'O') {
-        alert('O')
+        // alert('O')
+        playerInfo.winner = 'O'
+        this.toggleEndModal()
         return true
       }
     })
@@ -126,15 +133,39 @@ const gameHandler = reactive({
     if (board.every((item: string) => {
       return item === 'X' || item === 'O'
     }) && !this.checkWinner(board)) {
-      alert('Draw')
+      // alert('Draw')
+      playerInfo.winner = 'Draw'
+      this.toggleEndModal()
       return true
       //
     }
   }
 })
-const getForm = (form: formObject) => {
+
+const playerInfo = reactive({
+  playerOneName: '',
+  playerOneSelection: '',
+  playerTwoName: '',
+  playerTwoSelection: '',
+  useAi: false,
+  aiMode: '',
+  winner :'',
+  gameStatus: '',
+})
+const getForm = (arg: formObject) => {
   gameBoard.createBoard()
-  gameHandler.whoisTurn = form.playerOneSelection
+  gameHandler.whoisTurn = arg.playerOneSelection
+
+  playerInfo.playerOneName = arg.playerOneName
+  playerInfo.playerOneSelection = arg.playerOneSelection
+  playerInfo.playerTwoName = arg.playerTwoName
+  if (arg.playerOneSelection === 'X'){
+    playerInfo.playerTwoSelection = 'O'
+  }else{
+    playerInfo.playerTwoSelection = 'X'
+  }
+  playerInfo.useAi = arg.disableAi
+  playerInfo.aiMode = arg.aiMode
 }
 </script>
 
