@@ -7,6 +7,8 @@
           :show-modal="gameHandler.startModal"
           @close-modal="gameHandler.startModal = false"
           @send-form="getForm"
+          :reset-modal="resetModal"
+          @un-reset-form="resetModal = false"
       >
       </start-modal>
     </Teleport>
@@ -99,6 +101,7 @@ const gameHandler = reactive({
   toggleEndModal:async function () {
     this.endModal = !this.endModal
     this.startModal = true
+    resetModal.value = true
   },
 
   toggleWhoisTurn: function () {
@@ -152,6 +155,7 @@ const playerInfo = reactive({
   winner :'',
   gameStatus: '',
 })
+const resetModal = ref(false)
 const getForm = (arg: formObject) => {
   gameBoard.createBoard()
   gameHandler.whoisTurn = arg.playerOneSelection
