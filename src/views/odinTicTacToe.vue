@@ -26,8 +26,6 @@ import {computed, ComputedRef, onMounted, reactive, ref} from "vue";
 import {Board, Cell, formObject} from "@/global/ticTacToeTypes";
 import StartModal from "@/components/odinTicTacToe/startModal.vue";
 
-// Todo: @start playerOne selects either X or Y + update's whoisTurn(default ' ') = selection
-// Todo: @click on Cell -> addToken(whoisTurn) -> calculateGame(PossibleSolutions[solution[]]) -> update whoisTurn = (!current)
 
 onMounted(async () => {
   gameHandler.startModal = true
@@ -61,7 +59,7 @@ const gameBoard = reactive({
   },
 
   logBoard: function () {
-    const logBoard: [] = []
+    const logBoard: ComputedRef[] = []
     this.board.forEach((item: Cell) => {
       logBoard.push(item.getValue)
     })
@@ -112,10 +110,10 @@ const gameHandler = reactive({
     this.checkWinner(board)
     this.checkDraw(board)
   },
-
-  checkWinner: function (board:[]):boolean|void {
+  // Todo: ask Sandl if i can somehow type the boards right so i get no warning
+  checkWinner: function (board: unknown[]): boolean | void {
     this.possibleEnds.forEach((item) => {
-      if (board[item[0]] === 'X' && board[item[1]] === 'X' && board[item[2]] === 'X'){
+      if (board[item[0]] === 'X' && board[item[1]] === 'X' && board[item[2]] === 'X') {
         alert('X')
         return true
       } else if (board[item[0]] === 'O' && board[item[1]] === 'O' && board[item[2]] === 'O') {
@@ -124,8 +122,10 @@ const gameHandler = reactive({
       }
     })
   },
-  checkDraw: function (board:[]) {
-    if (board.every((item: string) => {return item === 'X' || item === 'O'}) && !this.checkWinner(board)  ) {
+  checkDraw: function (board: any[]) {
+    if (board.every((item: string) => {
+      return item === 'X' || item === 'O'
+    }) && !this.checkWinner(board)) {
       alert('Draw')
       return true
       //
