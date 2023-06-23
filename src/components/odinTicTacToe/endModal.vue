@@ -1,5 +1,5 @@
 <template>
-  <Transition name="fade">
+<!--  <Transition name="fade">-->
     <div v-if="showModal" class="modalBg">
       <div class="content">
         <h2>{{ props.gameInfo }}</h2>
@@ -10,7 +10,7 @@
         </button>
       </div>
     </div>
-  </Transition>
+<!--  </Transition>-->
 
 
 </template>
