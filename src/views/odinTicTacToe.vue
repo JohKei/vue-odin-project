@@ -27,8 +27,12 @@
         {{ item.getValue }}
       </li>
     </ul>
-    <button @click="gameHandler.toggleStartModal()">Log</button>
-    <button @click="gameHandler.toggleEndModal()">resetBoard</button>
+    <button @click="gameHandler.toggleStartModal()"
+            class="btn btn-info"
+            v-if="!playerInfo.playerOneName"
+    >
+      Start game!
+    </button>
   </div>
 </template>
 
@@ -48,9 +52,14 @@ onMounted(async () => {
 const cell = (): Cell => {
   const _tokenValue = ref()
   const addToken = (player: string) => {
-    _tokenValue.value = player
-    gameHandler.toggleWhoisTurn()
-    gameHandler.calculateGame()
+    if (_tokenValue.value){
+      return
+    }else{
+      _tokenValue.value = player
+      gameHandler.toggleWhoisTurn()
+      gameHandler.calculateGame()
+    }
+
   }
   const getValue = computed(() => _tokenValue.value)
   return {
@@ -58,7 +67,6 @@ const cell = (): Cell => {
     getValue
   }
 }
-
 const gameBoard = reactive({
   board: [] as Board<Cell>,
 
