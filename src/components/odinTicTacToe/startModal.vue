@@ -6,7 +6,8 @@
             v-slot="{errors}"
             class="startGameModal"
       >
-        <div class="form-floating mb-1">
+
+        <div class="form-floating mb-1 errorParent">
           <Field name="userNameOne"
                  type="text"
                  class="form-control"
@@ -17,8 +18,9 @@
           >
             Your Name
           </label>
+            <span class="error" v-if="errors.userNameOne">{{ errors.userNameOne }}</span>
+
         </div>
-        <span class="error">{{ errors.userNameOne }}</span>
         <div class="formCheckContainer">
           <p>choose:</p>
           <div class="form-check">
@@ -53,20 +55,20 @@
           <span class="error">{{ errors.playerOneSelection }}</span>
 
         </div>
-        <div class="inputContainer">
+        <div class="inputContainer errorParent">
           <Field name="enemy"
                  as="select"
                  class="form-select centerInputs"
                  v-model="modalHandler.formObject.enemy"
           >
-            <option value="">Choose your Enemy</option>
+            <option value="">Choose your opponent</option>
             <option value="Human">other Player</option>
             <option value="AI">Ai</option>
           </Field>
           <span class="error">{{ errors.enemy }}</span>
 
         </div>
-        <div class="form-floating mb-1">
+        <div class="form-floating mb-1 errorParent">
           <Field type="text"
                  name="playerTwoName"
                  placeholder="playerTwoName"
@@ -80,7 +82,7 @@
           <span class="error">{{ errors.playerTwoName }}</span>
 
         </div>
-        <div class="inputContainer">
+        <div class="inputContainer errorParent">
           <Field
               name="aiMode"
               as="select"
@@ -94,6 +96,7 @@
           </Field>
           <span class="error">{{ errors.aiMode }}</span>
         </div>
+
         <button class="startButton btn btn-success" type="submit">Start Game</button>
       </Form>
     </div>
@@ -178,18 +181,18 @@ watch(resetModal, () => {
 })
 
 const schema = yup.object({
-  userNameOne: yup.string().required().min(3),
+  userNameOne: yup.string().required('Type in your Name').min(3),
   playerOneSelection: yup.string().required().min(1),
-  enemy: yup.string().required().min(2),
+  enemy: yup.string().required('Choose your opponent!').min(2),
   playerTwoName: yup.string()
       .when('enemy', {
         is: 'Human',
-        then: (schema) => schema.required().min(3)
+        then: (schema) => schema.required("Type in your opponent's Name!").min(3)
       }),
   aiMode: yup.string()
       .when('enemy',{
         is: 'AI',
-        then: (schema) => schema.required().min(2)
+        then: (schema) => schema.required("Choose AI's difficulty!").min(2)
       })
 })
 configure({
@@ -269,9 +272,19 @@ const submit = (values: object) => {
   margin: 0;
 }
 
-.error {
+.errorParent{
   position: relative;
-  background-color: black;
+}
+
+.error {
+  position: absolute;
+  float: right;
+  width: max-content;
+  top: 25%;
+  left: 105%;
+  padding: 0 10px;
+  border-radius: 5px;
+  background-color: rgba(0,0,0,70%);
   color: white;
 }
 </style>

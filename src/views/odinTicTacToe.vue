@@ -41,7 +41,7 @@ import EndModal from "@/components/odinTicTacToe/endModal.vue";
 
 
 onMounted(async () => {
-  gameHandler.startModal = true
+  // gameHandler.startModal = true
   // gameHandler.endModal = true
 })
 
