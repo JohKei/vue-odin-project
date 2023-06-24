@@ -59,7 +59,6 @@ import {computed, ComputedRef, onMounted, reactive, ref} from "vue";
 import {Board, Cell, formObject, GameInfo} from "@/global/ticTacToeTypes";
 import StartModal from "@/components/odinTicTacToe/startModal.vue";
 import EndModal from "@/components/odinTicTacToe/endModal.vue";
-import {array} from "yup";
 
 
 onMounted(async () => {
@@ -75,7 +74,7 @@ const cell = (): Cell => {
     } else {
       _tokenValue.value = player
       gameHandler.toggleWhoisTurn()
-      gameHandler.calculateGame()
+      calculateGame()
     }
 
   }
@@ -148,40 +147,7 @@ const gameHandler = reactive({
     }
   },
 
-  calculateGame: function () {
-    const board = gameBoard.logBoard()
-    this.checkWinner(board)
-    this.checkDraw(board)
-  },
-  checkWinner: function (board: unknown[]): boolean | void {
-    this.possibleEnds.forEach((item) => {
-      if (board[item[0]] === 'X' && board[item[1]] === 'X' && board[item[2]] === 'X') {
-        // alert('X')
-        playerInfo.winner = 'X'
-        this.toggleEndModal()
-        this.whoisTurn = playerInfo.playerOneSelection
-        return true
-      } else if (board[item[0]] === 'O' && board[item[1]] === 'O' && board[item[2]] === 'O') {
-        // alert('O')
-        playerInfo.winner = 'O'
-        this.toggleEndModal()
-        this.whoisTurn = playerInfo.playerOneSelection
-        return true
-      }
-    })
-  },
-  checkDraw: function (board: any[]) {
-    if (board.every((item: string) => {
-      return item === 'X' || item === 'O'
-    }) && !this.checkWinner(board)) {
-      // alert('Draw')
-      playerInfo.winner = 'Draw'
-      this.toggleEndModal()
-      this.whoisTurn = playerInfo.playerOneSelection
-      return true
-      //
-    }
-  }
+
 })
 
 const playerInfo: GameInfo = reactive({
@@ -209,6 +175,43 @@ const getForm = (arg: formObject) => {
   }
   playerInfo.useAi = arg.disableAi
   playerInfo.aiMode = arg.aiMode
+}
+
+const calculateGame = function () {
+  const board = gameBoard.logBoard()
+  checkWinner(board)
+  checkDraw(board)
+}
+
+const checkWinner = function (board: unknown[]): boolean | void {
+  gameHandler.possibleEnds.forEach((item) => {
+    if (board[item[0]] === 'X' && board[item[1]] === 'X' && board[item[2]] === 'X') {
+      // alert('X')
+      playerInfo.winner = 'X'
+      gameHandler.toggleEndModal()
+      gameHandler.whoisTurn = playerInfo.playerOneSelection
+      return true
+    } else if (board[item[0]] === 'O' && board[item[1]] === 'O' && board[item[2]] === 'O') {
+      // alert('O')
+      playerInfo.winner = 'O'
+      gameHandler.toggleEndModal()
+      gameHandler.whoisTurn = playerInfo.playerOneSelection
+      return true
+    }
+  })
+}
+
+const checkDraw=  (board: any[]) => {
+  if (board.every((item: string) => {
+    return item === 'X' || item === 'O'
+  }) && checkWinner(board)) {
+    // alert('Draw')
+    playerInfo.winner = 'Draw'
+    gameHandler.toggleEndModal()
+    gameHandler.whoisTurn = playerInfo.playerOneSelection
+    return true
+    //
+  }
 }
 
 const getBestMove = (board: [], maximizing: boolean, callback = () => {
