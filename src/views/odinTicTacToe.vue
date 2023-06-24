@@ -2,6 +2,23 @@
   <navigation-bar></navigation-bar>
   <div class="body">
     <h1>Tic Tac Toe, aller</h1>
+    <h2 v-if="gameHandler.whoisTurn">It's your turn
+      <span
+          v-if="gameHandler.whoisTurn === playerInfo.playerOneSelection"
+      >
+        {{ playerInfo.playerOneName }} : {{ playerInfo.playerOneSelection }}
+      </span>
+      <span
+          v-if="gameHandler.whoisTurn === playerInfo.playerTwoSelection"
+      >
+        {{ playerInfo.playerTwoName }} {{ playerInfo.aiMode }}
+        <span
+            v-if="playerInfo.useAi"
+        >AI
+        </span>
+        : {{playerInfo.playerTwoSelection}}
+      </span>
+    </h2>
     <Teleport to="#modal">
       <start-modal
           :show-modal="gameHandler.startModal"
@@ -52,9 +69,9 @@ onMounted(async () => {
 const cell = (): Cell => {
   const _tokenValue = ref()
   const addToken = (player: string) => {
-    if (_tokenValue.value){
+    if (_tokenValue.value) {
       return
-    }else{
+    } else {
       _tokenValue.value = player
       gameHandler.toggleWhoisTurn()
       gameHandler.calculateGame()
@@ -112,12 +129,12 @@ const gameHandler = reactive({
     this.startModal = true
     resetModal.value = true
   },
-  restartAndReset:function (){
+  restartAndReset: function () {
     this.endModal = !this.endModal
     this.startModal = true
     resetModal.value = true
   },
-  restart:function (){
+  restart: function () {
     this.endModal = !this.endModal
     this.startModal = false
     gameBoard.createBoard()
@@ -166,14 +183,14 @@ const gameHandler = reactive({
   }
 })
 
-const playerInfo:GameInfo = reactive({
+const playerInfo: GameInfo = reactive({
   playerOneName: '',
   playerOneSelection: '',
   playerTwoName: '',
   playerTwoSelection: '',
   useAi: false,
   aiMode: '',
-  winner :'',
+  winner: '',
   gameStatus: '',
 })
 const resetModal = ref(false)
@@ -184,9 +201,9 @@ const getForm = (arg: formObject) => {
   playerInfo.playerOneName = arg.playerOneName
   playerInfo.playerOneSelection = arg.playerOneSelection
   playerInfo.playerTwoName = arg.playerTwoName
-  if (arg.playerOneSelection === 'X'){
+  if (arg.playerOneSelection === 'X') {
     playerInfo.playerTwoSelection = 'O'
-  }else{
+  } else {
     playerInfo.playerTwoSelection = 'X'
   }
   playerInfo.useAi = arg.disableAi
