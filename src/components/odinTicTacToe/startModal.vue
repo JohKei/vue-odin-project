@@ -2,9 +2,12 @@
   <transition name="fade">
     <div class="modalBackground" v-if="showModal">
       <Form @submit="submit"
+            :validation-schema="schema"
+            v-slot="{errors}"
             class="startGameModal"
       >
-        <div class="form-floating mb-1">
+
+        <div class="form-floating mb-1 errorParent">
           <Field name="userNameOne"
                  type="text"
                  class="form-control"
@@ -15,11 +18,13 @@
           >
             Your Name
           </label>
+            <span class="error" v-if="errors.userNameOne">{{ errors.userNameOne }}</span>
+
         </div>
         <div class="formCheckContainer">
           <p>choose:</p>
           <div class="form-check">
-            <Field name="selection"
+            <Field name="playerOneSelection"
                    type="radio"
                    class="form-check-input"
                    placeholder="X"
@@ -34,32 +39,36 @@
           </div>
           <p>or</p>
           <div class="form-check">
-            <Field name="selection"
+            <Field name="playerOneSelection"
                    type="radio"
                    class="form-check-input"
                    placeholder="O"
                    value="O"
                    v-model="modalHandler.formObject.playerOneSelection"
             />
-            <label for="selection"
+            <label for="playerOneSelection"
                    class="form-check-label"
             >
               O
             </label>
           </div>
+          <span class="error">{{ errors.playerOneSelection }}</span>
+
         </div>
-        <div class="inputContainer">
-          <Field name="Enemy"
+        <div class="inputContainer errorParent">
+          <Field name="enemy"
                  as="select"
                  class="form-select centerInputs"
                  v-model="modalHandler.formObject.enemy"
           >
-            <option value="">Choose your Enemy</option>
+            <option value="">Choose your opponent</option>
             <option value="Human">other Player</option>
             <option value="AI">Ai</option>
           </Field>
+          <span class="error">{{ errors.enemy }}</span>
+
         </div>
-        <div class="form-floating mb-1">
+        <div class="form-floating mb-1 errorParent">
           <Field type="text"
                  name="playerTwoName"
                  placeholder="playerTwoName"
@@ -70,8 +79,10 @@
           <label for="playerTwoName">
             Player 2
           </label>
+          <span class="error">{{ errors.playerTwoName }}</span>
+
         </div>
-        <div class="inputContainer">
+        <div class="inputContainer errorParent">
           <Field
               name="aiMode"
               as="select"
@@ -83,7 +94,9 @@
             <option value="easy">easy</option>
             <option value="hard">unbeatable</option>
           </Field>
+          <span class="error">{{ errors.aiMode }}</span>
         </div>
+
         <button class="startButton btn btn-success" type="submit">Start Game</button>
       </Form>
     </div>
@@ -93,19 +106,20 @@
 
 <script setup lang="ts">
 import {reactive, ref, toRef, watch} from "vue";
-import {Form, Field} from 'vee-validate';
+import {Form, Field, configure} from 'vee-validate';
 import {formObject} from "@/global/ticTacToeTypes";
+import * as yup from 'yup';
 // eslint-disable-next-line no-undef
 const props = defineProps<{
   showModal: boolean
-  resetModal : boolean
+  resetModal: boolean
 }>()
 
 // eslint-disable-next-line no-undef
 const emits = defineEmits<{
   (e: 'closeModal'): void
   (e: 'sendForm', obj: formObject): void
-  (e: 'unResetForm'):void
+  (e: 'unResetForm'): void
 }>()
 
 const modalHandler = reactive({
@@ -132,6 +146,8 @@ const modalHandler = reactive({
     this.formObject.playerOneName = ''
     this.formObject.playerOneSelection = 'X'
     this.formObject.enemy = ''
+    this.formObject.disablePlayerTwo = false
+    this.formObject.disableAi = false
   },
 
   closeModal: function () {
@@ -158,13 +174,32 @@ watch(modalHandler.formObject, () => {
 })
 
 const resetModal = toRef(props, 'resetModal')
-watch(resetModal,()=>{
-  if (resetModal.value){
+watch(resetModal, () => {
+  if (resetModal.value) {
     modalHandler.resetFormObj()
   }
 })
 
-const submit = () => {
+const schema = yup.object({
+  userNameOne: yup.string().required('Type in your Name').min(3),
+  playerOneSelection: yup.string().required().min(1),
+  enemy: yup.string().required('Choose your opponent!').min(2),
+  playerTwoName: yup.string()
+      .when('enemy', {
+        is: 'Human',
+        then: (schema) => schema.required("Type in your opponent's Name!").min(3)
+      }),
+  aiMode: yup.string()
+      .when('enemy',{
+        is: 'AI',
+        then: (schema) => schema.required("Choose AI's difficulty!").min(2)
+      })
+})
+configure({
+  validateOnInput: true
+})
+
+const submit = (values: object) => {
   emits('sendForm', modalHandler.formObject)
   modalHandler.closeModal()
 }
@@ -236,4 +271,19 @@ const submit = () => {
   margin: 0;
 }
 
+.errorParent{
+  position: relative;
+}
+
+.error {
+  position: absolute;
+  float: right;
+  width: max-content;
+  top: 25%;
+  left: 105%;
+  padding: 0 10px;
+  border-radius: 5px;
+  background-color: rgba(0,0,0,70%);
+  color: white;
+}
 </style>

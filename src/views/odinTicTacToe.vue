@@ -2,6 +2,23 @@
   <navigation-bar></navigation-bar>
   <div class="body">
     <h1>Tic Tac Toe, aller</h1>
+    <h2 v-if="gameHandler.whoisTurn">It's your turn
+      <span
+          v-if="gameHandler.whoisTurn === playerInfo.playerOneSelection"
+      >
+        {{ playerInfo.playerOneName }} : {{ playerInfo.playerOneSelection }}
+      </span>
+      <span
+          v-if="gameHandler.whoisTurn === playerInfo.playerTwoSelection"
+      >
+        {{ playerInfo.playerTwoName }} {{ playerInfo.aiMode }}
+        <span
+            v-if="playerInfo.useAi"
+        >AI
+        </span>
+        : {{playerInfo.playerTwoSelection}}
+      </span>
+    </h2>
     <Teleport to="#modal">
       <start-modal
           :show-modal="gameHandler.startModal"
@@ -15,8 +32,9 @@
     <Teleport to="body">
       <end-modal
           :show-modal="gameHandler.endModal"
-          @close-modal="gameHandler.toggleEndModal()"
+          @close-modal="gameHandler.restart()"
           :game-info="playerInfo"
+          @close-modal&reset="gameHandler.restartAndReset()"
       >
 
       </end-modal>
@@ -26,30 +44,39 @@
         {{ item.getValue }}
       </li>
     </ul>
-    <button @click="gameHandler.toggleStartModal()">Log</button>
-    <button @click="gameHandler.toggleEndModal()">resetBoard</button>
+    <button @click="gameHandler.toggleStartModal()"
+            class="btn btn-info"
+            v-if="!playerInfo.playerOneName"
+    >
+      Start game!
+    </button>
   </div>
 </template>
 
 <script setup lang="ts">
 import NavigationBar from "@/components/NavigationBar.vue";
 import {computed, ComputedRef, onMounted, reactive, ref} from "vue";
-import {Board, Cell, formObject} from "@/global/ticTacToeTypes";
+import {Board, Cell, formObject, GameInfo} from "@/global/ticTacToeTypes";
 import StartModal from "@/components/odinTicTacToe/startModal.vue";
 import EndModal from "@/components/odinTicTacToe/endModal.vue";
 
 
 onMounted(async () => {
-  gameHandler.startModal = true
+  // gameHandler.startModal = true
   // gameHandler.endModal = true
 })
 
 const cell = (): Cell => {
   const _tokenValue = ref()
   const addToken = (player: string) => {
-    _tokenValue.value = player
-    gameHandler.toggleWhoisTurn()
-    gameHandler.calculateGame()
+    if (_tokenValue.value) {
+      return
+    } else {
+      _tokenValue.value = player
+      gameHandler.toggleWhoisTurn()
+      gameHandler.calculateGame()
+    }
+
   }
   const getValue = computed(() => _tokenValue.value)
   return {
@@ -57,7 +84,6 @@ const cell = (): Cell => {
     getValue
   }
 }
-
 const gameBoard = reactive({
   board: [] as Board<Cell>,
 
@@ -98,12 +124,21 @@ const gameHandler = reactive({
   toggleStartModal: function () {
     this.startModal = !this.startModal
   },
-  toggleEndModal:async function () {
+  toggleEndModal: function () {
     this.endModal = !this.endModal
     this.startModal = true
     resetModal.value = true
   },
-
+  restartAndReset: function () {
+    this.endModal = !this.endModal
+    this.startModal = true
+    resetModal.value = true
+  },
+  restart: function () {
+    this.endModal = !this.endModal
+    this.startModal = false
+    gameBoard.createBoard()
+  },
   toggleWhoisTurn: function () {
     if (this.whoisTurn === 'X') {
       this.whoisTurn = 'O'
@@ -123,11 +158,13 @@ const gameHandler = reactive({
         // alert('X')
         playerInfo.winner = 'X'
         this.toggleEndModal()
+        this.whoisTurn = playerInfo.playerOneSelection
         return true
       } else if (board[item[0]] === 'O' && board[item[1]] === 'O' && board[item[2]] === 'O') {
         // alert('O')
         playerInfo.winner = 'O'
         this.toggleEndModal()
+        this.whoisTurn = playerInfo.playerOneSelection
         return true
       }
     })
@@ -139,20 +176,21 @@ const gameHandler = reactive({
       // alert('Draw')
       playerInfo.winner = 'Draw'
       this.toggleEndModal()
+      this.whoisTurn = playerInfo.playerOneSelection
       return true
       //
     }
   }
 })
 
-const playerInfo = reactive({
+const playerInfo: GameInfo = reactive({
   playerOneName: '',
   playerOneSelection: '',
   playerTwoName: '',
   playerTwoSelection: '',
   useAi: false,
   aiMode: '',
-  winner :'',
+  winner: '',
   gameStatus: '',
 })
 const resetModal = ref(false)
@@ -163,9 +201,9 @@ const getForm = (arg: formObject) => {
   playerInfo.playerOneName = arg.playerOneName
   playerInfo.playerOneSelection = arg.playerOneSelection
   playerInfo.playerTwoName = arg.playerTwoName
-  if (arg.playerOneSelection === 'X'){
+  if (arg.playerOneSelection === 'X') {
     playerInfo.playerTwoSelection = 'O'
-  }else{
+  } else {
     playerInfo.playerTwoSelection = 'X'
   }
   playerInfo.useAi = arg.disableAi
