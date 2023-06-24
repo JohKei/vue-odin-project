@@ -2,6 +2,8 @@
   <transition name="fade">
     <div class="modalBackground" v-if="showModal">
       <Form @submit="submit"
+            :validation-schema="schema"
+            v-slot="{errors}"
             class="startGameModal"
       >
         <div class="form-floating mb-1">
@@ -16,10 +18,11 @@
             Your Name
           </label>
         </div>
+        <span class="error">{{ errors.userNameOne }}</span>
         <div class="formCheckContainer">
           <p>choose:</p>
           <div class="form-check">
-            <Field name="selection"
+            <Field name="playerOneSelection"
                    type="radio"
                    class="form-check-input"
                    placeholder="X"
@@ -34,22 +37,24 @@
           </div>
           <p>or</p>
           <div class="form-check">
-            <Field name="selection"
+            <Field name="playerOneSelection"
                    type="radio"
                    class="form-check-input"
                    placeholder="O"
                    value="O"
                    v-model="modalHandler.formObject.playerOneSelection"
             />
-            <label for="selection"
+            <label for="playerOneSelection"
                    class="form-check-label"
             >
               O
             </label>
           </div>
+          <span class="error">{{ errors.playerOneSelection }}</span>
+
         </div>
         <div class="inputContainer">
-          <Field name="Enemy"
+          <Field name="enemy"
                  as="select"
                  class="form-select centerInputs"
                  v-model="modalHandler.formObject.enemy"
@@ -58,6 +63,8 @@
             <option value="Human">other Player</option>
             <option value="AI">Ai</option>
           </Field>
+          <span class="error">{{ errors.enemy }}</span>
+
         </div>
         <div class="form-floating mb-1">
           <Field type="text"
@@ -70,6 +77,8 @@
           <label for="playerTwoName">
             Player 2
           </label>
+          <span class="error">{{ errors.playerTwoName }}</span>
+
         </div>
         <div class="inputContainer">
           <Field
@@ -83,6 +92,7 @@
             <option value="easy">easy</option>
             <option value="hard">unbeatable</option>
           </Field>
+          <span class="error">{{ errors.aiMode }}</span>
         </div>
         <button class="startButton btn btn-success" type="submit">Start Game</button>
       </Form>
@@ -93,19 +103,20 @@
 
 <script setup lang="ts">
 import {reactive, ref, toRef, watch} from "vue";
-import {Form, Field} from 'vee-validate';
+import {Form, Field, configure} from 'vee-validate';
 import {formObject} from "@/global/ticTacToeTypes";
+import * as yup from 'yup';
 // eslint-disable-next-line no-undef
 const props = defineProps<{
   showModal: boolean
-  resetModal : boolean
+  resetModal: boolean
 }>()
 
 // eslint-disable-next-line no-undef
 const emits = defineEmits<{
   (e: 'closeModal'): void
   (e: 'sendForm', obj: formObject): void
-  (e: 'unResetForm'):void
+  (e: 'unResetForm'): void
 }>()
 
 const modalHandler = reactive({
@@ -132,6 +143,8 @@ const modalHandler = reactive({
     this.formObject.playerOneName = ''
     this.formObject.playerOneSelection = 'X'
     this.formObject.enemy = ''
+    this.formObject.disablePlayerTwo = false
+    this.formObject.disableAi = false
   },
 
   closeModal: function () {
@@ -158,13 +171,33 @@ watch(modalHandler.formObject, () => {
 })
 
 const resetModal = toRef(props, 'resetModal')
-watch(resetModal,()=>{
-  if (resetModal.value){
+watch(resetModal, () => {
+  if (resetModal.value) {
     modalHandler.resetFormObj()
   }
 })
 
-const submit = () => {
+const schema = yup.object({
+  userNameOne: yup.string().required().min(3),
+  playerOneSelection: yup.string().required().min(1),
+  enemy: yup.string().required().min(2),
+  playerTwoName: yup.string()
+      .when('enemy', {
+        is: 'Human',
+        then: (schema) => schema.required().min(3)
+      }),
+  aiMode: yup.string()
+      .when('enemy',{
+        is: 'AI',
+        then: (schema) => schema.required().min(2)
+      })
+})
+configure({
+  validateOnInput: true
+})
+
+const submit = (values: object) => {
+  console.log(values)
   emits('sendForm', modalHandler.formObject)
   modalHandler.closeModal()
 }
@@ -236,4 +269,9 @@ const submit = () => {
   margin: 0;
 }
 
+.error {
+  position: relative;
+  background-color: black;
+  color: white;
+}
 </style>
