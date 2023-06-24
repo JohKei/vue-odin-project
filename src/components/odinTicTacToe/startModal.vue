@@ -200,7 +200,6 @@ configure({
 })
 
 const submit = (values: object) => {
-  console.log(values)
   emits('sendForm', modalHandler.formObject)
   modalHandler.closeModal()
 }
