@@ -16,7 +16,7 @@
             v-if="playerInfo.useAi"
         >AI
         </span>
-        : {{playerInfo.playerTwoSelection}}
+        : {{ playerInfo.playerTwoSelection }}
       </span>
     </h2>
     <Teleport to="#modal">
@@ -59,6 +59,7 @@ import {computed, ComputedRef, onMounted, reactive, ref} from "vue";
 import {Board, Cell, formObject, GameInfo} from "@/global/ticTacToeTypes";
 import StartModal from "@/components/odinTicTacToe/startModal.vue";
 import EndModal from "@/components/odinTicTacToe/endModal.vue";
+import {array} from "yup";
 
 
 onMounted(async () => {
@@ -209,6 +210,14 @@ const getForm = (arg: formObject) => {
   playerInfo.useAi = arg.disableAi
   playerInfo.aiMode = arg.aiMode
 }
+
+const getBestMove = (board: [], maximizing: boolean, callback = () => {
+//
+}, depth: number) => {
+//
+}
+
+
 </script>
 
 <style scoped lang="css">
