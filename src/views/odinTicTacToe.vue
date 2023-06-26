@@ -62,11 +62,6 @@ import {Board, Cell, formObject, GameInfo} from "@/global/ticTacToeTypes";
 import StartModal from "@/components/odinTicTacToe/startModal.vue";
 import EndModal from "@/components/odinTicTacToe/endModal.vue";
 
-onMounted(async () => {
-  // gameHandler.startModal = true
-  // gameHandler.endModal = true
-})
-
 const click = (index:number) => {
   gameBoard.value[index] = whoisTurn.value
   toggleWhoisTurn()
@@ -134,7 +129,7 @@ const checkWinner = function (board: unknown[], player: string): boolean {
   return winner.value
 }
 
-const emptyIndex = (board:Ref<string[]|number[]>)=>{
+const emptyIndex = (board:string[]|number[])=>{
   return board.filter(s => s != 'X' && s != 'O')
 }
 const checkDraw = () => {
