@@ -133,13 +133,13 @@ const modalHandler = reactive({
   },
 
   formObject: {
-    playerOneName: '',
+    playerOneName: 'John',
     playerOneSelection: 'X',
-    enemy: '',
+    enemy: 'AI',
     playerTwoName: '',
     disablePlayerTwo: false,
-    aiMode: '',
-    disableAi: false
+    aiMode: 'hard',
+    disableAi: true
   },
 
   resetFormObj: function () {
