@@ -40,10 +40,10 @@
       </end-modal>
     </Teleport>
     <ul class="board">
-      <li v-for="item in gameBoard" :key="item" class="cell"
-          @click="click(gameBoard.indexOf(item))"
+      <li v-for="item in board.board" :key="item" class="cell"
+          @click="item.addToken(whoisTurn)"
       >
-        {{ item }}
+        {{ item.getValue }}
       </li>
     </ul>
     <button @click="toggleStartModal"
@@ -62,21 +62,49 @@ import {Board, Cell, formObject, GameInfo} from "@/global/ticTacToeTypes";
 import StartModal from "@/components/odinTicTacToe/startModal.vue";
 import EndModal from "@/components/odinTicTacToe/endModal.vue";
 
-const click = (index:number) => {
-  gameBoard.value[index] = whoisTurn.value
-  toggleWhoisTurn()
 
-  if (checkWinner(gameBoard.value, playerInfo.playerOneSelection)){
-    playerInfo.winner = playerInfo.playerOneSelection
-    toggleEndModal()
-  }else if(checkWinner(gameBoard.value, playerInfo.playerTwoSelection)){
-    playerInfo.winner = playerInfo.playerTwoSelection
-    toggleEndModal()
+// Todo: built the minimax() -> user wants to maximize -> AI wants to minimize
+// Todo: i need to continue using cell() & board() from my first attempt
+
+
+const cell = (): Cell => {
+  const _tokenValue = ref()
+  const addToken = (player: string) => {
+    if (_tokenValue.value) {
+      return
+    } else {
+      _tokenValue.value = player
+      toggleWhoisTurn()
+      calculateGame()
+    }
   }
-
-  checkDraw()
+  const getValue = computed(() => _tokenValue.value)
+  return {
+    addToken,
+    getValue
+  }
 }
+const board = reactive({
+  board: [] as Board<Cell>,
+  createBoard: function () {
+    if (this.board.length) {
+      this.board.splice(0)
+    }
+    for (let i = 1; i <= 9; i++) {
+      this.board.push(cell())
+    }
+  },
+  logBoard: function () {
+    const logBoard: ComputedRef[] = []
+    this.board.forEach((item: Cell) => {
+      logBoard.push(item.getValue)
+    })
+    return logBoard
+  }
+})
 
+
+// Todo: calcGame() -> CheckWinner() -> CheckDraw()
 const modalStart = ref(false)
 const modalEnd = ref(false)
 
@@ -89,14 +117,14 @@ const toggleEndModal = () => {
   modalEnd.value = !modalEnd.value
   modalStart.value = true
   resetModal.value = true
-  resetBoard()
+  // resetBoard()
 }
 
 const restartAndReset = () => {
   modalEnd.value = !modalEnd.value
   modalStart.value = true
   resetModal.value = true
-  resetBoard()
+  // resetBoard()
 }
 
 const restart = () => {
@@ -104,10 +132,6 @@ const restart = () => {
   modalStart.value = false
 }
 
-const gameBoard: Ref<number[] | string[]> = ref([0, 1, 2, 3, 4, 5, 6, 7, 8])
-const resetBoard = () =>{
-  gameBoard.value = [0,1,2,3,4,5,6,7,8]
-}
 const possibleEnds = [
   [0, 1, 2],
   [0, 4, 8],
@@ -119,24 +143,48 @@ const possibleEnds = [
   [6, 7, 8],
 ]
 
-const checkWinner = function (board: unknown[], player: string): boolean {
+const calculateGame = () => {
+  const gameState = board.logBoard()
+
+}
+const isTerminalState = (board: unknown[],): boolean => {
   const winner = ref(false)
   possibleEnds.forEach((item) => {
-    if (board[item[0]] === player && board[item[1]] === player && board[item[2]] === player) {
+    if (board[item[0]] === 'X' && board[item[1]] === 'X' && board[item[2]] === 'X' ||
+        board[item[0]] === 'O' && board[item[1]] === 'O' && board[item[2]] === 'O' ||
+        emptyIndex(board).length === 0 ) {
       return winner.value = true
     }
   })
   return winner.value
 }
+const getValue = (board: unknown[]): string => {
+  const playerOne = playerInfo.playerOneSelection
+  const playerTwo = playerInfo.playerTwoSelection
+  const score = ref()
+  possibleEnds.forEach((item) => {
+    if (board[item[0]] === playerOne && board[item[1]] === playerOne && board[item[2]] === playerOne) {
+      return score.value = 1
+    }else if (board[item[0]] === playerTwo && board[item[1]] === playerTwo && board[item[2]] === playerTwo){
+      return score.value = -1
+    }else if (checkDraw(board)){
+      return score.value = 0
+    }
+  })
+  return score.value
+}
 
-const emptyIndex = (board:string[]|number[])=>{
+
+const emptyIndex = (board: string[] | number[]) => {
   return board.filter(s => s != 'X' && s != 'O')
 }
-const checkDraw = () => {
-  if (emptyIndex(gameBoard.value).length === 0){
-    playerInfo.winner = 'Draw'
-    toggleEndModal()
+const checkDraw = (board:unknown[]):boolean => {
+
+  const draw = ref()
+  if (emptyIndex(board).length === 0) {
+    return draw.value = true
   }
+  return draw.value
 //
 }
 
@@ -163,6 +211,7 @@ const playerInfo: GameInfo = reactive({
   gameStatus: '',
 })
 const getForm = (arg: formObject) => {
+  board.createBoard()
   whoisTurn.value = arg.playerOneSelection
 
   playerInfo.playerOneName = arg.playerOneName
@@ -176,8 +225,6 @@ const getForm = (arg: formObject) => {
   playerInfo.useAi = arg.disableAi
   playerInfo.aiMode = arg.aiMode
 }
-
-
 
 
 </script>
