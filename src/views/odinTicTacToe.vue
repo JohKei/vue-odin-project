@@ -179,26 +179,17 @@ const getForm = (arg: formObject) => {
 
 const calculateGame = function () {
   const board = gameBoard.logBoard()
-  checkWinner(board)
   checkDraw(board)
 }
 
-const checkWinner = function (board: unknown[]): boolean | void {
+const checkWinner = function (board: unknown[], player: string): boolean {
+  const winner = ref(false)
   gameHandler.possibleEnds.forEach((item) => {
-    if (board[item[0]] === 'X' && board[item[1]] === 'X' && board[item[2]] === 'X') {
-      // alert('X')
-      playerInfo.winner = 'X'
-      gameHandler.toggleEndModal()
-      gameHandler.whoisTurn = playerInfo.playerOneSelection
-      return true
-    } else if (board[item[0]] === 'O' && board[item[1]] === 'O' && board[item[2]] === 'O') {
-      // alert('O')
-      playerInfo.winner = 'O'
-      gameHandler.toggleEndModal()
-      gameHandler.whoisTurn = playerInfo.playerOneSelection
-      return true
+    if (board[item[0]] === player && board[item[1]] === player && board[item[2]] === player) {
+      return winner.value = true
     }
   })
+  return winner.value
 }
 
 const checkDraw=  (board: any[]) => {
