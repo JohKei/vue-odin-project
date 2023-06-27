@@ -120,39 +120,33 @@ const getValue = (board: unknown[]) => {
 }
 
 const miniMax = (board: unknown[]) => {
-  const value = ref()
-
   // Todo: either check terminalState earlier or give another argument to getValue so it does not finish the game
   if (isTerminalState(board)) {
     // console.log(getValue(board))
-    console.log(board)
-    return value.value = getValue(board)
-
+    return getValue(board)
   }
+
   if (player(board) == 'MAX') {
     // user
-    value.value = -10000
+    const value = ref(-10000)
+    const bestMove = ref()
     const Actions = actions(board)
     Actions.forEach((a) => {
-
-      // console.table(miniMax(result(board, a, playerInfo.playerOneSelection)));
-      value.value = max(value.value, miniMax(result(board, a, playerInfo.playerOneSelection)))
+      // Todo: How do i find out wich action has the MIN || MAX value if only the values get returned?
+      const score = max(value.value, miniMax(result(board, a, playerInfo.playerOneSelection)))
+      console.log(score)
     })
-
   } else if (player(board) == 'MIN') {
     // AI
-    value.value = 10000
+    const value = ref(10000)
     const Actions = actions(board)
+    const bestMove = ref()
     Actions.forEach((a) => {
-      // console.table(miniMax(result(board, a, playerInfo.playerTwoSelection)));
-      // console.table(result(board, a, playerInfo.playerTwoSelection));
-      value.value = min(value.value, miniMax(result(board, a, playerInfo.playerTwoSelection)))
+      // Todo: How do i find out wich action has the MIN || MAX value if only the values get returned?
+      const score = min(value.value, miniMax(result(board, a, playerInfo.playerTwoSelection)))
+      console.log(score)
     })
   }
-
-
-
-
 }
 const player = (board: unknown[]): string => {
   const whoisTurn = ref()
@@ -165,7 +159,6 @@ const player = (board: unknown[]): string => {
 }
 
 const result = (board: unknown[], action: number, player: string) => {
-// Todo: takes gameState & action -> returns what new GameState would be
   const newBoard = []
   board.forEach((item) => {
     newBoard.push(item)
@@ -182,7 +175,6 @@ const actions = (board: string[] | number[]): number[] => {
     }
   }
   return emptySlots
-  // return board.filter(s => s != 'X' && s != 'O')
 }
 
 const modalStart = ref(false)
