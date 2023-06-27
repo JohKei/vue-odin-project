@@ -45,6 +45,7 @@ import {computed, ComputedRef, reactive, ref} from "vue";
 import {Board, Cell, formObject, GameInfo} from "@/global/ticTacToeTypes";
 import StartModal from "@/components/odinTicTacToe/startModal.vue";
 import EndModal from "@/components/odinTicTacToe/endModal.vue";
+import {max} from "@popperjs/core/lib/utils/math";
 // Todo: built the minimax() -> user wants to maximize -> AI wants to minimize
 
 const cell = (): Cell => {
@@ -122,21 +123,31 @@ const miniMax = (board: unknown[]) => {
   if (isTerminalState(board)) {
     getValue(board)
   }
-  if (player(board) == 'MAX'){
+  if (player(board) == 'MAX') {
     const value = ref(-10000)
     const Actions = actions(board)
-    console.log(Actions)
+    Actions.forEach((a) => {
+      // value.value = max(value.value, miniMax(result(board,a)))
+    })
+    return value.value
 
-  }else if (player(board) == 'MIN'){
+  } else if (player(board) == 'MIN') {
     const value = ref(10000)
     const Actions = actions(board)
-
+    Actions.forEach((a) => {
+      // value.value = max(value.value, miniMax(result(board,a)))
+    })
+    return value.value
   }
 
 }
-const player = (board: unknown[]):string => {
+const player = (board: unknown[]): string => {
   const whoisTurn = ref()
-// Todo: return whoisTurn in any given GameState -> MIN || MAX turn
+  if (actions(board).length % 2 == 0) {
+    return whoisTurn.value = 'MIN'
+  } else if (actions(board).length % 2 != 0) {
+    return whoisTurn.value = 'MAX'
+  }
   return whoisTurn.value
 }
 
@@ -145,9 +156,9 @@ const result = (board: unknown[], action: unknown[]) => {
 }
 
 const actions = (board: string[] | number[]): number[] => {
-  const emptySlots:number[] = []
-  for (let i = 0; i < board.length; i++){
-    if (board[i] != 'X' && board[i] != 'O'){
+  const emptySlots: number[] = []
+  for (let i = 0; i < board.length; i++) {
+    if (board[i] != 'X' && board[i] != 'O') {
       emptySlots.push(i)
     }
   }
