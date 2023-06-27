@@ -88,12 +88,6 @@ const calculateGame = () => {
   miniMax(gameState)
 }
 
-const miniMax = (board: unknown[]) => {
-  if (isTerminalState(board)) {
-    getValue(board)
-  }
-}
-
 const isTerminalState = (board: unknown[],): boolean => {
   const winner = ref(false)
   possibleEnds.forEach((item) => {
@@ -123,16 +117,42 @@ const getValue = (board: unknown[]) => {
   })
 }
 
-const whoIsTurn = (board: unknown[]) => {
-//
+const miniMax = (board: unknown[]) => {
+  // Todo: either check terminalState earlier or give another argument to getValue so it does not finish the game
+  if (isTerminalState(board)) {
+    getValue(board)
+  }
+  if (player(board) == 'MAX'){
+    const value = ref(-10000)
+    const Actions = actions(board)
+    console.log(Actions)
+
+  }else if (player(board) == 'MIN'){
+    const value = ref(10000)
+    const Actions = actions(board)
+
+  }
+
+}
+const player = (board: unknown[]):string => {
+  const whoisTurn = ref()
+// Todo: return whoisTurn in any given GameState -> MIN || MAX turn
+  return whoisTurn.value
 }
 
 const result = (board: unknown[], action: unknown[]) => {
-//
+// Todo: takes gameState & action -> returns what new GameState would be
 }
 
 const actions = (board: string[] | number[]): number[] => {
-  return board.filter(s => s != 'X' && s != 'O')
+  const emptySlots:number[] = []
+  for (let i = 0; i < board.length; i++){
+    if (board[i] != 'X' && board[i] != 'O'){
+      emptySlots.push(i)
+    }
+  }
+  return emptySlots
+  // return board.filter(s => s != 'X' && s != 'O')
 }
 
 const modalStart = ref(false)
