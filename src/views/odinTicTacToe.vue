@@ -45,7 +45,7 @@ import {computed, ComputedRef, reactive, ref} from "vue";
 import {Board, Cell, formObject, GameInfo} from "@/global/ticTacToeTypes";
 import StartModal from "@/components/odinTicTacToe/startModal.vue";
 import EndModal from "@/components/odinTicTacToe/endModal.vue";
-import {max} from "@popperjs/core/lib/utils/math";
+import {max, min} from "@popperjs/core/lib/utils/math";
 // Todo: built the minimax() -> user wants to maximize -> AI wants to minimize
 
 const cell = (): Cell => {
@@ -107,38 +107,51 @@ const getValue = (board: unknown[]) => {
   possibleEnds.forEach((item) => {
     if (board[item[0]] === playerOne && board[item[1]] === playerOne && board[item[2]] === playerOne) {
       playerInfo.winner = '1'
-      openEndModal()
+      // openEndModal()
     } else if (board[item[0]] === playerTwo && board[item[1]] === playerTwo && board[item[2]] === playerTwo) {
       playerInfo.winner = '-1'
-      openEndModal()
+      // openEndModal()
     } else if (checkDraw(board)) {
       playerInfo.winner = '0'
-      openEndModal()
+      // openEndModal()
     }
   })
+  return playerInfo.winner
 }
 
 const miniMax = (board: unknown[]) => {
+  const value = ref()
+
   // Todo: either check terminalState earlier or give another argument to getValue so it does not finish the game
   if (isTerminalState(board)) {
-    getValue(board)
+    // console.log(getValue(board))
+    console.log(board)
+    return value.value = getValue(board)
+
   }
   if (player(board) == 'MAX') {
-    const value = ref(-10000)
+    // user
+    value.value = -10000
     const Actions = actions(board)
     Actions.forEach((a) => {
-      // value.value = max(value.value, miniMax(result(board,a)))
+
+      // console.table(miniMax(result(board, a, playerInfo.playerOneSelection)));
+      value.value = max(value.value, miniMax(result(board, a, playerInfo.playerOneSelection)))
     })
-    return value.value
 
   } else if (player(board) == 'MIN') {
-    const value = ref(10000)
+    // AI
+    value.value = 10000
     const Actions = actions(board)
     Actions.forEach((a) => {
-      // value.value = max(value.value, miniMax(result(board,a)))
+      // console.table(miniMax(result(board, a, playerInfo.playerTwoSelection)));
+      // console.table(result(board, a, playerInfo.playerTwoSelection));
+      value.value = min(value.value, miniMax(result(board, a, playerInfo.playerTwoSelection)))
     })
-    return value.value
   }
+
+
+
 
 }
 const player = (board: unknown[]): string => {
@@ -151,8 +164,14 @@ const player = (board: unknown[]): string => {
   return whoisTurn.value
 }
 
-const result = (board: unknown[], action: unknown[]) => {
+const result = (board: unknown[], action: number, player: string) => {
 // Todo: takes gameState & action -> returns what new GameState would be
+  const newBoard = []
+  board.forEach((item) => {
+    newBoard.push(item)
+  })
+  newBoard[action] = player
+  return newBoard
 }
 
 const actions = (board: string[] | number[]): number[] => {
