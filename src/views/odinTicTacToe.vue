@@ -2,23 +2,7 @@
   <navigation-bar></navigation-bar>
   <div class="body">
     <h1>Tic Tac Toe, aller</h1>
-    <h2 v-if="whoisTurn">It's your turn
-      <span
-          v-if="whoisTurn === playerInfo.playerOneSelection"
-      >
-        {{ playerInfo.playerOneName }} : {{ playerInfo.playerOneSelection }}
-      </span>
-      <span
-          v-if="whoisTurn === playerInfo.playerTwoSelection"
-      >
-        {{ playerInfo.playerTwoName }} {{ playerInfo.aiMode }}
-        <span
-            v-if="playerInfo.useAi"
-        >AI
-        </span>
-        : {{ playerInfo.playerTwoSelection }}
-      </span>
-    </h2>
+    <h2 v-if="whoisTurn">{{ renderWhoisTurnMessage }}</h2>
     <Teleport to="#modal">
       <start-modal
           :show-modal="modalStart"
@@ -57,7 +41,7 @@
 
 <script setup lang="ts">
 import NavigationBar from "@/components/NavigationBar.vue";
-import {computed, ComputedRef, onMounted, reactive, Ref, ref} from "vue";
+import {computed, ComputedRef, reactive, ref} from "vue";
 import {Board, Cell, formObject, GameInfo} from "@/global/ticTacToeTypes";
 import StartModal from "@/components/odinTicTacToe/startModal.vue";
 import EndModal from "@/components/odinTicTacToe/endModal.vue";
@@ -215,6 +199,17 @@ const playerInfo: GameInfo = reactive({
   aiMode: '',
   winner: '',
   gameStatus: '',
+})
+
+const renderWhoisTurnMessage = computed(() => {
+  const message = ref()
+  if (playerInfo.playerOneSelection == whoisTurn.value) {
+    return message.value = `It's your turn ${playerInfo.playerOneName}! ${playerInfo.playerOneSelection}`
+  } else if (playerInfo.playerTwoSelection == whoisTurn.value) {
+    return message.value = `IT's your turn ${playerInfo.playerTwoName}! ${playerInfo.playerTwoSelection}`
+  }
+
+  return message.value
 })
 
 const getForm = (arg: formObject) => {
