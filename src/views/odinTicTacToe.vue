@@ -132,7 +132,6 @@ const miniMax = (board: unknown[]) => {
     const bestMove = ref()
     const Actions = actions(board)
     Actions.forEach((a) => {
-      // Todo: How do i find out wich action has the MIN || MAX value if only the values get returned?
       const score = max(value.value, miniMax(result(board, a, playerInfo.playerOneSelection)))
       console.log(score)
     })
@@ -142,7 +141,7 @@ const miniMax = (board: unknown[]) => {
     const Actions = actions(board)
     const bestMove = ref()
     Actions.forEach((a) => {
-      // Todo: How do i find out wich action has the MIN || MAX value if only the values get returned?
+      // Todo: forEach action in Action{ 1 : '' } Action.1 = score
       const score = min(value.value, miniMax(result(board, a, playerInfo.playerTwoSelection)))
       console.log(score)
     })
@@ -168,6 +167,7 @@ const result = (board: unknown[], action: number, player: string) => {
 }
 
 const actions = (board: string[] | number[]): number[] => {
+  // Todo: I have to refactor this function so it returns a Object { i : '' }
   const emptySlots: number[] = []
   for (let i = 0; i < board.length; i++) {
     if (board[i] != 'X' && board[i] != 'O') {
