@@ -41,10 +41,11 @@
 
 <script setup lang="ts">
 import NavigationBar from "@/components/NavigationBar.vue";
-import {computed, ComputedRef, customRef, reactive, ref} from "vue";
+import {computed, ComputedRef, reactive, ref} from "vue";
 import {Board, Cell, formObject, GameInfo} from "@/global/ticTacToeTypes";
 import StartModal from "@/components/odinTicTacToe/startModal.vue";
 import EndModal from "@/components/odinTicTacToe/endModal.vue";
+import {max, min} from "@popperjs/core/lib/utils/math";
 
 const cell = (): Cell => {
   const _tokenValue = ref()
@@ -85,23 +86,59 @@ const gameBoard = reactive({
 const calculateGame = () => {
   const computedState = gameBoard.logBoard()
   const gameState = transferBoard(computedState)
-  // console.log(gameState)
-  // const testBoard = ['O', undefined, 'X', 'X', undefined, 'X', undefined, 'O', 'O']
   if (isTerminalState(gameState)) {
     getValue(gameState, true)
-  } else if(whoisTurn.value == playerInfo.playerTwoSelection){
-    const bestMove = miniMax(gameState)
-    gameBoard.board[bestMove].addToken(playerInfo.playerTwoSelection)
+  } else if (whoisTurn.value == playerInfo.playerTwoSelection) {
+    gameBoard.board[getBestMove(gameState)].addToken(playerInfo.playerTwoSelection)
+    getBestMove(gameState)
   }
 }
+
+const miniMax = (board: (string | undefined)[]) => {
+// Todo: built the minimax() -> user wants to minimize -> AI wants to Maximize
+  if (isTerminalState(board)) {
+    return getValue(board, false)
+  }
+  if (playerTurn(board) == 'MIN') {
+    // MIN means next turn -> playerOne
+    let bestScore = 100;
+    const availSpots = actions(board)
+
+    availSpots.forEach((possibleMove) => {
+      bestScore = min(bestScore, miniMax(result(board, possibleMove, playerInfo.playerOneSelection)))
+
+    })
+    return bestScore
+  } else if (playerTurn(board) == 'MAX') {
+    // MAX means next turn -> playerTwo
+    let bestScore = -100;
+    const availSpots = actions(board)
+    availSpots.forEach((possibleMove) => {
+      bestScore = max(bestScore, miniMax(result(board, possibleMove, playerInfo.playerTwoSelection)))
+    })
+    return bestScore
+  }
+}
+const getBestMove = (board: (undefined | string)[]) => {
+  const possibleMoves = actions(board)
+  const bestMove = ref()
+  const bestScore = ref(-100)
+  possibleMoves.forEach((item) => {
+    const score = miniMax(result(board, item, playerInfo.playerTwoSelection))
+    if (score >= bestScore.value){
+      bestScore.value = score
+      bestMove.value = item
+    }
+  })
+  return bestMove.value
+}
+
 
 const transferBoard = (board: ComputedRef[]): (string | undefined)[] => {
   const newBoard: string[] | undefined[] = []
   board.forEach((item) => newBoard.push(item))
   return newBoard
-//
 }
-
 
 const isTerminalState = (board: (string | undefined)[],): boolean => {
   const winner = ref(false)
@@ -115,101 +152,48 @@ const isTerminalState = (board: (string | undefined)[],): boolean => {
   return winner.value
 }
 
-const getValue = (board: (string | undefined)[], isTerminal: boolean): object | void => {
+const getValue = (board: (string | undefined)[], isTerminal: boolean): number | void => {
   const playerOne = playerInfo.playerOneSelection
   const playerTwo = playerInfo.playerTwoSelection
-  const object = {score: 0}
+  const score = ref()
   possibleEnds.forEach((item) => {
     if (board[item[0]] === playerOne && board[item[1]] === playerOne && board[item[2]] === playerOne) {
-      object.score = -10
+      score.value = -10
       if (isTerminal) {
         playerInfo.winner = '-10'
         openEndModal()
       }
     } else if (board[item[0]] === playerTwo && board[item[1]] === playerTwo && board[item[2]] === playerTwo) {
-      object.score = 10
+      score.value = 10
       if (isTerminal) {
         playerInfo.winner = '10'
         openEndModal()
       }
     } else if (checkDraw(board)) {
-      object.score = 0
+      score.value = 0
       if (isTerminal) {
         playerInfo.winner = '0'
         openEndModal()
       }
     }
   })
-  return object
+  return score.value
 }
 
-const miniMax = (board: (string | undefined)[]) => {
-// Todo: built the minimax() -> user wants to minimize -> AI wants to Maximize
-
-  if (isTerminalState(board)) {
-    return getValue(board, false).score
-  }
-  const availSpots = actions(board)
-  const currentPlayer = ref('')
-
-  if (playerTurn(board) == 'MIN') {
-    currentPlayer.value = playerInfo.playerOneSelection
-  } else if (playerTurn(board) == 'MAX') {
-    currentPlayer.value = playerInfo.playerTwoSelection
-  }
-  const moves = []
-
-  if (playerTurn(board) == 'MIN') {
-    let bestScore = 100;
-    let bestMove;
-    for (let i = 0; i < availSpots.length; i++) {
-      let score = Math.min(miniMax(result(board, availSpots[i], playerInfo.playerOneSelection)))
-      if (score < bestScore){
-        moves.push({score: score, move: availSpots[i]})
-      }
-    }
-    moves.forEach((item) =>{
-      if (item.score < bestScore){
-        bestScore = item.score
-        bestMove = item.move
-      }
-    })
-    return bestMove
-  } else if (playerTurn(board) == 'MAX') {
-    let bestScore = -100;
-    let bestMove;
-    for (let i = 0; i < availSpots.length; i++) {
-      let score = Math.max(miniMax(result(board, availSpots[i], playerInfo.playerTwoSelection)))
-      if (score > bestScore){
-        moves.push({score: score, move: availSpots[i]})
-      }
-    }
-    moves.forEach((item) =>{
-      if (item.score > bestScore){
-        bestScore = item.score
-        bestMove = item.move
-      }
-    })
-    return bestMove
-  }
-}
 const playerTurn = (board: (string | undefined)[]): string => {
   const whoisTurn = ref()
   if (actions(board).length % 2 == 0) {
-    // AI = MAX
-    whoisTurn.value = 'MIN'
-    // console.log(actions(board), whoisTurn.value)
+    // if even -> playerOne just did a move -> next turn -> player Two
+    whoisTurn.value = 'MAX'
     return whoisTurn.value
   } else if (actions(board).length % 2 != 0) {
-
-    // console.log(actions(board), whoisTurn.value)
-    // User = MIN
-    return whoisTurn.value = 'MAX'
+    // if odd -> playerTwo just did a move -> next Turn -> playerOne
+    return whoisTurn.value = 'MIN'
   }
   return whoisTurn.value
 }
 
-const result = (board: (string | undefined)[], action: number, player: string) => {
+const result = (board: (string | undefined)[], action: number, player: string): (string | undefined)[] => {
   const newBoard = []
   board.forEach((item) => {
     newBoard.push(item)
