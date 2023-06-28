@@ -43,13 +43,13 @@ const gameInfo = toRef(props, 'gameInfo')
 
 const renderStatus = computed(() => {
   const message = ref()
-  if (gameInfo.value.winner === '1' && gameInfo.value.useAi) {
+  if (gameInfo.value.winner === '10' && gameInfo.value.useAi) {
     return message.value = `Congratulations ${gameInfo.value.playerOneName}! you won against the ${gameInfo.value.aiMode} AI!`
-  } else if (gameInfo.value.winner === '1' && !gameInfo.value.useAi) {
+  } else if (gameInfo.value.winner === '10' && !gameInfo.value.useAi) {
     return message.value = `Congratulations ${gameInfo.value.playerOneName}! you won against ${gameInfo.value.playerTwoName}!`
-  } else if (gameInfo.value.winner === '-1' && gameInfo.value.useAi) {
+  } else if (gameInfo.value.winner === '-10' && gameInfo.value.useAi) {
     return message.value = `Damn ${gameInfo.value.playerOneName}! You lost against the ${gameInfo.value.aiMode} AI!`
-  } else if (gameInfo.value.winner === '-1' && !gameInfo.value.useAi) {
+  } else if (gameInfo.value.winner === '-10' && !gameInfo.value.useAi) {
     return message.value = `Damn ${gameInfo.value.playerOneName}! You lost against ${gameInfo.value.playerTwoName}!`
   } else if (gameInfo.value.winner === '0') {
     return message.value = `It's a Draw!`
