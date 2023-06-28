@@ -88,9 +88,8 @@ const calculateGame = () => {
   const gameState = transferBoard(computedState)
   if (isTerminalState(gameState)) {
     getValue(gameState, true)
-  } else if (whoisTurn.value == playerInfo.playerTwoSelection) {
+  } else if (whoisTurn.value == playerInfo.playerTwoSelection && playerInfo.useAi) {
     gameBoard.board[getBestMove(gameState)].addToken(playerInfo.playerTwoSelection)
-    getBestMove(gameState)
   }
 }
 
@@ -300,8 +299,7 @@ const getForm = (arg: formObject) => {
   } else {
     playerInfo.playerTwoSelection = 'X'
   }
-  playerInfo.useAi = arg.disableAi
-  playerInfo.aiMode = arg.aiMode
+  playerInfo.useAi = arg.useAi
 }
 
 </script>
