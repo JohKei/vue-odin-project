@@ -4,7 +4,7 @@
       <div class="content">
         <div class="gradContainer">
           <h2>
-            {{renderStatus}}
+            {{ renderStatus }}
           </h2>
         </div>
         <div class="buttonContainer">
@@ -44,11 +44,11 @@ const gameInfo = toRef(props, 'gameInfo')
 const renderStatus = computed(() => {
   const message = ref()
   if (gameInfo.value.winner === '-10' && gameInfo.value.useAi) {
-    return message.value = `Congratulations ${gameInfo.value.playerOneName}! you won against the ${gameInfo.value.aiMode} AI!`
+    return message.value = `Congratulations ${gameInfo.value.playerOneName}! you won against the AI!`
   } else if (gameInfo.value.winner === '-10' && !gameInfo.value.useAi) {
     return message.value = `Congratulations ${gameInfo.value.playerOneName}! you won against ${gameInfo.value.playerTwoName}!`
   } else if (gameInfo.value.winner === '10' && gameInfo.value.useAi) {
-    return message.value = `Damn ${gameInfo.value.playerOneName}! You lost against the ${gameInfo.value.aiMode} AI!`
+    return message.value = `Damn ${gameInfo.value.playerOneName}! You lost against the AI!`
   } else if (gameInfo.value.winner === '10' && !gameInfo.value.useAi) {
     return message.value = `Damn ${gameInfo.value.playerOneName}! You lost against ${gameInfo.value.playerTwoName}!`
   } else if (gameInfo.value.winner === '0') {

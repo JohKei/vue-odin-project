@@ -18,7 +18,7 @@
           >
             Your Name
           </label>
-            <span class="error" v-if="errors.userNameOne">{{ errors.userNameOne }}</span>
+          <span class="error" v-if="errors.userNameOne">{{ errors.userNameOne }}</span>
 
         </div>
         <div class="formCheckContainer">
@@ -63,7 +63,7 @@
           >
             <option value="">Choose your opponent</option>
             <option value="Human">other Player</option>
-            <option value="AI">Ai</option>
+            <option value="AI">unbeatable Ai</option>
           </Field>
           <span class="error">{{ errors.enemy }}</span>
 
@@ -73,7 +73,7 @@
                  name="playerTwoName"
                  placeholder="playerTwoName"
                  class="form-control"
-                 :disabled="!modalHandler.formObject.disablePlayerTwo"
+                 :disabled="!modalHandler.formObject.playAgainstPlayer"
                  v-model="modalHandler.formObject.playerTwoName"
           />
           <label for="playerTwoName">
@@ -82,21 +82,6 @@
           <span class="error">{{ errors.playerTwoName }}</span>
 
         </div>
-        <div class="inputContainer errorParent">
-          <Field
-              name="aiMode"
-              as="select"
-              class="form-select centerInputs"
-              :disabled="!modalHandler.formObject.disableAi"
-              v-model="modalHandler.formObject.aiMode"
-          >
-            <option value="">Choose Ai mode</option>
-            <option value="easy">easy</option>
-            <option value="hard">unbeatable</option>
-          </Field>
-          <span class="error">{{ errors.aiMode }}</span>
-        </div>
-
         <button class="startButton btn btn-success" type="submit">Start Game</button>
       </Form>
     </div>
@@ -105,7 +90,7 @@
 
 
 <script setup lang="ts">
-import {reactive, ref, toRef, watch} from "vue";
+import {reactive, toRef, watch} from "vue";
 import {Form, Field, configure} from 'vee-validate';
 import {formObject} from "@/global/ticTacToeTypes";
 import * as yup from 'yup';
@@ -124,30 +109,21 @@ const emits = defineEmits<{
 
 const modalHandler = reactive({
 
-  showModalProp: toRef(props, 'showModal'),
-  showModal: ref(false),
-  watchProp: function () {
-    watch(this.showModalProp, () => {
-      this.showModal.value = this.showModalProp.value
-    })
-  },
-
   formObject: {
-    playerOneName: 'John',
+    playerOneName: '',
     playerOneSelection: 'X',
-    enemy: 'AI',
+    enemy: '',
     playerTwoName: '',
-    disablePlayerTwo: false,
-    aiMode: 'hard',
-    disableAi: true
+    playAgainstPlayer: false,
+    useAi: false
   },
 
   resetFormObj: function () {
     this.formObject.playerOneName = ''
     this.formObject.playerOneSelection = 'X'
     this.formObject.enemy = ''
-    this.formObject.disablePlayerTwo = false
-    this.formObject.disableAi = false
+    this.formObject.playAgainstPlayer = false
+    this.formObject.useAi = false
   },
 
   closeModal: function () {
@@ -158,18 +134,16 @@ const modalHandler = reactive({
 
 watch(modalHandler.formObject, () => {
   if (modalHandler.formObject.enemy === 'Human') {
-    modalHandler.formObject.disablePlayerTwo = true
-    modalHandler.formObject.disableAi = false
-    modalHandler.formObject.aiMode = ''
+    modalHandler.formObject.playAgainstPlayer = true
+    modalHandler.formObject.useAi = false
   } else if (modalHandler.formObject.enemy === "AI") {
-    modalHandler.formObject.disableAi = true
-    modalHandler.formObject.disablePlayerTwo = false
+    modalHandler.formObject.useAi = true
+    modalHandler.formObject.playAgainstPlayer = false
     modalHandler.formObject.playerTwoName = ''
   } else if (modalHandler.formObject.enemy === '') {
     modalHandler.formObject.playerTwoName = ''
-    modalHandler.formObject.aiMode = ''
-    modalHandler.formObject.disablePlayerTwo = false
-    modalHandler.formObject.disableAi = false
+    modalHandler.formObject.playAgainstPlayer = false
+    modalHandler.formObject.useAi = false
   }
 })
 
@@ -189,17 +163,12 @@ const schema = yup.object({
         is: 'Human',
         then: (schema) => schema.required("Type in your opponent's Name!").min(3)
       }),
-  aiMode: yup.string()
-      .when('enemy',{
-        is: 'AI',
-        then: (schema) => schema.required("Choose AI's difficulty!").min(2)
-      })
 })
 configure({
   validateOnInput: true
 })
 
-const submit = (values: object) => {
+const submit = () => {
   emits('sendForm', modalHandler.formObject)
   modalHandler.closeModal()
 }
@@ -271,7 +240,7 @@ const submit = (values: object) => {
   margin: 0;
 }
 
-.errorParent{
+.errorParent {
   position: relative;
 }
 
@@ -283,7 +252,7 @@ const submit = (values: object) => {
   left: 105%;
   padding: 0 10px;
   border-radius: 5px;
-  background-color: rgba(0,0,0,70%);
+  background-color: rgba(0, 0, 0, 70%);
   color: white;
 }
 </style>

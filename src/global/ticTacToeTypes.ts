@@ -19,9 +19,8 @@ interface formObject {
     playerOneSelection: string,
     enemy: string,
     playerTwoName: string,
-    disablePlayerTwo: boolean,
-    aiMode: string,
-    disableAi: boolean
+    playAgainstPlayer: boolean,
+    useAi: boolean
 }
 
 interface GameInfo {
