@@ -94,8 +94,8 @@ const calculateGame = () => {
   }
 }
 
-const miniMax = (board: (string | undefined)[]) => {
-// Todo: built the minimax() -> user wants to minimize -> AI wants to Maximize
+const miniMax = (board: (string | undefined)[]): number => {
+  //minimax() -> user wants to minimize -> AI wants to Maximize
   if (isTerminalState(board)) {
     return getValue(board, false)
   }
@@ -117,15 +117,15 @@ const miniMax = (board: (string | undefined)[]) => {
       bestScore = max(bestScore, miniMax(result(board, possibleMove, playerInfo.playerTwoSelection)))
     })
     return bestScore
-  }
+  } else return 0
 }
-const getBestMove = (board: (undefined | string)[]) => {
+const getBestMove = (board: (undefined | string)[]): number => {
   const possibleMoves = actions(board)
   const bestMove = ref()
   const bestScore = ref(-100)
   possibleMoves.forEach((item) => {
     const score = miniMax(result(board, item, playerInfo.playerTwoSelection))
-    if (score >= bestScore.value){
+    if (score >= bestScore.value) {
       bestScore.value = score
       bestMove.value = item
     }
@@ -152,7 +152,7 @@ const isTerminalState = (board: (string | undefined)[],): boolean => {
   return winner.value
 }
 
-const getValue = (board: (string | undefined)[], isTerminal: boolean): number | void => {
+const getValue = (board: (string | undefined)[], isTerminal: boolean): number => {
   const playerOne = playerInfo.playerOneSelection
   const playerTwo = playerInfo.playerTwoSelection
   const score = ref()
