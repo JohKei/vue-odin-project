@@ -3,19 +3,8 @@
     <div v-if="showModal" class="modalBg">
       <div class="content">
         <div class="gradContainer">
-          <h2 v-if="gameInfo.playerOneSelection == gameInfo.winner"
-          >
-            Congratulations {{ gameInfo.playerOneName }}! You won against
-            <span v-if="gameInfo.useAi">the {{ gameInfo.aiMode }} Ai!</span>
-            <span v-if="gameInfo.playerTwoName">{{ gameInfo.playerTwoName }}!</span>
-          </h2>
-          <h2 v-if="gameInfo.playerOneSelection != gameInfo.winner && gameInfo.winner != 'Draw'">
-            Damn! you lost against
-            <span v-if="gameInfo.useAi">the {{ gameInfo.aiMode }} Ai!</span>
-            <span v-if="!gameInfo.useAi">{{ gameInfo.playerTwoName }}!</span>
-          </h2>
-          <h2 v-if="gameInfo.winner == 'Draw'">
-            It's a Draw!
+          <h2>
+            {{renderStatus}}
           </h2>
         </div>
         <div class="buttonContainer">
@@ -37,7 +26,7 @@
 
 <script setup lang="ts">
 import {GameInfo} from "@/global/ticTacToeTypes";
-import {toRef} from "vue";
+import {computed, ref, toRef} from "vue";
 
 // eslint-disable-next-line no-undef
 const props = defineProps<{
@@ -50,8 +39,23 @@ const emits = defineEmits<{
   (e: 'closeModal&reset'): void
 //
 }>()
-
 const gameInfo = toRef(props, 'gameInfo')
+
+const renderStatus = computed(() => {
+  const message = ref()
+  if (gameInfo.value.winner === '-10' && gameInfo.value.useAi) {
+    return message.value = `Congratulations ${gameInfo.value.playerOneName}! you won against the ${gameInfo.value.aiMode} AI!`
+  } else if (gameInfo.value.winner === '-10' && !gameInfo.value.useAi) {
+    return message.value = `Congratulations ${gameInfo.value.playerOneName}! you won against ${gameInfo.value.playerTwoName}!`
+  } else if (gameInfo.value.winner === '10' && gameInfo.value.useAi) {
+    return message.value = `Damn ${gameInfo.value.playerOneName}! You lost against the ${gameInfo.value.aiMode} AI!`
+  } else if (gameInfo.value.winner === '10' && !gameInfo.value.useAi) {
+    return message.value = `Damn ${gameInfo.value.playerOneName}! You lost against ${gameInfo.value.playerTwoName}!`
+  } else if (gameInfo.value.winner === '0') {
+    return message.value = `It's a Draw!`
+  }
+  return message.value
+})
 </script>
 
 
@@ -92,9 +96,11 @@ const gameInfo = toRef(props, 'gameInfo')
   opacity: 0;
   transform: scale(1.1);
 }
-.gradContainer{
+
+.gradContainer {
   text-align: center;
 }
+
 .buttonContainer {
   display: flex;
   flex-direction: column;
