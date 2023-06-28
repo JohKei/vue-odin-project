@@ -45,7 +45,6 @@ import {computed, ComputedRef, reactive, ref} from "vue";
 import {Board, Cell, formObject, GameInfo} from "@/global/ticTacToeTypes";
 import StartModal from "@/components/odinTicTacToe/startModal.vue";
 import EndModal from "@/components/odinTicTacToe/endModal.vue";
-// Todo: built the minimax() -> user wants to maximize -> AI wants to minimize
 
 const cell = (): Cell => {
   const _tokenValue = ref()
@@ -86,14 +85,16 @@ const gameBoard = reactive({
 const calculateGame = () => {
   const computedState = gameBoard.logBoard()
   const gameState = transferBoard(computedState)
+  const testBoard = ['O', undefined, 'X', 'X', undefined, 'X', undefined, 'O', 'O']
+  console.log(testBoard)
   if (isTerminalState(gameState)) {
     getValue(gameState, true)
-  }else{
-    miniMax(gameState)
+  } else {
+    miniMax(testBoard)
   }
 }
 
-const transferBoard = (board: ComputedRef[]): string[] | undefined[] => {
+const transferBoard = (board: ComputedRef[]): (string | undefined)[] => {
   const newBoard: string[] | undefined[] = []
   board.forEach((item) => newBoard.push(item))
   return newBoard
@@ -101,7 +102,7 @@ const transferBoard = (board: ComputedRef[]): string[] | undefined[] => {
 }
 
 
-const isTerminalState = (board: string[] | undefined[],): boolean => {
+const isTerminalState = (board: (string | undefined)[],): boolean => {
   const winner = ref(false)
   possibleEnds.forEach((item) => {
     if (board[item[0]] === 'X' && board[item[1]] === 'X' && board[item[2]] === 'X' ||
@@ -113,7 +114,7 @@ const isTerminalState = (board: string[] | undefined[],): boolean => {
   return winner.value
 }
 
-const getValue = (board: string[] | undefined[], isTerminal: boolean): object | void => {
+const getValue = (board: (string | undefined)[], isTerminal: boolean): object | void => {
   const playerOne = playerInfo.playerOneSelection
   const playerTwo = playerInfo.playerTwoSelection
   const object = {score: 0}
@@ -121,13 +122,13 @@ const getValue = (board: string[] | undefined[], isTerminal: boolean): object | 
     if (board[item[0]] === playerOne && board[item[1]] === playerOne && board[item[2]] === playerOne) {
       object.score = 10
       if (isTerminal) {
-        playerInfo.winner = '10'
+        playerInfo.winner = '-10'
         openEndModal()
       }
     } else if (board[item[0]] === playerTwo && board[item[1]] === playerTwo && board[item[2]] === playerTwo) {
       object.score = -10
       if (isTerminal) {
-        playerInfo.winner = '-10'
+        playerInfo.winner = '10'
         openEndModal()
       }
     } else if (checkDraw(board)) {
@@ -138,32 +139,31 @@ const getValue = (board: string[] | undefined[], isTerminal: boolean): object | 
       }
     }
   })
-  if (!isTerminal){
-    return object
-  }
+  return object
 }
 
-const miniMax = (board: string[] | undefined[]) => {
+const miniMax = (board: (string | undefined)[]) => {
+// Todo: built the minimax() -> user wants to minimize -> AI wants to Maximize
 
   if (isTerminalState(board)) {
-    // console.log(getValue(board))
-    // return getValue(board).score
+    console.log(getValue(board, false))
+    return getValue(board, false)
   }
   const moves = []
 
-
 }
-const player = (board: string[] | undefined[]): string => {
+
+const playerTurn = (board: (string | undefined)[]): string => {
   const whoisTurn = ref()
   if (actions(board).length % 2 == 0) {
-    return whoisTurn.value = 'MIN'
-  } else if (actions(board).length % 2 != 0) {
     return whoisTurn.value = 'MAX'
+  } else if (actions(board).length % 2 != 0) {
+    return whoisTurn.value = 'MIN'
   }
   return whoisTurn.value
 }
 
-const result = (board: unknown[], action: number, player: string) => {
+const result = (board: (string | undefined)[], action: number, player: string) => {
   const newBoard = []
   board.forEach((item) => {
     newBoard.push(item)
@@ -172,7 +172,7 @@ const result = (board: unknown[], action: number, player: string) => {
   return newBoard
 }
 
-const actions = (board: string[] | undefined[]): number[] => {
+const actions = (board: (string | undefined)[]): number[] => {
   const emptySlots: number[] = []
   for (let i = 0; i < board.length; i++) {
     if (board[i] != 'X' && board[i] != 'O') {
@@ -218,7 +218,7 @@ const possibleEnds = [
   [6, 7, 8],
 ]
 
-const checkDraw = (board: string[] | undefined[]): boolean => {
+const checkDraw = (board: (string | undefined)[]): boolean => {
   const draw = ref()
   if (actions(board).length === 0) {
     return draw.value = true
@@ -255,7 +255,6 @@ const renderWhoisTurnMessage = computed(() => {
   } else if (playerInfo.playerTwoSelection == whoisTurn.value) {
     return message.value = `IT's your turn ${playerInfo.playerTwoName}! ${playerInfo.playerTwoSelection}`
   }
-
   return message.value
 })
 
@@ -274,6 +273,7 @@ const getForm = (arg: formObject) => {
   playerInfo.useAi = arg.disableAi
   playerInfo.aiMode = arg.aiMode
 }
+
 </script>
 
 <style scoped lang="css">
