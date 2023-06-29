@@ -134,6 +134,7 @@ const getBestMove = (board: (undefined | string)[]): number => {
 
 
 const transferBoard = (board: ComputedRef[]): (string | undefined)[] => {
+  // gets rid of the computedRef[] type early
   const newBoard: string[] | undefined[] = []
   board.forEach((item) => newBoard.push(item))
   return newBoard
