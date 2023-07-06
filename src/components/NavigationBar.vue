@@ -40,6 +40,7 @@
             <h3 class="courseTopics">Javascript</h3>
             <router-link to="/odinLibrary" class="routerLinks">Odin Library</router-link>
             <router-link to="/odinTicTacToe" class="routerLinks">Odin Tic Tac Toe</router-link>
+            <router-link to="/restaurantPage" class="routerLinks">Odin Restaurant Page</router-link>
           </div>
         </div>
       </div>

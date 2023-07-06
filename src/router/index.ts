@@ -13,6 +13,7 @@ import odinRPS from "@/views/odinRPS.vue";
 import odinEtchaSketch from "@/views/odinEtchaSketch.vue";
 import odinCalculator from "@/views/odinCalculator.vue";
 import odinTicTacToe from "@/views/odinTicTacToe.vue";
+import restaurantPage from "../views/RestaurantPage.vue";
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -84,6 +85,11 @@ const routes: Array<RouteRecordRaw> = [
         path: '/odinTicTacToe',
         name: 'Odin Tic Tac Toe',
         component: odinTicTacToe
+    },
+    {
+        path: '/restaurantPage',
+        name: 'Odin Restaurant',
+        component: restaurantPage
     }
 
 ]
