@@ -1,6 +1,6 @@
 <template>
   <restaurant-nav/>
-  <div class="body">
+  <div class="restaurantBody">
 
   </div>
 </template>
@@ -14,5 +14,7 @@ import RestaurantNav from "../components/restaurant Page/restaurantNav.vue";
 
 
 <style scoped>
-
+.restaurantBody{
+  padding: 50px 50px;
+}
 </style>
