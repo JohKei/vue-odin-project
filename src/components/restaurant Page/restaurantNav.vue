@@ -3,9 +3,21 @@
   <div class="navBody">
     <h1>Restaurant</h1>
     <div class="navButtonGroup">
-      <button class="button" :class="{buttonActive:props.activeView[0]}" @click="emits('changeView', 0)">Home</button>
-      <button class="button" :class="{buttonActive:props.activeView[1]}" @click="emits('changeView', 1)">Menu</button>
-      <button class="button" :class="{buttonActive:props.activeView[2]}" @click="emits('changeView', 2)">Contact</button>
+      <button class="button"
+              :class="{buttonActive:props.activeView[0]}"
+              @click="emits('changeView', 0)">
+        Home
+      </button>
+      <button class="button"
+              :class="{buttonActive:props.activeView[1]}"
+              @click="emits('changeView', 1)">
+        Menu
+      </button>
+      <button class="button"
+              :class="{buttonActive:props.activeView[2]}"
+              @click="emits('changeView', 2)">
+        Contact
+      </button>
     </div>
     <button class="button cartButton">
       <svg-icon type="mdi" :path="mdiCartHeart" size="35"/>
@@ -36,10 +48,11 @@ const emits = defineEmits<{
 .navBody {
   padding: 0 50px;
   position: absolute;
-  display: flex;
+  display: grid;
   align-content: center;
-  justify-content: space-between;
   width: 100vw;
+  z-index: 8;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
 .navButtonGroup {
@@ -55,5 +68,13 @@ const emits = defineEmits<{
 
 .buttonActive {
   background-color: green;
+}
+
+.navButtonGroup {
+  justify-self: center;
+}
+
+.cartButton {
+  justify-self: end;
 }
 </style>
