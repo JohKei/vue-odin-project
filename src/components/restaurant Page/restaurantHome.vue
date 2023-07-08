@@ -6,7 +6,9 @@
 
 
 <script setup lang="ts">
-
+import {VueperSlides, VueperSlide} from 'vueperslides'
+import 'vueperslides/dist/vueperslides.css'
+import {homeSlides} from "@/global/restaurantPage/types&Data";
 
 </script>
 

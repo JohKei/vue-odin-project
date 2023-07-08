@@ -1,5 +1,6 @@
 export {
     menu,
+    homeSlides
 }
 
 // Todo: Menu interface
@@ -116,9 +117,21 @@ const menu = [
 
 // Todo: homeSlides -> slideTitle, slideDescription
 // Todo: homeSlides interface
-const homeSlides: string[] = [
-    'https://cdn.discordapp.com/attachments/1059907690383544413/1124977784264077343/john7094_photorealistic_beautiful_people_enjoying_food_in_this__d13c016e-1149-4ef0-a4a9-5ad7e891ddca.png',
-    'https://cdn.discordapp.com/attachments/1059907690383544413/1124339674580783104/john7094_a_beautiful_restaurant_photorealistic._this_is_this_re_e80e13f2-04d8-437f-b612-ce07a844ea31.png',
-    'https://cdn.discordapp.com/attachments/1059907690383544413/1124340328149819472/john7094_photorealistic_beautiful_the_cooks_cooking_for_this_re_47f7bb14-3855-4cb6-875b-510895a917b3.png'
+const homeSlides = [
+    {
+        title: 'Enjoyable',
+        smallTitle: 'Wine and Dine',
+        image: 'https://cdn.discordapp.com/attachments/1059907690383544413/1124977784264077343/john7094_photorealistic_beautiful_people_enjoying_food_in_this__d13c016e-1149-4ef0-a4a9-5ad7e891ddca.png'
+    },
+    {
+        title: 'Delicious',
+        smallTitle: 'Crispy and Soft',
+        image: 'https://cdn.discordapp.com/attachments/1059907690383544413/1124339674580783104/john7094_a_beautiful_restaurant_photorealistic._this_is_this_re_e80e13f2-04d8-437f-b612-ce07a844ea31.png',
+    },
+    {
+        title: 'Restaurant',
+        smallTitle: 'Tasty and Crunchy',
+        image: 'https://cdn.discordapp.com/attachments/1059907690383544413/1124340328149819472/john7094_photorealistic_beautiful_the_cooks_cooking_for_this_re_47f7bb14-3855-4cb6-875b-510895a917b3.png'
+    }
 
 ]
