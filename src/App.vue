@@ -1,5 +1,4 @@
 <template>
-  <!--Todo: Vue-colorPalette-->
   <router-view/>
 </template>
 
