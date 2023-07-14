@@ -1,7 +1,7 @@
 <template>
-  <restaurant-nav/>
+  <restaurant-nav :home="true"/>
   <div class="restaurantBody">
-
+    <h2>Home</h2>
   </div>
 </template>
 

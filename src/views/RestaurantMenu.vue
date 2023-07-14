@@ -1,5 +1,8 @@
 <template>
-  <restaurant-nav/>
+  <restaurant-nav :menu="true"/>
+  <div class="menuBody">
+    <h2>Menu</h2>
+  </div>
 </template>
 
 
@@ -11,5 +14,10 @@ import RestaurantNav from "@/components/restaurant Page/restaurantNav.vue";
 
 
 <style scoped lang="css">
-
+.menuBody {
+  padding: 50px 50px;
+  height: 100vh;
+  width: 100vw;
+  background-color: blue;
+}
 </style>

@@ -3,17 +3,17 @@
   <div class="navBody">
     <h1>Restaurant</h1>
     <div class="navButtonGroup">
-      <button class="button">
+      <button class="button" :class="{buttonActive:props.home}">
         <router-link to="/restaurantPage">
           Home
         </router-link>
       </button>
-      <button class="button">
+      <button class="button" :class="{buttonActive:props.menu}">
         <router-link to="/restaurantPage/Menu">
           Menu
         </router-link>
       </button>
-      <button class="button">
+      <button class="button" :class="{buttonActive:props.contact}">
         <router-link to="/restaurantPage/Contact">
           Contact
         </router-link>
@@ -33,12 +33,14 @@ import NavigationBar from "@/components/NavigationBar.vue";
 
 // eslint-disable-next-line no-undef
 const props = defineProps<{
-  // activeView: Array<boolean>
+  home?: boolean
+  menu?: boolean
+  contact?: boolean
 }>()
 
 // eslint-disable-next-line no-undef
 const emits = defineEmits<{
-  // (e: 'changeView', arg: number): void
+  //
 }>()
 
 </script>
